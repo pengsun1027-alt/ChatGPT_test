@@ -1,6 +1,12 @@
 :root {
   --font-family: "PingFang SC", Arial, sans-serif;
   --font-size: 16px;
+  --font-size-13: 13px;
+  --font-size-14: 14px;
+  --font-size-15: 15px;
+  --font-size-16: 16px;
+  --font-size-18: 18px;
+  --font-size-20: 20px;
   --line-height: 1.4;
   --spacing: 16px;
   --primary: #4C8BF5;
@@ -79,7 +85,7 @@ a {
 }
 .btn-small {
   padding: calc(var(--spacing) * 0.5);
-  font-size: 14px;
+  font-size: var(--font-size-16);
 }
 .btn-block {
   width: 100%;

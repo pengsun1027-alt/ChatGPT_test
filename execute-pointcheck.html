@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-		<title>点检执行（两页版·含实例选择+扫码）</title>
+		<title>点检 · 执行（两页版·含实例选择+扫码）</title>
 		<link rel="stylesheet" href="styles.css" />
 		<style>
 			:root {
@@ -80,12 +80,13 @@
 				border: 1px solid var(--border);
 				background: #fff;
 				font-weight: 600;
+				font-size: 18px;
 			}
 			.btn-small {
 				height: 32px;
 				padding: 0 12px;
 				border-radius: 10px;
-				font-size: 14px;
+				font-size: 15px;
 			}
 			.btn-primary {
 				background: var(--primary);
@@ -112,13 +113,14 @@
 			}
 			.sec-title {
 				font-weight: 700;
+				font-size: 18px;
 			}
 			.chip {
 				padding: calc(var(--spacing) * 0.5) 12px;
 				border: 1px solid var(--border);
 				border-radius: 999px;
 				background: #fff;
-				font-size: 12px;
+				font-size: 13px;
 				white-space: nowrap;
 			}
 			.chip.active {
@@ -169,7 +171,7 @@
 				color: var(--muted);
 			}
 			.tag {
-				font-size: 12px;
+				font-size: 14px;
 				padding: 4px 8px;
 				border-radius: 999px;
 				border: 1px solid var(--border);
@@ -246,6 +248,10 @@
 				font-size: 12px;
 				color: var(--muted);
 			}
+			/* 修改: 故障下的照片和备注字体大小 */
+			.section .small .small {
+				font-size: 15px;
+			}
 			.actions {
 				display: flex;
 				justify-content: space-between;
@@ -256,7 +262,7 @@
 				background: transparent;
 				border: none;
 				padding: 0;
-				font-size: 12px;
+				font-size: 13px;
 				color: var(--muted);
 				text-decoration: underline;
 				cursor: pointer;
@@ -281,7 +287,7 @@
 			}
 			.modal h3 {
 				margin: 0 0 8px 0;
-				font-size: var(--font-size);
+				font-size: 18px;
 			}
 			.modal .row {
 				display: flex;
@@ -293,6 +299,7 @@
 				padding: 6px 10px;
 				border-radius: 999px;
 				border: 1px solid var(--border);
+				font-size: 14px;
 			}
 			.modal textarea {
 				width: 100%;
@@ -300,6 +307,7 @@
 				border: 1px solid var(--border);
 				border-radius: 10px;
 				padding: calc(var(--spacing) * 0.5);
+				font-size: 14px;
 			}
 			.modal .actions {
 				display: flex;
