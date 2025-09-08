@@ -3,8 +3,9 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-		<title>首页</title>
-		<style>
+                <title>首页</title>
+                <link rel="stylesheet" href="styles.css" />
+                <style>
 			:root {
 				--primary: #2b6fff;
 				--primary-active: #1c54f0;
@@ -28,8 +29,8 @@
 				padding: 0;
 				background: var(--bg);
 				color: var(--text);
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
-				font-size: 16px;
+                                font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
+                                font-size: var(--font-size);
 				line-height: 1.5;
 				/* 禁用纵向滚动条但保留滚动功能 */
 				overflow-y: scroll;
@@ -67,7 +68,7 @@
 			}
 			.navbar .title {
 				font-weight: 600;
-				font-size: 18px;
+				font-size: var(--font-size-20);
 			}
 			.badge {
 				display: inline-flex;
@@ -79,7 +80,7 @@
 				border-radius: 999px;
 				background: var(--danger);
 				color: #fff;
-				font-size: 12px;
+				font-size: var(--font-size-14);
 				line-height: 1;
 			}
 			.card {
@@ -130,7 +131,7 @@
 				fill: var(--primary);
 			}
 			.grid-item .label {
-				font-size: 14px;
+				font-size: var(--font-size-16);
 				font-weight: 600;
 			}
 			.grid-item .corner {
@@ -152,10 +153,10 @@
 			}
 			.kpi .num {
 				font-weight: 700;
-				font-size: 18px;
+				font-size: var(--font-size-20);
 			}
 			.kpi .label {
-				font-size: 12px;
+				font-size: var(--font-size-14);
 				color: var(--muted);
 			}
 			.btn {
@@ -195,7 +196,7 @@
 				height: 32px;
 				padding: 0 12px;
 				border-radius: 10px;
-				font-size: 14px;
+				font-size: var(--font-size-16);
 			}
 			.btn-block {
 				width: 100%;
@@ -219,7 +220,7 @@
 				outline: none;
 				flex: 1;
 				height: 42px;
-				font-size: 14px;
+				font-size: var(--font-size-16);
 			}
 			.filter-bar {
 				position: sticky;
@@ -243,7 +244,7 @@
 				border: 1px solid var(--border);
 				border-radius: 999px;
 				background: #fff;
-				font-size: 14px;
+				font-size: var(--font-size-16);
 				white-space: nowrap;
 			}
 			.chip.active {
@@ -262,10 +263,10 @@
 			}
 			.device-card .title {
 				font-weight: 700;
-				font-size: 16px;
+				font-size: var(--font-size-18);
 			}
 			.device-card .meta {
-				font-size: 12px;
+				font-size: var(--font-size-14);
 				color: var(--muted);
 			}
 			.pills {
@@ -274,7 +275,7 @@
 				flex-wrap: wrap;
 			}
 			.pill {
-				font-size: 12px;
+				font-size: var(--font-size-14);
 				border-radius: 999px;
 				padding: 4px 8px;
 				border: 1px solid var(--border);
@@ -305,7 +306,7 @@
 				border-top: none;
 			}
 			.countdown {
-				font-size: 12px;
+				font-size: var(--font-size-14);
 				color: var(--danger);
 			}
 			.card-actions {
@@ -367,7 +368,7 @@
 				background: var(--success);
 			}
 			.scanbar .desc {
-				font-size: 12px;
+				font-size: var(--font-size-14);
 				color: var(--muted);
 			}
 			/* Sections (Project) */
@@ -389,7 +390,7 @@
 				font-weight: 700;
 			}
 			.tag {
-				font-size: 12px;
+				font-size: var(--font-size-14);
 				padding: 4px 8px;
 				border-radius: 999px;
 				border: 1px solid var(--border);
@@ -410,7 +411,7 @@
 				margin: 8px 0;
 			}
 			.label {
-				font-size: 13px;
+				font-size: var(--font-size-15);
 				color: var(--muted);
 				margin-bottom: 6px;
 			}
@@ -452,7 +453,7 @@
 				align-items: center;
 				justify-content: center;
 				color: var(--muted);
-				font-size: 12px;
+				font-size: var(--font-size-14);
 				cursor: pointer;
 			}
 			.required {
@@ -554,7 +555,7 @@
 				margin-right: 8px;
 			}
 			.small {
-				font-size: 12px;
+				font-size: var(--font-size-14);
 				color: var(--muted);
 			}
 			.center {
