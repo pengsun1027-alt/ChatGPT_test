@@ -4,7 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<title>巡检任务 · 聚合（含 PPE 状态）</title>
-		<style>
+		<link rel="stylesheet" href="styles.css">
+                <style>
 			:root {
 				--primary: #2b6fff;
 				--primary-active: #1c54f0;
@@ -28,9 +29,9 @@
 				padding: 0;
 				background: var(--bg);
 				color: var(--text);
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
-				font-size: 16px;
-				line-height: 1.5;
+				font-family: var(--font-family);
+				font-size: var(--font-size);
+				line-height: var(--line-height);
 				/* 禁用纵向滚动条但保留滚动功能 */
 				overflow-y: scroll;
 			}
@@ -52,28 +53,28 @@
 				text-decoration: none;
 			}
 			.container {
-				padding: 16px;
+				padding: var(--spacing);
 			}
 			.navbar {
 				position: sticky;
 				top: 0;
 				z-index: 10;
 				background: #fff;
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				border-bottom: 1px solid var(--border);
 				display: flex;
 				align-items: center;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 			}
 			.navbar .title {
 				font-weight: 600;
-				font-size: 18px;
+				font-size: var(--font-size-lg);
 			}
 			.search {
 				margin-left: auto;
 				display: flex;
 				align-items: center;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				border: 1px solid var(--border);
 				border-radius: 10px;
 				padding: 0 12px;
@@ -85,7 +86,7 @@
 				outline: none;
 				flex: 1;
 				height: 42px;
-				font-size: 14px;
+				font-size: var(--font-size-sm);
 			}
 			.ppe-bar {
 				position: sticky;
@@ -97,11 +98,11 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 			}
 			.ppe-bar .state {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				align-items: center;
 				font-weight: 600;
 			}
@@ -118,7 +119,7 @@
 				background: #f59e0b;
 			}
 			.ppe-bar .small {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 			.btn {
@@ -143,18 +144,18 @@
 				background: #fff;
 				z-index: 8;
 				border-bottom: 1px solid var(--border);
-				padding: 8px 16px;
+				padding: calc(var(--spacing) * 0.5) 16px;
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				align-items: center;
 				overflow: auto;
 			}
 			.chip {
-				padding: 8px 12px;
+				padding: calc(var(--spacing) * 0.5) 12px;
 				border: 1px solid var(--border);
 				border-radius: 999px;
 				background: #fff;
-				font-size: 14px;
+				font-size: var(--font-size-sm);
 				white-space: nowrap;
 			}
 			.chip.active {
@@ -169,10 +170,10 @@
 				box-shadow: var(--shadow);
 			}
 			.card + .card {
-				margin-top: 12px;
+				margin-top: calc(var(--spacing) * 0.75);
 			}
 			.device-card {
-				padding: 12px;
+				padding: calc(var(--spacing) * 0.75);
 			}
 			.device-card .head {
 				display: flex;
@@ -182,10 +183,10 @@
 			}
 			.device-card .title {
 				font-weight: 700;
-				font-size: 16px;
+				font-size: var(--font-size);
 			}
 			.device-card .meta {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 			.pills {
@@ -194,7 +195,7 @@
 				flex-wrap: wrap;
 			}
 			.pill {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				border-radius: 999px;
 				padding: 4px 8px;
 				border: 1px solid var(--border);
@@ -232,14 +233,14 @@
 				border-top: none;
 			}
 			.small {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 			.footer {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				margin-top: 12px;
+				margin-top: calc(var(--spacing) * 0.75);
 			}
 			.more {
 				position: relative;
@@ -253,12 +254,12 @@
 				border: 1px solid var(--border);
 				border-radius: 12px;
 				box-shadow: var(--shadow);
-				padding: 8px;
+				padding: calc(var(--spacing) * 0.5);
 				min-width: 160px;
 			}
 			.more-menu a {
 				display: block;
-				padding: 8px 10px;
+				padding: calc(var(--spacing) * 0.5) 10px;
 				border-radius: 8px;
 			}
 			.more.open .more-menu {
@@ -268,7 +269,7 @@
 				height: 32px;
 				padding: 0 12px;
 				border-radius: 10px;
-				font-size: 14px;
+				font-size: var(--font-size-sm);
 			}
 		</style>
 	</head>
@@ -284,7 +285,7 @@
 				<div class="dot"></div>
 				<div id="ppeText">本时窗 PPE：未完成</div>
 			</div>
-			<div style="display: flex; gap: 8px; align-items: center">
+			<div style="display: flex; gap: calc(var(--spacing) * 0.5); align-items: center">
 				<span id="ppeMeta" class="small"></span>
 				<a id="ppeBtn" class="btn btn-primary" href="ppe-session.html?from=task-list-aggregate.html">去采集</a>
 			</div>
@@ -309,7 +310,7 @@
 				</div>
 
 				<div id="rows"></div>
-				<div class="small" style="margin-top: 8px"><a href="#" id="toggleMore">查看更多</a></div>
+				<div class="small" style="margin-top: calc(var(--spacing) * 0.5)"><a href="#" id="toggleMore">查看更多</a></div>
 
 				<div class="footer">
 					<!-- 左下角：更多 -->
@@ -327,7 +328,7 @@
 						</div>
 					</div>
 					<!-- 右侧主操作 -->
-					<div style="display: flex; gap: 8px">
+					<div style="display: flex; gap: calc(var(--spacing) * 0.5)">
 						<a class="btn need-ppe" data-action="detail" href="task-detail_mixed.html">任务详情</a>
 						<a id="claimBtn" class="btn btn-primary need-ppe" data-action="claim" href="#"
 							>本设备全部领取</a
@@ -335,7 +336,7 @@
 					</div>
 				</div>
 
-				<div class="small" style="margin-top: 8px; color: var(--muted)">
+				<div class="small" style="margin-top: calc(var(--spacing) * 0.5); color: var(--muted)">
 					说明：默认仅展示 3
 					条；未到时间标为「未到时间」，可查看不可开始；“更多”在左下角；主操作“全部领取”靠右，便于右手操作。
 				</div>
@@ -362,12 +363,12 @@
 					background: #fff;
 					border-top-left-radius: 16px;
 					border-top-right-radius: 16px;
-					padding: 16px;
+					padding: var(--spacing);
 					border: 1px solid var(--border);
 				"
 			>
-				<h3 style="margin: 0 0 8px 0; font-size: 16px">设备无法巡检</h3>
-				<div class="row" style="display: flex; gap: 8px; margin: 8px 0; flex-wrap: wrap">
+				<h3 style="margin: 0 0 8px 0; font-size: var(--font-size)">设备无法巡检</h3>
+				<div class="row" style="display: flex; gap: calc(var(--spacing) * 0.5); margin: 8px 0; flex-wrap: wrap">
 					<div class="chip">停电/断电</div>
 					<div class="chip">设备检修中</div>
 					<div class="chip">安全风险</div>
@@ -381,11 +382,11 @@
 						min-height: 80px;
 						border: 1px solid var(--border);
 						border-radius: 10px;
-						padding: 8px;
+						padding: calc(var(--spacing) * 0.5);
 					"
 					placeholder="请补充具体原因（必填）"
 				></textarea>
-				<div class="row" style="display: flex; gap: 8px; margin-top: 12px">
+				<div class="row" style="display: flex; gap: calc(var(--spacing) * 0.5); margin-top: calc(var(--spacing) * 0.75)">
 					<button class="btn" onclick="hideUnavail()">取消</button>
 					<button class="btn btn-primary" onclick="saveUnavail()">提交</button>
 				</div>

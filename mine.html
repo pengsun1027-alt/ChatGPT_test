@@ -4,7 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
 		<title>我的</title>
-		<style>
+		<link rel="stylesheet" href="styles.css">
+                <style>
 			:root {
 				--primary: #2b6fff;
 				--primary-active: #1c54f0;
@@ -29,9 +30,9 @@
 				padding: 0;
 				background: var(--bg);
 				color: var(--text);
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
-				font-size: 16px;
-				line-height: 1.5;
+				font-family: var(--font-family);
+				font-size: var(--font-size);
+				line-height: var(--line-height);
 				/* 禁用纵向滚动条但保留滚动功能 */
 				overflow-y: scroll;
 			}
@@ -54,22 +55,22 @@
 				text-decoration: none;
 			}
 			.container {
-				padding: 16px 16px 16px 16px;
+				padding: var(--spacing) 16px 16px 16px;
 			} /* no tabbar by default */
 			.navbar {
 				position: sticky;
 				top: 0;
 				z-index: 10;
 				background: #fff;
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				border-bottom: 1px solid var(--border);
 				display: flex;
 				align-items: center;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 			}
 			.navbar .title {
 				font-weight: 600;
-				font-size: 18px;
+				font-size: var(--font-size-lg);
 			}
 			.badge {
 				display: inline-flex;
@@ -81,7 +82,7 @@
 				border-radius: 999px;
 				background: var(--danger);
 				color: #fff;
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				line-height: 1;
 			}
 			.card {
@@ -91,11 +92,11 @@
 				box-shadow: var(--shadow);
 			}
 			.card + .card {
-				margin-top: 12px;
+				margin-top: calc(var(--spacing) * 0.75);
 			}
 			.grid {
 				display: grid;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 			}
 			.grid.cols-3 {
 				grid-template-columns: repeat(3, 1fr);
@@ -105,7 +106,7 @@
 				border: 1px solid var(--border);
 				border-radius: 12px;
 				box-shadow: var(--shadow);
-				padding: 12px;
+				padding: calc(var(--spacing) * 0.75);
 				display: flex;
 				flex-direction: column;
 				align-items: center;
@@ -129,7 +130,7 @@
 				fill: var(--primary);
 			}
 			.grid-item .label {
-				font-size: 14px;
+				font-size: var(--font-size-sm);
 				font-weight: 600;
 			}
 			.grid-item .corner {
@@ -139,7 +140,7 @@
 			}
 			.kpi-bar {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 			}
 			.kpi {
 				flex: 1;
@@ -147,14 +148,14 @@
 				border: 1px solid var(--border);
 				border-radius: 12px;
 				box-shadow: var(--shadow);
-				padding: 12px;
+				padding: calc(var(--spacing) * 0.75);
 			}
 			.kpi .num {
 				font-weight: 700;
-				font-size: 18px;
+				font-size: var(--font-size-lg);
 			}
 			.kpi .label {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 			.btn {
@@ -194,7 +195,7 @@
 				height: 32px;
 				padding: 0 12px;
 				border-radius: 10px;
-				font-size: 14px;
+				font-size: var(--font-size-sm);
 			}
 			.btn-block {
 				width: 100%;
@@ -211,14 +212,14 @@
 			.search {
 				display: flex;
 				align-items: center;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 			}
 			.search input {
 				border: none;
 				outline: none;
 				flex: 1;
 				height: 42px;
-				font-size: 14px;
+				font-size: var(--font-size-sm);
 			}
 			.filter-bar {
 				position: sticky;
@@ -226,23 +227,23 @@
 				background: #fff;
 				z-index: 9;
 				border-bottom: 1px solid var(--border);
-				padding: 8px 16px;
+				padding: calc(var(--spacing) * 0.5) 16px;
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				align-items: center;
 				overflow: auto;
 			}
 			.chips {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				overflow: auto;
 			}
 			.chip {
-				padding: 8px 12px;
+				padding: calc(var(--spacing) * 0.5) 12px;
 				border: 1px solid var(--border);
 				border-radius: 999px;
 				background: #fff;
-				font-size: 14px;
+				font-size: var(--font-size-sm);
 				white-space: nowrap;
 			}
 			.chip.active {
@@ -251,7 +252,7 @@
 				color: var(--primary);
 			}
 			.device-card {
-				padding: 12px;
+				padding: calc(var(--spacing) * 0.75);
 			}
 			.device-card .head {
 				display: flex;
@@ -261,10 +262,10 @@
 			}
 			.device-card .title {
 				font-weight: 700;
-				font-size: 16px;
+				font-size: var(--font-size);
 			}
 			.device-card .meta {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 			.pills {
@@ -273,7 +274,7 @@
 				flex-wrap: wrap;
 			}
 			.pill {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				border-radius: 999px;
 				padding: 4px 8px;
 				border: 1px solid var(--border);
@@ -297,19 +298,19 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				padding: 8px 0;
+				padding: calc(var(--spacing) * 0.5) 0;
 				border-top: 1px dashed var(--border);
 			}
 			.task-row:first-child {
 				border-top: none;
 			}
 			.countdown {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--danger);
 			}
 			.card-actions {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 			}
 			.more {
 				position: relative;
@@ -323,12 +324,12 @@
 				border: 1px solid var(--border);
 				border-radius: 10px;
 				box-shadow: var(--shadow);
-				padding: 8px;
+				padding: calc(var(--spacing) * 0.5);
 				min-width: 140px;
 			}
 			.more-menu a {
 				display: block;
-				padding: 8px 10px;
+				padding: calc(var(--spacing) * 0.5) 10px;
 				border-radius: 8px;
 			}
 			.more-menu a:hover {
@@ -348,12 +349,12 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 			}
 			.scanbar .state {
 				display: flex;
 				align-items: center;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				font-weight: 600;
 			}
 			.scanbar .dot {
@@ -366,7 +367,7 @@
 				background: var(--success);
 			}
 			.scanbar .desc {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 			/* Sections (Project) */
@@ -375,7 +376,7 @@
 				border: 1px solid var(--border);
 				border-radius: 12px;
 				box-shadow: var(--shadow);
-				padding: 12px;
+				padding: calc(var(--spacing) * 0.75);
 				margin: 12px 0;
 			}
 			.section .sec-head {
@@ -388,7 +389,7 @@
 				font-weight: 700;
 			}
 			.tag {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				padding: 4px 8px;
 				border-radius: 999px;
 				border: 1px solid var(--border);
@@ -409,20 +410,20 @@
 				margin: 8px 0;
 			}
 			.label {
-				font-size: 13px;
+				font-size: var(--font-size-sm);
 				color: var(--muted);
 				margin-bottom: 6px;
 			}
 			.radio-group {
 				display: flex;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 				flex-wrap: wrap;
 			}
 			.radio {
 				display: flex;
 				align-items: center;
 				gap: 6px;
-				padding: 8px 10px;
+				padding: calc(var(--spacing) * 0.5) 10px;
 				border: 1px solid var(--border);
 				border-radius: 999px;
 			}
@@ -435,12 +436,12 @@
 				min-height: 80px;
 				border: 1px solid var(--border);
 				border-radius: 10px;
-				padding: 8px;
+				padding: calc(var(--spacing) * 0.5);
 				resize: vertical;
 			}
 			.photo-uploader {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				flex-wrap: wrap;
 			}
 			.photo {
@@ -452,14 +453,14 @@
 				align-items: center;
 				justify-content: center;
 				color: var(--muted);
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				cursor: pointer;
 			}
 			.input {
 				width: 100%;
 			}
 			.helper {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 			.helper.red {
@@ -468,7 +469,7 @@
 			.unit-row {
 				display: flex;
 				align-items: center;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 			}
 			.unit-row input {
 				flex: 1;
@@ -485,9 +486,9 @@
 				bottom: 0;
 				background: #fff;
 				border-top: 1px solid var(--border);
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				z-index: 20;
 			}
 			.bottom-affix .btn {
@@ -509,7 +510,7 @@
 			/* utility */
 			.row {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				align-items: center;
 			}
 			.space-between {
@@ -518,10 +519,10 @@
 				align-items: center;
 			}
 			.mt-8 {
-				margin-top: 8px;
+				margin-top: calc(var(--spacing) * 0.5);
 			}
 			.mt-12 {
-				margin-top: 12px;
+				margin-top: calc(var(--spacing) * 0.75);
 			}
 			.mt-16 {
 				margin-top: 16px;
@@ -533,7 +534,7 @@
 				margin-right: 8px;
 			}
 			.small {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 			.center {

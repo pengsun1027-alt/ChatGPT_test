@@ -4,7 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<title>巡检 · 任务列表（聚合）· 含会话条/计划入口</title>
-		<style>
+		<link rel="stylesheet" href="styles.css">
+                <style>
 			:root {
 				--primary: #2b6fff;
 				--primary-active: #1c54f0;
@@ -28,9 +29,9 @@
 				padding: 0;
 				background: var(--bg);
 				color: var(--text);
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
-				font-size: 16px;
-				line-height: 1.5;
+				font-family: var(--font-family);
+				font-size: var(--font-size);
+				line-height: var(--line-height);
 				/* 禁用纵向滚动条但保留滚动功能 */
 				overflow-y: scroll;
 			}
@@ -48,22 +49,22 @@
 			/* IE/Edge 隐藏滚动条 */
 			-ms-overflow-style: none;
 			.container {
-				padding: 12px 16px 96px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px 96px 16px;
 			}
 			.navbar {
 				position: sticky;
 				top: 0;
 				z-index: 20;
 				background: #fff;
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				border-bottom: 1px solid var(--border);
 				display: flex;
 				align-items: center;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 			}
 			.navbar .title {
 				font-weight: 600;
-				font-size: 18px;
+				font-size: var(--font-size-lg);
 			}
 			.badge {
 				display: inline-flex;
@@ -74,7 +75,7 @@
 				border-radius: 999px;
 				background: #eef2ff;
 				color: #3730a3;
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 			}
 			/* 会话条 */
 			.sessionbar {
@@ -89,7 +90,7 @@
 				padding: 10px 16px;
 				display: grid;
 				grid-template-columns: 1fr auto;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				align-items: center;
 			}
 			.session-info {
@@ -99,7 +100,7 @@
 			}
 			.session-line {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				flex-wrap: wrap;
 				align-items: center;
 			}
@@ -107,12 +108,12 @@
 				font-weight: 700;
 			}
 			.session-line .date {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 			.window-chips {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				flex-wrap: wrap;
 			}
 			.chip {
@@ -120,7 +121,7 @@
 				border: 1px solid var(--border);
 				border-radius: 999px;
 				background: #fff;
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				display: inline-flex;
 				align-items: center;
 				gap: 6px;
@@ -150,7 +151,7 @@
 			}
 			.session-actions {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 			}
 			.btn {
 				display: inline-flex;
@@ -177,13 +178,13 @@
 				height: 28px;
 				padding: 0 10px;
 				border-radius: 999px;
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 			}
 			.ppe-status {
 				display: flex;
 				align-items: center;
 				gap: 6px;
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 			}
 			.ppe-status .dot {
 				width: 8px;
@@ -206,10 +207,10 @@
 				border: 1px solid var(--border);
 				border-radius: 12px;
 				box-shadow: var(--shadow);
-				padding: 12px;
+				padding: calc(var(--spacing) * 0.75);
 			}
 			.card + .card {
-				margin-top: 12px;
+				margin-top: calc(var(--spacing) * 0.75);
 			}
 			.card .head {
 				display: flex;
@@ -221,11 +222,11 @@
 				font-weight: 700;
 			}
 			.small {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 			.pill {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				border-radius: 999px;
 				padding: 4px 8px;
 				border: 1px solid var(--border);
@@ -256,7 +257,7 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				padding: 8px 0;
+				padding: calc(var(--spacing) * 0.5) 0;
 				border-top: 1px dashed var(--border);
 			}
 			.task-mini:first-child {
@@ -264,14 +265,14 @@
 			}
 			.actions {
 				display: flex;
-				gap: 8px;
-				margin-top: 8px;
+				gap: calc(var(--spacing) * 0.5);
+				margin-top: calc(var(--spacing) * 0.5);
 			}
 			.more-row {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				margin-top: 8px;
+				margin-top: calc(var(--spacing) * 0.5);
 			}
 			/* 更多（左下角菜单） */
 			.more {
@@ -292,7 +293,7 @@
 			.more-menu a {
 				display: block;
 				padding: 10px 12px;
-				font-size: 14px;
+				font-size: var(--font-size-sm);
 				border-top: 1px solid var(--border);
 			}
 			.more-menu a:first-child {
@@ -323,14 +324,14 @@
 				position: sticky;
 				top: 0;
 				background: #fff;
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				border-bottom: 1px solid var(--border);
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
 			}
 			.drawer .content {
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 			}
 			.progress {
 				height: 8px;
@@ -352,7 +353,7 @@
 				display: flex;
 				align-items: center;
 				justify-content: center;
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				font-weight: 700;
 			}
 			.dev-row {
@@ -382,12 +383,12 @@
 				border: 1px solid var(--border);
 			}
 			.modal .sheet .head {
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				border-bottom: 1px solid var(--border);
 				font-weight: 700;
 			}
 			.modal .sheet .item {
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				border-top: 1px solid var(--border);
 			}
 			.show {
@@ -439,21 +440,21 @@
 
 				<div class="task-mini">
 					<div>电机温度</div>
-					<div style="display: flex; gap: 8px; align-items: center">
+					<div style="display: flex; gap: calc(var(--spacing) * 0.5); align-items: center">
 						<span class="pill gray"><span class="dot"></span> 未到</span>
 						<a class="btn btn-small" href="#" onclick="return false;">查看</a>
 					</div>
 				</div>
 				<div class="task-mini">
 					<div>运行电流</div>
-					<div style="display: flex; gap: 8px; align-items: center">
+					<div style="display: flex; gap: calc(var(--spacing) * 0.5); align-items: center">
 						<span class="pill blue"><span class="dot"></span> 可开始</span>
 						<a class="btn btn-small btn-primary" href="task-detail_mixed.html">进入</a>
 					</div>
 				</div>
 				<div class="task-mini">
 					<div>振动</div>
-					<div style="display: flex; gap: 8px; align-items: center">
+					<div style="display: flex; gap: calc(var(--spacing) * 0.5); align-items: center">
 						<span class="pill red"><span class="dot"></span> 逾期</span>
 						<a class="btn btn-small btn-primary" href="task-detail_mixed.html">进入</a>
 					</div>
@@ -515,7 +516,7 @@
 						<div class="small">进行中</div>
 					</div>
 
-					<div style="margin-top: 12px" class="small">
+					<div style="margin-top: calc(var(--spacing) * 0.75)" class="small">
 						计划级 SOP/SSP 概要：1) 作业区需两人同行；2) 需穿戴绝缘手套/护目镜；3) 严禁越站操作。
 					</div>
 				</div>

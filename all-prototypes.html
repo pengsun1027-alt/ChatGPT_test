@@ -4,7 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
 		<title>All Prototypes</title>
-		<style>
+		<link rel="stylesheet" href="styles.css">
+                <style>
 			:root {
 				--border: #e2e8f0;
 				--bg: #f8fafc;
@@ -17,7 +18,7 @@
 			body {
 				margin: 0;
 				padding: 0;
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
+				font-family: var(--font-family);
 				background: var(--bg);
 				color: var(--text);
 			}
@@ -26,7 +27,7 @@
 				top: 0;
 				background: #fff;
 				border-bottom: 1px solid var(--border);
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				font-weight: 700;
 			}
 			.grid {
@@ -51,10 +52,10 @@
 			}
 			.tile-head .title {
 				font-weight: 700;
-				font-size: 14px;
+				font-size: var(--font-size-sm);
 			}
 			.tile-head a {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				text-decoration: none;
 				color: #2b6fff;
 			}

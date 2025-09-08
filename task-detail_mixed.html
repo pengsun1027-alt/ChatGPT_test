@@ -4,7 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<title>巡检 · 任务详情 · 混合（逾期+可开始+未到）</title>
-		<style>
+		<link rel="stylesheet" href="styles.css">
+                <style>
 			:root {
 				--primary: #2b6fff;
 				--primary-active: #1c54f0;
@@ -29,9 +30,9 @@
 				padding: 0;
 				background: var(--bg);
 				color: var(--text);
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
-				font-size: 16px;
-				line-height: 1.5;
+				font-family: var(--font-family);
+				font-size: var(--font-size);
+				line-height: var(--line-height);
 				/* 禁用纵向滚动条但保留滚动功能 */
 				overflow-y: scroll;
 			}
@@ -53,22 +54,22 @@
 				text-decoration: none;
 			}
 			.container {
-				padding: 16px 16px 96px 16px;
+				padding: var(--spacing) 16px 96px 16px;
 			}
 			.navbar {
 				position: sticky;
 				top: 0;
 				z-index: 10;
 				background: #fff;
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				border-bottom: 1px solid var(--border);
 				display: flex;
 				align-items: center;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 			}
 			.navbar .title {
 				font-weight: 600;
-				font-size: 18px;
+				font-size: var(--font-size-lg);
 			}
 			.badge {
 				display: inline-flex;
@@ -79,7 +80,7 @@
 				border-radius: 999px;
 				background: #eef2ff;
 				color: #3730a3;
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				line-height: 1;
 			}
 			.card {
@@ -89,7 +90,7 @@
 				box-shadow: var(--shadow);
 			}
 			.card + .card {
-				margin-top: 12px;
+				margin-top: calc(var(--spacing) * 0.75);
 			}
 			.btn {
 				display: inline-flex;
@@ -121,10 +122,10 @@
 				height: 32px;
 				padding: 0 12px;
 				border-radius: 10px;
-				font-size: 14px;
+				font-size: var(--font-size-sm);
 			}
 			.small {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 			.pills {
@@ -133,7 +134,7 @@
 				flex-wrap: wrap;
 			}
 			.pill {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				border-radius: 999px;
 				padding: 4px 8px;
 				border: 1px solid var(--border);
@@ -180,7 +181,7 @@
 				border: 1px solid var(--border);
 				border-radius: 12px;
 				box-shadow: var(--shadow);
-				padding: 12px;
+				padding: calc(var(--spacing) * 0.75);
 				margin: 4px 0;
 			}
 			.sec-head {
@@ -194,7 +195,7 @@
 			}
 			.row {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				align-items: center;
 			}
 			.task-row {
@@ -214,9 +215,9 @@
 				bottom: 0;
 				background: #fff;
 				border-top: 1px solid var(--border);
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				z-index: 20;
 			}
 			.bottom-affix .btn {
@@ -225,16 +226,16 @@
 			/* chips & links */
 			.instance-switch {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				flex-wrap: wrap;
 				margin: 12px 0;
 			}
 			.is-chip {
-				padding: 8px 12px;
+				padding: calc(var(--spacing) * 0.5) 12px;
 				border: 1px solid var(--border);
 				border-radius: 999px;
 				background: #fff;
-				font-size: 14px;
+				font-size: var(--font-size-sm);
 			}
 			.is-chip.active {
 				background: var(--primary-subtle);
@@ -249,7 +250,7 @@
 				background: transparent;
 				border: none;
 				padding: 0;
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 				text-decoration: underline;
 				cursor: pointer;
@@ -290,16 +291,16 @@
 				background: #fff;
 				border-top-left-radius: 16px;
 				border-top-right-radius: 16px;
-				padding: 16px;
+				padding: var(--spacing);
 				border: 1px solid var(--border);
 			}
 			.modal h3 {
 				margin: 0 0 8px 0;
-				font-size: 16px;
+				font-size: var(--font-size);
 			}
 			.modal .row {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				margin: 8px 0;
 				flex-wrap: wrap;
 			}
@@ -313,12 +314,12 @@
 				min-height: 80px;
 				border: 1px solid var(--border);
 				border-radius: 10px;
-				padding: 8px;
+				padding: calc(var(--spacing) * 0.5);
 			}
 			.modal .actions {
 				display: flex;
-				gap: 8px;
-				margin-top: 12px;
+				gap: calc(var(--spacing) * 0.5);
+				margin-top: calc(var(--spacing) * 0.75);
 			}
 			.modal .btn {
 				flex: 1;
@@ -337,12 +338,12 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 			}
 			.scanbar .state {
 				display: flex;
 				align-items: center;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				font-weight: 600;
 			}
 			.scanbar .dot {
@@ -355,7 +356,7 @@
 				background: var(--success);
 			}
 			.scanbar .desc {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 		</style>
@@ -379,7 +380,7 @@
 			</div>
 
 			<!-- 设备卡 -->
-			<div class="card" style="padding: 12px">
+			<div class="card" style="padding: calc(var(--spacing) * 0.75)">
 				<div class="row" style="justify-content: space-between">
 					<div>
 						<div style="font-weight: 700">供水泵#1 <span class="small">（DEV-001）</span></div>
@@ -396,7 +397,7 @@
 					<div class="sec-title">选择今日实例</div>
 					<div class="small">时窗列表</div>
 				</div>
-				<div class="row" style="flex-wrap: wrap; gap: 8px">
+				<div class="row" style="flex-wrap: wrap; gap: calc(var(--spacing) * 0.5)">
 					<div class="pill blue">08:00–09:00 · 逾期</div>
 					<div class="pill gray">12:00–13:00 · 可开始</div>
 					<div class="pill gray">18:00–19:00 · 未到时间</div>

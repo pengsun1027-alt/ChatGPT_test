@@ -4,7 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<title>PPE 会话采集（含 SSP/SOP 勾选）</title>
-		<style>
+		<link rel="stylesheet" href="styles.css">
+                <style>
 			:root {
 				--primary: #2b6fff;
 				--primary-active: #1c54f0;
@@ -28,9 +29,9 @@
 				padding: 0;
 				background: var(--bg);
 				color: var(--text);
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
-				font-size: 16px;
-				line-height: 1.5;
+				font-family: var(--font-family);
+				font-size: var(--font-size);
+				line-height: var(--line-height);
 				/* 禁用纵向滚动条但保留滚动功能 */
 				overflow-y: scroll;
 			}
@@ -48,22 +49,22 @@
 			/* IE/Edge 隐藏滚动条 */
 			-ms-overflow-style: none;
 			.container {
-				padding: 16px 16px 96px 16px;
+				padding: var(--spacing) 16px 96px 16px;
 			}
 			.navbar {
 				position: sticky;
 				top: 0;
 				z-index: 10;
 				background: #fff;
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				border-bottom: 1px solid var(--border);
 				display: flex;
 				align-items: center;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 			}
 			.navbar .title {
 				font-weight: 600;
-				font-size: 18px;
+				font-size: var(--font-size-lg);
 			}
 			.badge {
 				display: inline-flex;
@@ -74,25 +75,25 @@
 				border-radius: 999px;
 				background: #eef2ff;
 				color: #3730a3;
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 			}
 			.card {
 				background: var(--card);
 				border: 1px solid var(--border);
 				border-radius: 12px;
 				box-shadow: var(--shadow);
-				padding: 12px;
+				padding: calc(var(--spacing) * 0.75);
 			}
 			.card + .card {
-				margin-top: 12px;
+				margin-top: calc(var(--spacing) * 0.75);
 			}
 			.small {
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				color: var(--muted);
 			}
 			.row {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				align-items: center;
 			}
 			.chip {
@@ -100,7 +101,7 @@
 				border: 1px solid var(--border);
 				border-radius: 999px;
 				background: #fff;
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 				display: inline-flex;
 				align-items: center;
 				gap: 6px;
@@ -149,9 +150,9 @@
 				bottom: 0;
 				background: #fff;
 				border-top: 1px solid var(--border);
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				z-index: 20;
 			}
 			.bottom-affix .btn {
@@ -171,7 +172,7 @@
 			}
 			.capture {
 				display: flex;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 				align-items: center;
 			}
 			.capture .mock {
@@ -184,7 +185,7 @@
 				align-items: center;
 				justify-content: center;
 				color: #94a3b8;
-				font-size: 12px;
+				font-size: var(--font-size-xs);
 			}
 		</style>
 	</head>
@@ -200,7 +201,7 @@
 					<div>选择今日实例（时窗）</div>
 					<div class="small">计划：机组A日巡 · W33-1</div>
 				</div>
-				<div class="row" style="margin-top: 8px; flex-wrap: wrap; gap: 8px">
+				<div class="row" style="margin-top: calc(var(--spacing) * 0.5); flex-wrap: wrap; gap: calc(var(--spacing) * 0.5)">
 					<span class="chip blue"><span class="dot"></span> 12:00–13:00 · 当前</span>
 					<span class="chip"><span class="dot"></span> 08:00–09:00 · 已过</span>
 					<span class="chip gray"><span class="dot"></span> 18:00–19:00 · 未到</span>
@@ -214,14 +215,14 @@
 				<div class="small" style="margin-top: 6px">
 					进入作业区前需穿戴：安全帽、护目镜、绝缘手套、防护鞋；现场至少两人（执行+监护）。
 				</div>
-				<div class="row" style="margin-top: 10px; align-items: flex-start; gap: 12px">
-					<label class="row" style="align-items: flex-start; gap: 8px">
+				<div class="row" style="margin-top: 10px; align-items: flex-start; gap: calc(var(--spacing) * 0.75)">
+					<label class="row" style="align-items: flex-start; gap: calc(var(--spacing) * 0.5)">
 						<input type="checkbox" id="ssp" />
 						<span>我已阅读并同意本计划的 <b>SSP 安全要求</b>（必勾）</span></label
 					>
 				</div>
-				<div class="row" style="margin-top: 6px; align-items: flex-start; gap: 8px">
-					<label class="row" style="align-items: flex-start; gap: 8px">
+				<div class="row" style="margin-top: 6px; align-items: flex-start; gap: calc(var(--spacing) * 0.5)">
+					<label class="row" style="align-items: flex-start; gap: calc(var(--spacing) * 0.5)">
 						<input type="checkbox" id="sop" />
 						<span>我已知悉本计划的 <b>SOP 作业指导</b>（必勾）</span></label
 					>
@@ -242,7 +243,7 @@
 			<div class="card">
 				<div style="font-weight: 700">回执信息</div>
 				<div class="small" id="receipt">尚未采集</div>
-				<div class="progress" style="margin-top: 8px"><div class="bar" id="bar" style="width: 0%"></div></div>
+				<div class="progress" style="margin-top: calc(var(--spacing) * 0.5)"><div class="bar" id="bar" style="width: 0%"></div></div>
 			</div>
 		</div>
 
