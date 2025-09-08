@@ -4,8 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<title>巡检 · 任务详情 · 可执行（可开始/进行中）</title>
-		<link rel="stylesheet" href="styles.css">
-                <style>
+		<link rel="stylesheet" href="styles.css" />
+		<style>
 			:root {
 				--primary: #2b6fff;
 				--primary-active: #1c54f0;
@@ -320,19 +320,31 @@
 			<div class="title">巡检 · 任务详情</div>
 			<span class="badge">场景：可执行（可开始/进行中）</span>
 		</div>
-		<div class="container">
-			<!-- 顶部扫码条：可执行场景默认已扫码 -->
-			<div id="scanbar" class="scanbar scanned">
-				<div>
-					<div class="state">
-						<div class="dot"></div>
-						<div id="scan-text">已扫码</div>
-					</div>
-					<div class="desc" id="scan-desc">现场到点 · 12:01 · 距离 2m</div>
+		<!-- 顶部扫码条：可执行场景默认已扫码 -->
+		<div id="scanbar" class="scanbar scanned">
+			<div>
+				<div class="state">
+					<div class="dot"></div>
+					<div id="scan-text">已扫码</div>
 				</div>
-				<button class="btn btn-small" disabled>去扫码</button>
+				<div class="desc" id="scan-desc">现场到点 · 12:01 · 距离 2m</div>
 			</div>
+			<button class="btn btn-small" disabled>去扫码</button>
+		</div>
 
+		<!-- 选择今日实例：当前 12:00–13:00 可开始（蓝），08:00–09:00 已完成（绿），18:00–19:00 未到（灰） -->
+		<div class="section">
+			<div class="sec-head">
+				<div class="sec-title">选择今日实例</div>
+				<div class="small">时窗列表</div>
+			</div>
+			<div class="row" style="flex-wrap: wrap; gap: calc(var(--spacing) * 0.5)">
+				<div class="pill green">08:00–09:00 · 已完成</div>
+				<div class="pill blue">12:00–13:00 · 可开始</div>
+				<div class="pill gray">18:00–19:00 · 未到时间</div>
+			</div>
+		</div>
+		<div class="container">
 			<!-- 设备卡 -->
 			<div class="card" style="padding: calc(var(--spacing) * 0.75)">
 				<div class="row" style="justify-content: space-between">
@@ -344,20 +356,6 @@
 				</div>
 				<div class="small"><span class="btn-text" onclick="openDevUnavail()">设备无法巡检</span></div>
 			</div>
-
-			<!-- 选择今日实例：当前 12:00–13:00 可开始（蓝），08:00–09:00 已完成（绿），18:00–19:00 未到（灰） -->
-			<div class="section">
-				<div class="sec-head">
-					<div class="sec-title">选择今日实例</div>
-					<div class="small">时窗列表</div>
-				</div>
-				<div class="row" style="flex-wrap: wrap; gap: calc(var(--spacing) * 0.5)">
-					<div class="pill green">08:00–09:00 · 已完成</div>
-					<div class="pill blue">12:00–13:00 · 可开始</div>
-					<div class="pill gray">18:00–19:00 · 未到时间</div>
-				</div>
-			</div>
-
 			<!-- 项目说明（SOP）：未勾选（可操作） -->
 			<div class="section">
 				<div class="sec-head">

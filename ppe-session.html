@@ -4,8 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<title>PPE 会话采集</title>
-		<link rel="stylesheet" href="styles.css">
-                <style>
+		<link rel="stylesheet" href="styles.css" />
+		<style>
 			:root {
 				--primary: #2b6fff;
 				--primary-active: #1c54f0;
@@ -86,7 +86,7 @@
 				border-radius: 12px;
 				box-shadow: var(--shadow);
 				padding: calc(var(--spacing) * 0.75);
-				margin: 12px 0;
+				margin-bottom: calc(var(--spacing) * 0.5);
 			}
 			.sec-head {
 				display: flex;
@@ -208,7 +208,9 @@
 				</ul>
 				<div class="capture">
 					<div>拍摄 PPE 合影</div>
-					<button id="capBtn" class="btn btn-primary" style="margin-top: calc(var(--spacing) * 0.5)">拍摄</button>
+					<button id="capBtn" class="btn btn-primary" style="margin-top: calc(var(--spacing) * 0.5)">
+						拍摄
+					</button>
 					<div id="thumb" class="thumb">尚未采集</div>
 				</div>
 			</div>

@@ -4,8 +4,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
 		<title>首页</title>
-		<link rel="stylesheet" href="styles.css">
-                <style>
+		<style>
 			:root {
 				--primary: #2b6fff;
 				--primary-active: #1c54f0;
@@ -29,9 +28,9 @@
 				padding: 0;
 				background: var(--bg);
 				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
+				font-size: 16px;
+				line-height: 1.5;
 				/* 禁用纵向滚动条但保留滚动功能 */
 				overflow-y: scroll;
 			}
@@ -53,18 +52,18 @@
 				text-decoration: none;
 			}
 			.container {
-				padding: var(--spacing) 16px 88px 16px;
+				padding: 16px 16px 88px 16px;
 			} /* bottom space for tabbar */
 			.navbar {
 				position: sticky;
 				top: 0;
 				z-index: 10;
 				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
+				padding: 12px 16px;
 				border-bottom: 1px solid var(--border);
 				display: flex;
 				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
+				gap: 12px;
 			}
 			.navbar .title {
 				font-weight: 600;
@@ -90,11 +89,11 @@
 				box-shadow: var(--shadow);
 			}
 			.card + .card {
-				margin-top: calc(var(--spacing) * 0.75);
+				margin-top: 12px;
 			}
 			.grid {
 				display: grid;
-				gap: calc(var(--spacing) * 0.75);
+				gap: 12px;
 			}
 			.grid.cols-3 {
 				grid-template-columns: repeat(3, 1fr);
@@ -107,7 +106,7 @@
 				border: 1px solid var(--border);
 				border-radius: 12px;
 				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
+				padding: 12px;
 				display: flex;
 				flex-direction: column;
 				align-items: center;
@@ -141,7 +140,7 @@
 			}
 			.kpi-bar {
 				display: flex;
-				gap: calc(var(--spacing) * 0.5);
+				gap: 8px;
 			}
 			.kpi {
 				flex: 1;
@@ -149,7 +148,7 @@
 				border: 1px solid var(--border);
 				border-radius: 12px;
 				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
+				padding: 12px;
 			}
 			.kpi .num {
 				font-weight: 700;
@@ -213,7 +212,7 @@
 			.search {
 				display: flex;
 				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
+				gap: 8px;
 			}
 			.search input {
 				border: none;
@@ -228,19 +227,19 @@
 				background: #fff;
 				z-index: 9;
 				border-bottom: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.5) 16px;
+				padding: 8px 16px;
 				display: flex;
-				gap: calc(var(--spacing) * 0.5);
+				gap: 8px;
 				align-items: center;
 				overflow: auto;
 			}
 			.chips {
 				display: flex;
-				gap: calc(var(--spacing) * 0.5);
+				gap: 8px;
 				overflow: auto;
 			}
 			.chip {
-				padding: calc(var(--spacing) * 0.5) 12px;
+				padding: 8px 12px;
 				border: 1px solid var(--border);
 				border-radius: 999px;
 				background: #fff;
@@ -253,7 +252,7 @@
 				color: var(--primary);
 			}
 			.device-card {
-				padding: calc(var(--spacing) * 0.75);
+				padding: 12px;
 			}
 			.device-card .head {
 				display: flex;
@@ -263,7 +262,7 @@
 			}
 			.device-card .title {
 				font-weight: 700;
-				font-size: var(--font-size);
+				font-size: 16px;
 			}
 			.device-card .meta {
 				font-size: 12px;
@@ -299,7 +298,7 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				padding: calc(var(--spacing) * 0.5) 0;
+				padding: 8px 0;
 				border-top: 1px dashed var(--border);
 			}
 			.task-row:first-child {
@@ -311,7 +310,7 @@
 			}
 			.card-actions {
 				display: flex;
-				gap: calc(var(--spacing) * 0.5);
+				gap: 8px;
 			}
 			.more {
 				position: relative;
@@ -325,12 +324,12 @@
 				border: 1px solid var(--border);
 				border-radius: 10px;
 				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.5);
+				padding: 8px;
 				min-width: 140px;
 			}
 			.more-menu a {
 				display: block;
-				padding: calc(var(--spacing) * 0.5) 10px;
+				padding: 8px 10px;
 				border-radius: 8px;
 			}
 			.more-menu a:hover {
@@ -350,12 +349,12 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
+				gap: 12px;
 			}
 			.scanbar .state {
 				display: flex;
 				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
+				gap: 8px;
 				font-weight: 600;
 			}
 			.scanbar .dot {
@@ -377,7 +376,7 @@
 				border: 1px solid var(--border);
 				border-radius: 12px;
 				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
+				padding: 12px;
 				margin: 12px 0;
 			}
 			.section .sec-head {
@@ -417,13 +416,13 @@
 			}
 			.radio-group {
 				display: flex;
-				gap: calc(var(--spacing) * 0.75);
+				gap: 12px;
 			}
 			.radio {
 				display: flex;
 				align-items: center;
 				gap: 6px;
-				padding: calc(var(--spacing) * 0.5) 10px;
+				padding: 8px 10px;
 				border: 1px solid var(--border);
 				border-radius: 999px;
 			}
@@ -436,12 +435,12 @@
 				min-height: 80px;
 				border: 1px solid var(--border);
 				border-radius: 10px;
-				padding: calc(var(--spacing) * 0.5);
+				padding: 8px;
 				resize: vertical;
 			}
 			.photo-uploader {
 				display: flex;
-				gap: calc(var(--spacing) * 0.5);
+				gap: 8px;
 				flex-wrap: wrap;
 			}
 			.photo {
@@ -468,9 +467,9 @@
 				bottom: 64px;
 				background: #fff;
 				border-top: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.75) 16px;
+				padding: 12px 16px;
 				display: flex;
-				gap: calc(var(--spacing) * 0.5);
+				gap: 8px;
 				z-index: 20;
 			}
 			.bottom-affix .btn {
@@ -531,7 +530,7 @@
 			/* utility */
 			.row {
 				display: flex;
-				gap: calc(var(--spacing) * 0.5);
+				gap: 8px;
 				align-items: center;
 			}
 			.space-between {
@@ -540,10 +539,10 @@
 				align-items: center;
 			}
 			.mt-8 {
-				margin-top: calc(var(--spacing) * 0.5);
+				margin-top: 8px;
 			}
 			.mt-12 {
-				margin-top: calc(var(--spacing) * 0.75);
+				margin-top: 12px;
 			}
 			.mt-16 {
 				margin-top: 16px;
