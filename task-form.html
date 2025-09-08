@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+		<title>任务表单（三页版·执行）</title>
+		<style>
+			:root {
+				--primary: #2b6fff;
+				--primary-active: #1c54f0;
+				--primary-subtle: #e8eeff;
+				--success: #22c55e;
+				--warning: #f59e0b;
+				--danger: #ef4444;
+				--text: #0f172a;
+				--muted: #64748b;
+				--border: #e2e8f0;
+				--bg: #f8fafc;
+				--card: #ffffff;
+				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+			}
+			* {
+				box-sizing: border-box;
+				-webkit-tap-highlight-color: transparent;
+			}
+			body {
+				margin: 0;
+				padding: 0;
+				background: var(--bg);
+				color: var(--text);
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
+				font-size: 16px;
+				line-height: 1.5;
+				/* 禁用纵向滚动条但保留滚动功能 */
+				overflow-y: scroll;
+			}
+			/* Firefox 隐藏滚动条 */
+			html {
+				scrollbar-width: none;
+			}
+
+			/* 隐藏滚动条 */
+			::-webkit-scrollbar {
+				width: 0;
+				background: transparent;
+			}
+
+			/* IE/Edge 隐藏滚动条 */
+			-ms-overflow-style: none;
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
+			.container {
+				padding: 16px 16px 88px 16px;
+			}
+			.navbar {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				background: #fff;
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+			.navbar .title {
+				font-weight: 600;
+				font-size: 18px;
+			}
+			.section {
+				background: #fff;
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+				padding: 12px;
+				margin: 4px 0;
+			}
+			.sec-head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 8px;
+			}
+			.sec-title {
+				font-weight: 700;
+			}
+			.tag {
+				font-size: 12px;
+				padding: 4px 8px;
+				border-radius: 999px;
+				border: 1px solid var(--border);
+			}
+			.tag.green {
+				border-color: var(--success);
+				color: var(--success);
+			}
+			.tag.red {
+				border-color: var(--danger);
+				color: var(--danger);
+			}
+			.tag.yellow {
+				border-color: var(--warning);
+				color: var(--warning);
+			}
+			.label {
+				font-size: 13px;
+				color: var(--muted);
+				margin-bottom: 6px;
+			}
+			.unit-row {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+			.input {
+				width: 100%;
+				height: 44px;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: 0 12px;
+				background: #fff;
+			}
+			.textarea {
+				width: 100%;
+				min-height: 80px;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: 8px;
+			}
+			.helper {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.helper.red {
+				color: var(--danger);
+			}
+			.btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				height: 44px;
+				padding: 0 16px;
+				border-radius: 12px;
+				border: 1px solid var(--border);
+				background: #fff;
+				font-weight: 600;
+			}
+			.btn-primary {
+				background: var(--primary);
+				border-color: var(--primary);
+				color: #fff;
+			}
+			.btn-small {
+				height: 32px;
+				padding: 0 12px;
+				border-radius: 10px;
+				font-size: 14px;
+			}
+			.btn-text {
+				background: transparent;
+				border: none;
+				padding: 0;
+				font-size: 12px;
+				color: var(--muted);
+				text-decoration: underline;
+				cursor: pointer;
+			}
+			.row {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+			}
+			.actions {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 8px;
+			}
+			.bottom-affix {
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: #fff;
+				border-top: 1px solid var(--border);
+				padding: 12px 16px;
+				display: flex;
+				gap: 8px;
+				z-index: 20;
+			}
+			.bottom-affix .btn {
+				flex: 1;
+			}
+			/* 只读到点条（无按钮） */
+			.scaninfo {
+				position: sticky;
+				top: 54px;
+				background: #fff;
+				border-bottom: 1px solid var(--border);
+				z-index: 9;
+				padding: 10px 16px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			.scaninfo .state {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-weight: 600;
+			}
+			.scaninfo .dot {
+				width: 10px;
+				height: 10px;
+				border-radius: 999px;
+				background: var(--success);
+			}
+			.small {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			/* modal */
+			.modal-backdrop {
+				position: fixed;
+				inset: 0;
+				background: rgba(15, 23, 42, 0.45);
+				display: none;
+				align-items: flex-end;
+				z-index: 99;
+			}
+			.modal {
+				background: #fff;
+				border-top-left-radius: 16px;
+				border-top-right-radius: 16px;
+				padding: 16px;
+				border: 1px solid var(--border);
+			}
+			.modal h3 {
+				margin: 0 0 8px 0;
+				font-size: 16px;
+			}
+			.modal .row {
+				display: flex;
+				gap: 8px;
+				margin: 8px 0;
+				flex-wrap: wrap;
+			}
+			.modal .chip {
+				padding: 6px 10px;
+				border-radius: 999px;
+				border: 1px solid var(--border);
+			}
+			.modal textarea {
+				width: 100%;
+				min-height: 80px;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: 8px;
+			}
+			.modal .actions {
+				display: flex;
+				gap: 8px;
+				margin-top: 12px;
+			}
+			.modal .btn {
+				flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="navbar">
+			<div class="title">巡检 · 执行（供水泵#1）</div>
+			<div style="margin-left: auto" class="small">批次 2025W33</div>
+		</div>
+
+		<!-- 只读到点信息（三页版：扫码已在详情页完成，这里仅提示，不提供按钮） -->
+		<div class="scaninfo">
+			<div class="state">
+				<div class="dot"></div>
+				<div>已到点</div>
+			</div>
+			<div class="small">09:40 · 距离 3m · DEV-001</div>
+		</div>
+
+		<div class="container">
+			<!-- 项目1：电机温度（°C） -->
+			<div class="section" id="sec-temp">
+				<div class="sec-head">
+					<div class="sec-title">电机温度（°C）</div>
+					<div class="tag" id="tag-temp">未填</div>
+				</div>
+				<div class="label">输入数值（参考 60–80）</div>
+				<div class="unit-row">
+					<input id="temp" type="number" class="input" placeholder="请输入温度，如 72" />
+					<div>°C</div>
+				</div>
+				<div id="temp-help" class="helper">正常范围 60–80</div>
+				<div class="actions">
+					<button class="btn-text" onclick="openCant('tag-temp','电机温度')">无法完成</button>
+					<button id="btn-temp" class="btn btn-small btn-primary" onclick="submitTemp()">提交本项目</button>
+				</div>
+			</div>
+
+			<!-- 项目2：运行电流（A） -->
+			<div class="section" id="sec-amp">
+				<div class="sec-head">
+					<div class="sec-title">运行电流（A）</div>
+					<div class="tag" id="tag-amp">未填</div>
+				</div>
+				<div class="label">输入数值（示例参考 10–20）</div>
+				<div class="unit-row">
+					<input id="amp" type="number" class="input" placeholder="请输入电流，如 16" />
+					<div>A</div>
+				</div>
+				<div id="amp-help" class="helper">示例参考 10–20（越界允许提交）</div>
+				<div class="actions">
+					<button class="btn-text" onclick="openCant('tag-amp','运行电流')">无法完成</button>
+					<button id="btn-amp" class="btn btn-small btn-primary" onclick="submitAmp()">提交本项目</button>
+				</div>
+			</div>
+
+			<!-- 项目3：轴承振动（mm/s） -->
+			<div class="section" id="sec-vib">
+				<div class="sec-head">
+					<div class="sec-title">轴承振动（mm/s）</div>
+					<div class="tag" id="tag-vib">未填</div>
+				</div>
+				<div class="label">输入数值（示例参考 ≤ 4.5）</div>
+				<div class="unit-row">
+					<input id="vib" type="number" class="input" placeholder="请输入振动，如 3.2" step="0.1" />
+					<div>mm/s</div>
+				</div>
+				<div id="vib-help" class="helper">示例参考 ≤ 4.5（越界允许提交）</div>
+				<div class="actions">
+					<button class="btn-text" onclick="openCant('tag-vib','轴承振动')">无法完成</button>
+					<button id="btn-vib" class="btn btn-small btn-primary" onclick="submitVib()">提交本项目</button>
+				</div>
+			</div>
+
+			<!-- 备注（可选） -->
+			<div class="section" id="sec-remark">
+				<div class="sec-head">
+					<div class="sec-title">备注</div>
+					<div class="tag" id="tag-rmk">未填</div>
+				</div>
+				<textarea id="remark" class="textarea" placeholder="可填写观察到的其他情况（选填）"></textarea>
+				<div class="actions">
+					<span class="small" style="visibility: hidden">占位</span>
+					<button class="btn btn-small btn-primary" onclick="submitRemark()">提交本项目</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="bottom-affix">
+			<button class="btn">保存草稿</button>
+			<button id="submitAll" class="btn btn-primary" disabled onclick="submitAll()">批量提交</button>
+		</div>
+
+		<!-- 无法完成：弹窗 -->
+		<div id="cant-modal" class="modal-backdrop">
+			<div class="modal" style="width: 100%">
+				<h3 id="cant-title">项目无法完成</h3>
+				<div class="row">
+					<div class="chip">无法接近测点</div>
+					<div class="chip">仪表损坏</div>
+					<div class="chip">工况不允许</div>
+					<div class="chip">其他</div>
+				</div>
+				<textarea id="cant-reason" placeholder="请补充具体原因（必填）"></textarea>
+				<div class="actions">
+					<button class="btn" onclick="closeCant()">取消</button
+					><button class="btn btn-primary" onclick="submitCant()">提交原因</button>
+				</div>
+			</div>
+		</div>
+
+		<script>
+			function markTag(id, state) {
+				const el = document.getElementById(id);
+				el.className = 'tag ' + (state === '异常' || state === '无法完成' ? 'red' : 'green');
+				el.textContent = state;
+			}
+			function sectionDone(id) {
+				const el = document.getElementById(id);
+				return el.classList.contains('green') || el.classList.contains('red');
+			}
+			function lockAll() {
+				const all = ['tag-temp', 'tag-amp', 'tag-vib', 'tag-rmk'].every(sectionDone);
+				document.getElementById('submitAll').disabled = !all;
+			}
+
+			function submitTemp() {
+				const v = parseFloat(document.getElementById('temp').value);
+				if (Number.isNaN(v)) return alert('请填写温度数值');
+				const h = document.getElementById('temp-help');
+				if (!(v >= 60 && v <= 80)) {
+					h.className = 'helper red';
+					h.textContent = '已超出范围（仍可提交，记为异常）';
+					markTag('tag-temp', '异常');
+				} else {
+					h.className = 'helper';
+					h.textContent = '正常范围 60–80';
+					markTag('tag-temp', '已提交');
+				}
+				document.getElementById('btn-temp').disabled = true;
+				lockAll();
+				alert('电机温度已提交');
+			}
+			function submitAmp() {
+				const v = parseFloat(document.getElementById('amp').value);
+				if (Number.isNaN(v)) return alert('请填写电流数值');
+				markTag('tag-amp', '已提交');
+				document.getElementById('btn-amp').disabled = true;
+				lockAll();
+				alert('运行电流已提交');
+			}
+			function submitVib() {
+				const v = parseFloat(document.getElementById('vib').value);
+				if (Number.isNaN(v)) return alert('请填写振动数值');
+				markTag('tag-vib', '已提交');
+				document.getElementById('btn-vib').disabled = true;
+				lockAll();
+				alert('轴承振动已提交');
+			}
+			function submitRemark() {
+				markTag('tag-rmk', '已提交');
+				lockAll();
+				alert('备注已提交');
+			}
+			function submitAll() {
+				alert('批量提交成功：4/4');
+			}
+			lockAll();
+
+			// 无法完成弹窗逻辑
+			let cantTargetTagId = null;
+			let cantTargetName = '';
+			function openCant(tagId, name) {
+				cantTargetTagId = tagId;
+				cantTargetName = name;
+				document.getElementById('cant-title').textContent = '项目无法完成 · ' + name;
+				document.getElementById('cant-modal').style.display = 'flex';
+			}
+			function closeCant() {
+				document.getElementById('cant-modal').style.display = 'none';
+			}
+			function submitCant() {
+				const reason = document.getElementById('cant-reason').value.trim();
+				if (!reason) {
+					alert('请填写原因');
+					return;
+				}
+				markTag(cantTargetTagId, '无法完成'); // 禁用对应提交按钮
+				const btnId = 'btn-' + cantTargetTagId.split('-')[1];
+				const btn = document.getElementById(btnId);
+				if (btn) btn.disabled = true;
+				lockAll();
+				closeCant();
+				alert('已记录无法完成：' + cantTargetName + '；原因：' + reason);
+				document.getElementById('cant-reason').value = '';
+			}
+		</script>
+	</body>
+</html>

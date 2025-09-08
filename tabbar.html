@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+		<title>tabbar</title>
+		<style>
+			:root {
+				--primary: #2b6fff;
+				--primary-active: #1c54f0;
+				--primary-subtle: #e8eeff;
+				--success: #22c55e;
+				--warning: #f59e0b;
+				--danger: #ef4444;
+				--text: #0f172a;
+				--muted: #64748b;
+				--border: #e2e8f0;
+				--bg: #f8fafc;
+				--card: #ffffff;
+				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+			}
+			* {
+				box-sizing: border-box;
+				-webkit-tap-highlight-color: transparent;
+			}
+			body {
+				margin: 0;
+				padding: 0;
+				background: var(--bg);
+				color: var(--text);
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
+				font-size: 16px;
+				line-height: 1.5;
+				/* 禁用纵向滚动条但保留滚动功能 */
+				overflow-y: scroll;
+			}
+			/* Firefox 隐藏滚动条 */
+			html {
+				scrollbar-width: none;
+			}
+
+			/* 隐藏滚动条 */
+			::-webkit-scrollbar {
+				width: 0;
+				background: transparent;
+			}
+
+			/* IE/Edge 隐藏滚动条 */
+			-ms-overflow-style: none;
+
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
+			.container {
+				padding: 16px 16px 88px 16px;
+			} /* bottom space for tabbar */
+			.navbar {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				background: #fff;
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+			.navbar .title {
+				font-weight: 600;
+				font-size: 18px;
+			}
+			.badge {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				min-width: 16px;
+				height: 16px;
+				padding: 0 4px;
+				border-radius: 999px;
+				background: var(--danger);
+				color: #fff;
+				font-size: 12px;
+				line-height: 1;
+			}
+			.card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+			}
+			.card + .card {
+				margin-top: 12px;
+			}
+			.grid {
+				display: grid;
+				gap: 12px;
+			}
+			.grid.cols-3 {
+				grid-template-columns: repeat(3, 1fr);
+			}
+			.grid.cols-2 {
+				grid-template-columns: repeat(2, 1fr);
+			}
+			.grid-item {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+				padding: 12px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				min-height: 88px;
+				position: relative;
+			}
+			.grid-item .icon {
+				width: 28px;
+				height: 28px;
+				border-radius: 10px;
+				background: var(--primary-subtle);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-bottom: 8px;
+			}
+			.grid-item .icon svg {
+				width: 18px;
+				height: 18px;
+				fill: var(--primary);
+			}
+			.grid-item .label {
+				font-size: 14px;
+				font-weight: 600;
+			}
+			.grid-item .corner {
+				position: absolute;
+				top: 6px;
+				right: 6px;
+			}
+			.kpi-bar {
+				display: flex;
+				gap: 8px;
+			}
+			.kpi {
+				flex: 1;
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+				padding: 12px;
+			}
+			.kpi .num {
+				font-weight: 700;
+				font-size: 18px;
+			}
+			.kpi .label {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				height: 44px;
+				padding: 0 16px;
+				border-radius: 12px;
+				border: 1px solid var(--border);
+				background: #fff;
+				font-weight: 600;
+			}
+			.btn:active {
+				transform: scale(0.98);
+			}
+			.btn-primary {
+				background: var(--primary);
+				border-color: var(--primary);
+				color: #fff;
+			}
+			.btn-primary:disabled {
+				background: #9db8ff;
+				border-color: #9db8ff;
+			}
+			.btn-ghost {
+				background: #fff;
+				border-color: var(--border);
+				color: var(--text);
+			}
+			.btn-danger {
+				background: var(--danger);
+				border-color: var(--danger);
+				color: #fff;
+			}
+			.btn-small {
+				height: 32px;
+				padding: 0 12px;
+				border-radius: 10px;
+				font-size: 14px;
+			}
+			.btn-block {
+				width: 100%;
+			}
+			.input,
+			.select,
+			.search {
+				height: 44px;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: 0 12px;
+				background: #fff;
+			}
+			.search {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+			.search input {
+				border: none;
+				outline: none;
+				flex: 1;
+				height: 42px;
+				font-size: 14px;
+			}
+			.filter-bar {
+				position: sticky;
+				top: 54px;
+				background: #fff;
+				z-index: 9;
+				border-bottom: 1px solid var(--border);
+				padding: 8px 16px;
+				display: flex;
+				gap: 8px;
+				align-items: center;
+				overflow: auto;
+			}
+			.chips {
+				display: flex;
+				gap: 8px;
+				overflow: auto;
+			}
+			.chip {
+				padding: 8px 12px;
+				border: 1px solid var(--border);
+				border-radius: 999px;
+				background: #fff;
+				font-size: 14px;
+				white-space: nowrap;
+			}
+			.chip.active {
+				background: var(--primary-subtle);
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.device-card {
+				padding: 12px;
+			}
+			.device-card .head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 8px;
+			}
+			.device-card .title {
+				font-weight: 700;
+				font-size: 16px;
+			}
+			.device-card .meta {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.pills {
+				display: flex;
+				gap: 6px;
+				flex-wrap: wrap;
+			}
+			.pill {
+				font-size: 12px;
+				border-radius: 999px;
+				padding: 4px 8px;
+				border: 1px solid var(--border);
+				background: #fff;
+			}
+			.pill.gray {
+				color: #475569;
+			}
+			.pill.blue {
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.pill.red {
+				border-color: var(--danger);
+				color: var(--danger);
+			}
+			.device-card .body {
+				margin: 8px 0 12px 0;
+			}
+			.task-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 8px 0;
+				border-top: 1px dashed var(--border);
+			}
+			.task-row:first-child {
+				border-top: none;
+			}
+			.countdown {
+				font-size: 12px;
+				color: var(--danger);
+			}
+			.card-actions {
+				display: flex;
+				gap: 8px;
+			}
+			.more {
+				position: relative;
+			}
+			.more-menu {
+				display: none;
+				position: absolute;
+				right: 0;
+				top: 46px;
+				background: #fff;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				box-shadow: var(--shadow);
+				padding: 8px;
+				min-width: 140px;
+			}
+			.more-menu a {
+				display: block;
+				padding: 8px 10px;
+				border-radius: 8px;
+			}
+			.more-menu a:hover {
+				background: var(--bg);
+			}
+			.more.open .more-menu {
+				display: block;
+			}
+			/* ScanBar */
+			.scanbar {
+				position: sticky;
+				top: 54px;
+				background: #fff;
+				border-bottom: 1px solid var(--border);
+				z-index: 9;
+				padding: 10px 16px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 12px;
+			}
+			.scanbar .state {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-weight: 600;
+			}
+			.scanbar .dot {
+				width: 10px;
+				height: 10px;
+				border-radius: 999px;
+				background: var(--muted);
+			}
+			.scanbar.scanned .dot {
+				background: var(--success);
+			}
+			.scanbar .desc {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			/* Sections (Project) */
+			.section {
+				background: #fff;
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+				padding: 12px;
+				margin: 12px 0;
+			}
+			.section .sec-head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 8px;
+			}
+			.section .sec-title {
+				font-weight: 700;
+			}
+			.tag {
+				font-size: 12px;
+				padding: 4px 8px;
+				border-radius: 999px;
+				border: 1px solid var(--border);
+			}
+			.tag.green {
+				border-color: var(--success);
+				color: var(--success);
+			}
+			.tag.red {
+				border-color: var(--danger);
+				color: var(--danger);
+			}
+			.tag.yellow {
+				border-color: var(--warning);
+				color: var(--warning);
+			}
+			.form-row {
+				margin: 8px 0;
+			}
+			.label {
+				font-size: 13px;
+				color: var(--muted);
+				margin-bottom: 6px;
+			}
+			.radio-group {
+				display: flex;
+				gap: 12px;
+			}
+			.radio {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				padding: 8px 10px;
+				border: 1px solid var(--border);
+				border-radius: 999px;
+			}
+			.radio.active {
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.textarea {
+				width: 100%;
+				min-height: 80px;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: 8px;
+				resize: vertical;
+			}
+			.photo-uploader {
+				display: flex;
+				gap: 8px;
+				flex-wrap: wrap;
+			}
+			.photo {
+				width: 72px;
+				height: 72px;
+				border-radius: 8px;
+				border: 1px dashed var(--border);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: var(--muted);
+				font-size: 12px;
+				cursor: pointer;
+			}
+			.required {
+				color: var(--danger);
+				margin-left: 4px;
+			}
+			/* Bottom Affix */
+			.bottom-affix {
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 64px;
+				background: #fff;
+				border-top: 1px solid var(--border);
+				padding: 12px 16px;
+				display: flex;
+				gap: 8px;
+				z-index: 20;
+			}
+			.bottom-affix .btn {
+				flex: 1;
+			}
+			/* TabBar */
+			.tabbar {
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: #fff;
+				border-top: 1px solid var(--border);
+				height: 64px;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+				z-index: 30;
+			}
+			.tabbar .item {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 4px;
+				color: #475569;
+				width: 50%;
+				height: 64px;
+			}
+			.tabbar .item.active {
+				color: var(--primary);
+			}
+			.tabbar .item .ico {
+				width: 22px;
+				height: 22px;
+				border-radius: 8px;
+				background: var(--primary-subtle);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.tabbar .item.active .ico {
+				background: rgba(43, 111, 255, 0.15);
+			}
+			.skeleton {
+				background: linear-gradient(90deg, #eee, #f5f5f5, #eee);
+				background-size: 200% 100%;
+				animation: s 1.4s infinite;
+			}
+			@keyframes s {
+				0% {
+					background-position: 200% 0;
+				}
+				100% {
+					background-position: -200% 0;
+				}
+			}
+			/* utility */
+			.row {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+			}
+			.space-between {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			.mt-8 {
+				margin-top: 8px;
+			}
+			.mt-12 {
+				margin-top: 12px;
+			}
+			.mt-16 {
+				margin-top: 16px;
+			}
+			.mt-20 {
+				margin-top: 20px;
+			}
+			.mr-8 {
+				margin-right: 8px;
+			}
+			.small {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.center {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.hide {
+				display: none !important;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="navbar"><div class="title">风格基线</div></div>
+		<div class="container">
+			<div class="card" style="padding: 16px; line-height: 1.6; font-size: 14px; color: #0f172a">
+				<h3 style="margin-top: 0; font-size: 16px">主题</h3>
+				<p>蓝青系，默认浅色；可加夜间暗色</p>
+
+				<h3 style="font-size: 16px">设计基线 (Design Tokens)</h3>
+				<ul style="padding-left: 20px">
+					<li><b>Primary 主色：</b> <code>#2B6FFF</code>（蓝）</li>
+					<li><b>Primary-Active：</b> <code>#1C54F0</code>； <b>Primary-Subtle：</b> <code>#E8EEFF</code></li>
+					<li>
+						<b>Success：</b> <code>#22C55E</code>； <b>Warning：</b> <code>#F59E0B</code>； <b>Danger：</b>
+						<code>#EF4444</code>； <b>Info：</b> <code>#06B6D4</code>
+					</li>
+					<li>
+						<b>中性色：</b> <code>#0F172A</code> / <code>#334155</code> / <code>#64748B</code> /
+						<code>#94A3B8</code> / <code>#E2E8F0</code> / <code>#F8FAFC</code>
+					</li>
+				</ul>
+
+				<h3 style="font-size: 16px">字体与字号（移动端 H5）</h3>
+				<ul style="padding-left: 20px">
+					<li>
+						字体：<code
+							>-apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", Roboto, Arial</code
+						>
+					</li>
+					<li>字号：标题 18–20，正文 15–16（最小不低于 14），弱文案 12–13</li>
+					<li>行高：标题 1.3，正文 1.5</li>
+				</ul>
+
+				<h3 style="font-size: 16px">圆角与阴影</h3>
+				<ul style="padding-left: 20px">
+					<li>卡片圆角 12px；按钮圆角 12px；输入框圆角 10px</li>
+					<li>卡片阴影：<code>0 6px 16px rgba(16,24,40,0.06)</code></li>
+					<li>悬浮大按钮阴影：<code>0 8px 24px rgba(16,24,40,0.12)</code></li>
+				</ul>
+
+				<h3 style="font-size: 16px">间距尺度（8pt 系）</h3>
+				<p>XS 4 / S 8 / M 12 / L 16 / XL 20 / 2XL 24 / 3XL 32</p>
+
+				<h3 style="font-size: 16px">触控命中区</h3>
+				<ul style="padding-left: 20px">
+					<li>主要操作 ≥44×44px</li>
+					<li>列表行高 ≥52px</li>
+					<li>卡片左右安全边距 ≥16px</li>
+				</ul>
+
+				<h3 style="font-size: 16px">状态色 / 标签</h3>
+				<ul style="padding-left: 20px">
+					<li>待领：<code>#64748B</code>（灰）</li>
+					<li>进行中：Primary</li>
+					<li>已提交：Success</li>
+					<li>异常：Danger</li>
+					<li>草稿：<code>#F59E0B</code>（黄）</li>
+				</ul>
+
+				<h3 style="font-size: 16px">图标</h3>
+				<ul style="padding-left: 20px">
+					<li>图标库：Iconify（Tabler/IconPark 线性图标），线宽统一</li>
+					<li>尺寸：18–22px</li>
+					<li>宫格图标：实心简化版，统一圆角背景 <code>Primary-Subtle</code></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="tabbar">
+			<a class="item active" href="#"
+				><div class="ico"></div>
+				<div>首页</div></a
+			>
+			<a class="item" href="#"
+				><div class="ico"></div>
+				<div>我的</div></a
+			>
+		</div>
+	</body>
+</html>

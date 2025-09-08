@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+		<title>All Prototypes</title>
+		<style>
+			:root {
+				--border: #e2e8f0;
+				--bg: #f8fafc;
+				--text: #0f172a;
+			}
+			* {
+				box-sizing: border-box;
+			}
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
+				background: var(--bg);
+				color: var(--text);
+			}
+			.header {
+				position: sticky;
+				top: 0;
+				background: #fff;
+				border-bottom: 1px solid var(--border);
+				padding: 12px 16px;
+				font-weight: 700;
+			}
+			.grid {
+				display: grid;
+				grid-template-columns: repeat(4, minmax(320px, 1fr));
+				gap: 48px;
+				padding: 24px;
+			}
+			.tile {
+				background: #fff;
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				overflow: hidden;
+				box-shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+			}
+			.tile-head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 10px 12px;
+				border-bottom: 1px solid var(--border);
+			}
+			.tile-head .title {
+				font-weight: 700;
+				font-size: 14px;
+			}
+			.tile-head a {
+				font-size: 12px;
+				text-decoration: none;
+				color: #2b6fff;
+			}
+			.tile-body iframe {
+				width: 100%;
+				height: 640px;
+				border: 0;
+				display: block;
+				background: #fff;
+			}
+			@media (max-width: 1100px) {
+				.grid {
+					grid-template-columns: repeat(2, minmax(320px, 1fr));
+				}
+			}
+			@media (max-width: 740px) {
+				.grid {
+					grid-template-columns: repeat(1, minmax(320px, 1fr));
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header">All Prototypes (4 per row)</div>
+		<div class="grid">
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">tabbar</div>
+					<div><a href="tabbar.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="tabbar.html" title="tabbar"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">login</div>
+					<div><a href="login.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="login.html" title="login"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">home</div>
+					<div><a href="home.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="home.html" title="home"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">mine</div>
+					<div><a href="mine.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="mine.html" title="mine"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">task-list-aggregate</div>
+					<div><a href="task-list-aggregate.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="task-list-aggregate.html" title="task-list-aggregate"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">task-list-flat</div>
+					<div><a href="task-list-flat.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="task-list-flat.html" title="task-list-flat"></iframe>
+				</div>
+			</div>
+
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">ppe-session</div>
+					<div><a href="ppe-session.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="ppe-session.html" title="scan"></iframe>
+				</div>
+			</div>
+
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">scan</div>
+					<div><a href="scan.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="scan.html" title="scan"></iframe>
+				</div>
+			</div>
+
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">task-detail</div>
+					<div>
+						<a
+							href="javascript:void(0);"
+							onclick="document.querySelector('.tile-body-specific iframe').src='task-detail_can-start.html';"
+							>可执行</a
+						>
+					</div>
+					<div>
+						<a
+							href="javascript:void(0);"
+							onclick="document.querySelector('.tile-body-specific iframe').src='task-detail_done-and-notyet.html';"
+							>部分完成</a
+						>
+					</div>
+					<div>
+						<a
+							href="javascript:void(0);"
+							onclick="document.querySelector('.tile-body-specific iframe').src='task-detail_mixed.html';"
+							>逾期</a
+						>
+					</div>
+					<div>
+						<a
+							href="javascript:void(0);"
+							onclick="document.querySelector('.tile-body-specific iframe').src='task-detail_all-notyet.html';"
+							>未开始</a
+						>
+					</div>
+					<div>
+						<a
+							href="javascript:void(0);"
+							onclick="document.querySelector('.tile-body-specific iframe').src='task-detail_all-done.html';"
+							>已完成</a
+						>
+					</div>
+					<div><a href="task-detail_can-start.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body tile-body-specific">
+					<iframe src="task-detail_can-start.html" title="task-detail"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">task-form</div>
+					<div><a href="task-form.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="task-form.html" title="task-form"></iframe>
+				</div>
+			</div>
+
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">execute-pointcheck</div>
+					<div><a href="execute-pointcheck.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="execute-pointcheck.html" title="execute-pointcheck"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">repair-new</div>
+					<div><a href="repair-new.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="repair-new.html" title="repair-new"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">repair-list</div>
+					<div><a href="repair-list.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="repair-list.html" title="repair-list"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">repair-detail</div>
+					<div><a href="repair-detail.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="repair-detail.html" title="repair-detail"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">device-archive</div>
+					<div><a href="device-archive.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="device-archive.html" title="device-archive"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">record-detail</div>
+					<div><a href="record-detail.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="record-detail.html" title="record-detail"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">drafts</div>
+					<div><a href="drafts.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="drafts.html" title="drafts"></iframe>
+				</div>
+			</div>
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">message-center</div>
+					<div><a href="message-center.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="message-center.html" title="message-center"></iframe>
+				</div>
+			</div>
+
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">task-list-aggregate (阶段二)</div>
+					<div>
+						<a href="task-list-aggregate_with-sessionbar_step2.html" target="_blank" rel="noopener">Open</a>
+					</div>
+				</div>
+				<div class="tile-body">
+					<iframe
+						src="task-list-aggregate_with-sessionbar_step2.html"
+						title="task-list-aggregate_with-sessionbar_step2"
+					></iframe>
+				</div>
+			</div>
+
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">ppe-session_step2 (阶段二)</div>
+					<div><a href="ppe-session_step2.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="ppe-session_step2.html" title="ppe-session_step2"></iframe>
+				</div>
+			</div>
+
+			<div class="tile">
+				<div class="tile-head">
+					<div class="title">plan-view_step2 (阶段二)</div>
+					<div><a href="plan-view_step2.html" target="_blank" rel="noopener">Open</a></div>
+				</div>
+				<div class="tile-body">
+					<iframe src="plan-view_step2.html" title="plan-view_step2"></iframe>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

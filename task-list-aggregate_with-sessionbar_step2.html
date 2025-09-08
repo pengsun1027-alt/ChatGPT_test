@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>巡检 · 任务列表（聚合）· 含会话条/计划入口</title>
+		<style>
+			:root {
+				--primary: #2b6fff;
+				--primary-active: #1c54f0;
+				--primary-subtle: #e8eeff;
+				--success: #22c55e;
+				--warning: #f59e0b;
+				--danger: #ef4444;
+				--text: #0f172a;
+				--muted: #64748b;
+				--border: #e2e8f0;
+				--bg: #f8fafc;
+				--card: #ffffff;
+				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+			}
+			* {
+				box-sizing: border-box;
+				-webkit-tap-highlight-color: transparent;
+			}
+			body {
+				margin: 0;
+				padding: 0;
+				background: var(--bg);
+				color: var(--text);
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
+				font-size: 16px;
+				line-height: 1.5;
+				/* 禁用纵向滚动条但保留滚动功能 */
+				overflow-y: scroll;
+			}
+			/* Firefox 隐藏滚动条 */
+			html {
+				scrollbar-width: none;
+			}
+
+			/* 隐藏滚动条 */
+			::-webkit-scrollbar {
+				width: 0;
+				background: transparent;
+			}
+
+			/* IE/Edge 隐藏滚动条 */
+			-ms-overflow-style: none;
+			.container {
+				padding: 12px 16px 96px 16px;
+			}
+			.navbar {
+				position: sticky;
+				top: 0;
+				z-index: 20;
+				background: #fff;
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+			.navbar .title {
+				font-weight: 600;
+				font-size: 18px;
+			}
+			.badge {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				height: 20px;
+				padding: 0 8px;
+				border-radius: 999px;
+				background: #eef2ff;
+				color: #3730a3;
+				font-size: 12px;
+			}
+			/* 会话条 */
+			.sessionbar {
+				position: sticky;
+				top: 52px;
+				z-index: 19;
+				background: #fff;
+				border-bottom: 1px solid var(--border);
+				box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);
+			}
+			.sessionbar .wrap {
+				padding: 10px 16px;
+				display: grid;
+				grid-template-columns: 1fr auto;
+				gap: 8px;
+				align-items: center;
+			}
+			.session-info {
+				display: flex;
+				flex-direction: column;
+				gap: 6px;
+			}
+			.session-line {
+				display: flex;
+				gap: 8px;
+				flex-wrap: wrap;
+				align-items: center;
+			}
+			.session-line .plan {
+				font-weight: 700;
+			}
+			.session-line .date {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.window-chips {
+				display: flex;
+				gap: 8px;
+				flex-wrap: wrap;
+			}
+			.chip {
+				padding: 6px 10px;
+				border: 1px solid var(--border);
+				border-radius: 999px;
+				background: #fff;
+				font-size: 12px;
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+			}
+			.chip .dot {
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background: #94a3b8;
+			}
+			.chip.blue {
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.chip.blue .dot {
+				background: var(--primary);
+			}
+			.chip.red {
+				border-color: var(--danger);
+				color: var(--danger);
+			}
+			.chip.red .dot {
+				background: var(--danger);
+			}
+			.chip.gray {
+				color: #475569;
+			}
+			.session-actions {
+				display: flex;
+				gap: 8px;
+			}
+			.btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				height: 36px;
+				padding: 0 12px;
+				border-radius: 10px;
+				border: 1px solid var(--border);
+				background: #fff;
+				font-weight: 600;
+			}
+			.btn-primary {
+				background: var(--primary);
+				border-color: var(--primary);
+				color: #fff;
+			}
+			.btn-ghost {
+				background: #fff;
+				border-color: var(--border);
+				color: var(--text);
+			}
+			.btn-small {
+				height: 28px;
+				padding: 0 10px;
+				border-radius: 999px;
+				font-size: 12px;
+			}
+			.ppe-status {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				font-size: 12px;
+			}
+			.ppe-status .dot {
+				width: 8px;
+				height: 8px;
+				border-radius: 999px;
+				background: #cbd5e1;
+			}
+			.ppe-status.done .dot {
+				background: var(--success);
+			}
+			.ppe-status.warn .dot {
+				background: var(--warning);
+			}
+			.ppe-status.err .dot {
+				background: var(--danger);
+			}
+			/* 列表 */
+			.card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+				padding: 12px;
+			}
+			.card + .card {
+				margin-top: 12px;
+			}
+			.card .head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 6px;
+			}
+			.card .title {
+				font-weight: 700;
+			}
+			.small {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.pill {
+				font-size: 12px;
+				border-radius: 999px;
+				padding: 4px 8px;
+				border: 1px solid var(--border);
+				background: #fff;
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+			}
+			.pill .dot {
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background: #94a3b8;
+			}
+			.pill.blue {
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.pill.red {
+				border-color: var(--danger);
+				color: var(--danger);
+			}
+			.pill.green {
+				border-color: #22c55e;
+				color: #22c55e;
+			}
+			.task-mini {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 8px 0;
+				border-top: 1px dashed var(--border);
+			}
+			.task-mini:first-child {
+				border-top: none;
+			}
+			.actions {
+				display: flex;
+				gap: 8px;
+				margin-top: 8px;
+			}
+			.more-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-top: 8px;
+			}
+			/* 更多（左下角菜单） */
+			.more {
+				position: relative;
+			}
+			.more-menu {
+				position: absolute;
+				left: 0;
+				bottom: 38px;
+				background: #fff;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				box-shadow: var(--shadow);
+				display: none;
+				min-width: 140px;
+				overflow: hidden;
+			}
+			.more-menu a {
+				display: block;
+				padding: 10px 12px;
+				font-size: 14px;
+				border-top: 1px solid var(--border);
+			}
+			.more-menu a:first-child {
+				border-top: none;
+			}
+			.more.open .more-menu {
+				display: block;
+			}
+			/* 计划抽屉 */
+			.drawer {
+				position: fixed;
+				inset: 0;
+				background: rgba(15, 23, 42, 0.45);
+				display: none;
+				align-items: flex-end;
+				z-index: 99;
+			}
+			.drawer .panel {
+				background: #fff;
+				border-top-left-radius: 16px;
+				border-top-right-radius: 16px;
+				width: 100%;
+				max-height: 85vh;
+				overflow: auto;
+				border: 1px solid var(--border);
+			}
+			.drawer .head {
+				position: sticky;
+				top: 0;
+				background: #fff;
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			.drawer .content {
+				padding: 12px 16px;
+			}
+			.progress {
+				height: 8px;
+				background: #f1f5f9;
+				border-radius: 999px;
+				overflow: hidden;
+			}
+			.progress .bar {
+				height: 100%;
+				background: var(--primary);
+				width: 40%;
+			}
+			.order {
+				width: 22px;
+				height: 22px;
+				border-radius: 999px;
+				background: var(--primary-subtle);
+				color: var(--primary);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 12px;
+				font-weight: 700;
+			}
+			.dev-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 10px 0;
+				border-top: 1px dashed var(--border);
+			}
+			.dev-row:first-child {
+				border-top: none;
+			}
+			/* 计划切换器 */
+			.modal {
+				position: fixed;
+				inset: 0;
+				background: rgba(15, 23, 42, 0.45);
+				display: none;
+				align-items: flex-end;
+				z-index: 100;
+			}
+			.modal .sheet {
+				background: #fff;
+				border-top-left-radius: 16px;
+				border-top-right-radius: 16px;
+				width: 100%;
+				border: 1px solid var(--border);
+			}
+			.modal .sheet .head {
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--border);
+				font-weight: 700;
+			}
+			.modal .sheet .item {
+				padding: 12px 16px;
+				border-top: 1px solid var(--border);
+			}
+			.show {
+				display: flex;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="navbar">
+			<div class="title">巡检 · 任务列表（聚合）</div>
+			<span class="badge">演示：会话条/计划入口</span>
+		</div>
+
+		<!-- 顶部会话条（计划 + 时窗 + PPE + 查看/切换计划入口） -->
+		<div class="sessionbar">
+			<div class="wrap">
+				<div class="session-info">
+					<div class="session-line">
+						<span class="plan">计划：机组A日巡 · W33-1</span><span class="date">2025-08-22（今日）</span
+						><span class="ppe-status err" id="ppeState"><span class="dot"></span> 本时窗 PPE：未完成</span
+						><a class="btn btn-small btn-primary" href="ppe-session_step2.html" id="ppeCTA">去采集</a>
+					</div>
+					<div class="window-chips">
+						<span class="chip red"><span class="dot"></span> 08:00–09:00 · 逾期</span>
+						<span class="chip blue"><span class="dot"></span> 12:00–13:00 · 可开始</span>
+						<span class="chip gray"><span class="dot"></span> 18:00–19:00 · 未到</span>
+					</div>
+				</div>
+				<div class="session-actions">
+					<a class="btn btn-ghost btn-small" href="plan-view_step2.html">查看计划</a>
+					<button class="btn btn-ghost btn-small" onclick="openSwitcher()">切换计划</button>
+				</div>
+			</div>
+		</div>
+
+		<div class="container">
+			<!-- 设备聚合卡 示例 -->
+			<div class="card">
+				<div class="head">
+					<div>
+						<div class="title">供水泵#1 <span class="small">（DEV-001）</span></div>
+						<div class="small">一号厂 · 南区</div>
+					</div>
+					<div class="pill"><span class="dot"></span> 待办2｜进行中1｜逾期1</div>
+				</div>
+				<div class="small" style="margin-bottom: 6px">
+					项目摘要：电机温度（未到）· 运行电流（可开始）· 振动（逾期）
+				</div>
+
+				<div class="task-mini">
+					<div>电机温度</div>
+					<div style="display: flex; gap: 8px; align-items: center">
+						<span class="pill gray"><span class="dot"></span> 未到</span>
+						<a class="btn btn-small" href="#" onclick="return false;">查看</a>
+					</div>
+				</div>
+				<div class="task-mini">
+					<div>运行电流</div>
+					<div style="display: flex; gap: 8px; align-items: center">
+						<span class="pill blue"><span class="dot"></span> 可开始</span>
+						<a class="btn btn-small btn-primary" href="task-detail_mixed.html">进入</a>
+					</div>
+				</div>
+				<div class="task-mini">
+					<div>振动</div>
+					<div style="display: flex; gap: 8px; align-items: center">
+						<span class="pill red"><span class="dot"></span> 逾期</span>
+						<a class="btn btn-small btn-primary" href="task-detail_mixed.html">进入</a>
+					</div>
+				</div>
+
+				<div class="more-row">
+					<div class="more" id="more1">
+						<button class="btn btn-small" onclick="toggleMore('more1')">更多</button>
+						<div class="more-menu">
+							<a href="#" onclick="toScan();return false;">扫码到点</a>
+							<a href="#" onclick="alert('异常报修：带入设备上下文');return false;">异常报修</a>
+							<a href="#" onclick="alert('设备无法巡检：弹出原因收集');return false;">设备无法巡检</a>
+						</div>
+					</div>
+					<div class="actions">
+						<a class="btn btn-small" href="task-detail_mixed.html">任务详情</a>
+						<button class="btn btn-small btn-primary">本设备全部领取</button>
+					</div>
+				</div>
+			</div>
+
+			<!-- 更多设备卡可按需复制 -->
+		</div>
+
+		<!-- 计划抽屉（查看计划） -->
+		<div class="drawer" id="drawer">
+			<div class="panel">
+				<div class="head">
+					<div>
+						<div style="font-weight: 700">机组A日巡 · W33-1</div>
+						<div class="small">时窗：12:00–13:00（当前）｜执行顺序：按路线</div>
+					</div>
+					<button class="btn btn-small" onclick="closeDrawer()">关闭</button>
+				</div>
+				<div class="content">
+					<div style="margin-bottom: 8px">总体进度</div>
+					<div class="progress" aria-label="progress"><div class="bar" style="width: 45%"></div></div>
+					<div class="small" style="margin: 8px 0 12px 0">完成 5 / 11 · 逾期 1</div>
+
+					<div class="small" style="opacity: 0.8">设备清单（按顺序）</div>
+					<div class="dev-row">
+						<div class="order">1</div>
+						<div>供水泵#1</div>
+						<div class="small">可开始</div>
+					</div>
+					<div class="dev-row">
+						<div class="order">2</div>
+						<div>供水泵#2</div>
+						<div class="small">未到</div>
+					</div>
+					<div class="dev-row">
+						<div class="order">3</div>
+						<div>冷却塔#1</div>
+						<div class="small" style="color: #ef4444">逾期</div>
+					</div>
+					<div class="dev-row">
+						<div class="order">4</div>
+						<div>配电柜A</div>
+						<div class="small">进行中</div>
+					</div>
+
+					<div style="margin-top: 12px" class="small">
+						计划级 SOP/SSP 概要：1) 作业区需两人同行；2) 需穿戴绝缘手套/护目镜；3) 严禁越站操作。
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 计划切换器（底部弹层） -->
+		<div class="modal" id="switcher">
+			<div class="sheet">
+				<div class="head">切换计划</div>
+				<div class="item" onclick="choosePlan('机组A日巡 · W33-1')">机组A日巡 · W33-1（当前）</div>
+				<div class="item" onclick="choosePlan('机组B夜巡 · W33-1')">机组B夜巡 · W33-1（未开始）</div>
+				<div class="item" onclick="choosePlan('原水泵站日巡')">原水泵站日巡（明日）</div>
+			</div>
+		</div>
+
+		<script>
+			function toggleMore(id) {
+				const el = document.getElementById(id);
+				el.classList.toggle('open');
+			}
+			function toScan() {
+				alert('PPE 未完成 → 先去 PPE 采集');
+				window.location.href = 'ppe-session.html';
+			}
+			function openDrawer() {
+				document.getElementById('drawer').classList.add('show');
+			}
+			function closeDrawer() {
+				document.getElementById('drawer').classList.remove('show');
+			}
+			function openSwitcher() {
+				document.getElementById('switcher').classList.add('show');
+			}
+			function choosePlan(name) {
+				alert('已切换到：' + name + '（演示）');
+				document.getElementById('switcher').classList.remove('show');
+			}
+		</script>
+	</body>
+</html>

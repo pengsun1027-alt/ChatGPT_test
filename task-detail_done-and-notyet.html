@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+		<title>巡检 · 任务详情 · 部分完成 + 其余未到</title>
+		<style>
+			:root {
+				--primary: #2b6fff;
+				--primary-active: #1c54f0;
+				--primary-subtle: #e8eeff;
+				--success: #22c55e;
+				--warning: #f59e0b;
+				--danger: #ef4444;
+				--text: #0f172a;
+				--muted: #64748b;
+				--border: #e2e8f0;
+				--bg: #f8fafc;
+				--card: #ffffff;
+				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+			}
+			* {
+				box-sizing: border-box;
+				-webkit-tap-highlight-color: transparent;
+			}
+			body {
+				margin: 0;
+				padding: 0;
+				background: var(--bg);
+				color: var(--text);
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
+				font-size: 16px;
+				line-height: 1.5;
+				/* 禁用纵向滚动条但保留滚动功能 */
+				overflow-y: scroll;
+			}
+			/* Firefox 隐藏滚动条 */
+			html {
+				scrollbar-width: none;
+			}
+
+			/* 隐藏滚动条 */
+			::-webkit-scrollbar {
+				width: 0;
+				background: transparent;
+			}
+
+			/* IE/Edge 隐藏滚动条 */
+			-ms-overflow-style: none;
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
+			.container {
+				padding: 16px 16px 120px 16px;
+			}
+			.navbar {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				background: #fff;
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+			.navbar .title {
+				font-weight: 600;
+				font-size: 18px;
+			}
+			.badge {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				min-width: 16px;
+				height: 16px;
+				padding: 0 4px;
+				border-radius: 999px;
+				background: #eef2ff;
+				color: #3730a3;
+				font-size: 12px;
+				line-height: 1;
+			}
+			.card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+			}
+			.card + .card {
+				margin-top: 12px;
+			}
+			.btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				height: 44px;
+				padding: 0 16px;
+				border-radius: 12px;
+				border: 1px solid var(--border);
+				background: #fff;
+				font-weight: 600;
+			}
+			.btn:active {
+				transform: scale(0.98);
+			}
+			.btn-primary {
+				background: var(--primary);
+				border-color: var(--primary);
+				color: #fff;
+			}
+			.btn-primary:disabled {
+				background: #9db8ff;
+				border-color: #9db8ff;
+				color: #fff;
+			}
+			.btn:disabled {
+				background: #f3f4f6;
+				border-color: var(--border);
+				color: #94a3b8;
+			}
+			.btn-ghost {
+				background: #fff;
+				border-color: var(--border);
+				color: var(--text);
+			}
+			.btn-danger {
+				background: var(--danger);
+				border-color: var(--danger);
+				color: #fff;
+			}
+			.btn-small {
+				height: 32px;
+				padding: 0 12px;
+				border-radius: 10px;
+				font-size: 14px;
+			}
+			.small {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.row {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+			}
+			.pills {
+				display: flex;
+				gap: 6px;
+				flex-wrap: wrap;
+			}
+			.pill {
+				font-size: 12px;
+				border-radius: 999px;
+				padding: 4px 8px;
+				border: 1px solid var(--border);
+				background: #fff;
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+			}
+			.pill.gray {
+				color: #475569;
+			}
+			.pill.blue {
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.pill.red {
+				border-color: var(--danger);
+				color: var(--danger);
+			}
+			.pill.green {
+				border-color: #22c55e;
+				color: #22c55e;
+			}
+			.device-card {
+				padding: 12px;
+			}
+			.device-card .head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 8px;
+			}
+			.device-card .title {
+				font-weight: 700;
+				font-size: 16px;
+			}
+			.device-card .meta {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.task-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 8px 0;
+				border-top: 1px dashed var(--border);
+			}
+			.task-row:first-child {
+				border-top: none;
+			}
+
+			/* 文本按钮（项目名右侧“无法填写”） */
+			.btn-text {
+				background: transparent;
+				border: none;
+				padding: 0;
+				font-size: 12px;
+				color: var(--muted);
+				text-decoration: underline;
+				cursor: not-allowed;
+				opacity: 0.6;
+			}
+			.btn-text:disabled {
+				opacity: 0.6;
+			}
+
+			/* 扫码条：未扫码（按钮可用） */
+			.scanbar {
+				position: sticky;
+				top: 54px;
+				background: #fff;
+				border-bottom: 1px solid var(--border);
+				z-index: 9;
+				padding: 10px 16px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 12px;
+			}
+			.scanbar .state {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-weight: 600;
+			}
+			.scanbar .dot {
+				width: 10px;
+				height: 10px;
+				border-radius: 999px;
+				background: var(--muted);
+			}
+			.scanbar .desc {
+				font-size: 12px;
+				color: var(--muted);
+			}
+
+			/* Section */
+			.section {
+				background: #fff;
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+				padding: 12px;
+				margin: 4px 0;
+			}
+			.section .sec-head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 8px;
+			}
+			.section .sec-title {
+				font-weight: 700;
+			}
+
+			/* 底部固定操作条 */
+			.bottom-affix {
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: #fff;
+				border-top: 1px solid var(--border);
+				padding: 12px 16px;
+				display: flex;
+				gap: 8px;
+				z-index: 20;
+			}
+			.bottom-affix .btn {
+				flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="navbar">
+			<div class="title">巡检 · 任务详情</div>
+			<span class="badge">场景：部分完成 + 其余未到</span>
+		</div>
+
+		<div class="container">
+			<!-- 顶部扫码条：未扫码，去扫码按钮可用 -->
+			<div id="scanbar" class="scanbar">
+				<div>
+					<div class="state">
+						<div class="dot"></div>
+						<div id="scan-text">未扫码</div>
+					</div>
+					<div class="desc" id="scan-desc">请先到点扫码，完成位置与时间校验</div>
+				</div>
+				<a class="btn btn-small btn-primary" href="#">去扫码</a>
+			</div>
+
+			<!-- 设备卡 -->
+			<div class="card device-card">
+				<div class="head">
+					<div>
+						<div class="title">
+							<span id="dev-name">供水泵#1</span> <span class="small" id="dev-id">（DEV-001）</span>
+						</div>
+						<div class="meta" id="dev-meta">一号厂 · 南区</div>
+					</div>
+					<div class="pill gray" id="batch">批次 2025W33</div>
+				</div>
+				<div class="body small" id="last-rec">最近一次记录：08:55 正常（3 照片）</div>
+			</div>
+
+			<!-- 选择今日实例（08:00–09:00 已完成；12:00–13:00 未到（当前）；18:00–19:00 未到） -->
+			<div class="section">
+				<div class="sec-head">
+					<div class="sec-title">选择今日实例</div>
+					<div class="small">时窗列表</div>
+				</div>
+				<div class="row" style="flex-wrap: wrap; gap: 8px">
+					<div class="pill green">08:00–09:00 · 已完成</div>
+					<div class="pill blue">12:00–13:00 · 未到时间</div>
+					<div class="pill gray">18:00–19:00 · 未到时间</div>
+				</div>
+			</div>
+
+			<!-- 项目说明（SOP）：未勾选 & 禁用（锁定，仅展示） -->
+			<div class="section">
+				<div class="sec-head">
+					<div class="sec-title">项目说明（SOP）</div>
+					<div class="small" id="window-text">时窗：12:00–13:00</div>
+				</div>
+				<div class="small">1) 以测温枪对电机壳体三点求平均；2) 抄录运行电流；3) 测振沿轴/径两向取平均。</div>
+				<div class="row" style="margin-top: 8px">
+					<label class="row"><input id="ack" type="checkbox" disabled /> 我已知悉操作步骤与风险</label>
+				</div>
+			</div>
+
+			<!-- 本实例项目清单：当前实例为“未到时间”，按钮“开始记录”（禁用）；名称右侧“无法填写”（禁用） -->
+			<div class="section">
+				<div class="sec-head">
+					<div class="sec-title">本实例项目清单</div>
+					<div class="small">到点前不开放填写</div>
+				</div>
+
+				<div class="task-row">
+					<div class="row" style="gap: 8px; align-items: center">
+						<div>电机温度</div>
+						<button class="btn-text" disabled>无法填写</button>
+					</div>
+					<div class="row">
+						<span class="pill gray"><span class="dot"></span> 未到时间</span>
+						<button class="btn btn-small" disabled>开始记录</button>
+					</div>
+				</div>
+
+				<div class="task-row">
+					<div class="row" style="gap: 8px; align-items: center">
+						<div>运行电流</div>
+						<button class="btn-text" disabled>无法填写</button>
+					</div>
+					<div class="row">
+						<span class="pill gray"><span class="dot"></span> 未到时间</span>
+						<button class="btn btn-small" disabled>开始记录</button>
+					</div>
+				</div>
+
+				<div class="task-row">
+					<div class="row" style="gap: 8px; align-items: center">
+						<div>轴承振动</div>
+						<button class="btn-text" disabled>无法填写</button>
+					</div>
+					<div class="row">
+						<span class="pill gray"><span class="dot"></span> 未到时间</span>
+						<button class="btn btn-small" disabled>开始记录</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /container -->
+
+		<!-- 底部固定操作条：异常报修 + 开始记录（禁用） -->
+		<div class="bottom-affix">
+			<a class="btn btn-danger" href="#">异常报修</a>
+			<button class="btn btn-primary" disabled>开始记录</button>
+		</div>
+	</body>
+</html>

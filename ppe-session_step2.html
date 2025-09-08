@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>PPE 会话采集（含 SSP/SOP 勾选）</title>
+		<style>
+			:root {
+				--primary: #2b6fff;
+				--primary-active: #1c54f0;
+				--primary-subtle: #e8eeff;
+				--success: #22c55e;
+				--warning: #f59e0b;
+				--danger: #ef4444;
+				--text: #0f172a;
+				--muted: #64748b;
+				--border: #e2e8f0;
+				--bg: #f8fafc;
+				--card: #ffffff;
+				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+			}
+			* {
+				box-sizing: border-box;
+				-webkit-tap-highlight-color: transparent;
+			}
+			body {
+				margin: 0;
+				padding: 0;
+				background: var(--bg);
+				color: var(--text);
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
+				font-size: 16px;
+				line-height: 1.5;
+				/* 禁用纵向滚动条但保留滚动功能 */
+				overflow-y: scroll;
+			}
+			/* Firefox 隐藏滚动条 */
+			html {
+				scrollbar-width: none;
+			}
+
+			/* 隐藏滚动条 */
+			::-webkit-scrollbar {
+				width: 0;
+				background: transparent;
+			}
+
+			/* IE/Edge 隐藏滚动条 */
+			-ms-overflow-style: none;
+			.container {
+				padding: 16px 16px 96px 16px;
+			}
+			.navbar {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				background: #fff;
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+			.navbar .title {
+				font-weight: 600;
+				font-size: 18px;
+			}
+			.badge {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				height: 20px;
+				padding: 0 8px;
+				border-radius: 999px;
+				background: #eef2ff;
+				color: #3730a3;
+				font-size: 12px;
+			}
+			.card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+				padding: 12px;
+			}
+			.card + .card {
+				margin-top: 12px;
+			}
+			.small {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.row {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+			}
+			.chip {
+				padding: 6px 10px;
+				border: 1px solid var(--border);
+				border-radius: 999px;
+				background: #fff;
+				font-size: 12px;
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+			}
+			.chip .dot {
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background: #94a3b8;
+			}
+			.chip.blue {
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.chip.blue .dot {
+				background: var(--primary);
+			}
+			.chip.gray {
+				color: #475569;
+			}
+			.btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				height: 44px;
+				padding: 0 16px;
+				border-radius: 12px;
+				border: 1px solid var(--border);
+				background: #fff;
+				font-weight: 600;
+			}
+			.btn-primary {
+				background: var(--primary);
+				border-color: var(--primary);
+				color: #fff;
+			}
+			.btn:disabled {
+				background: #f3f4f6;
+				border-color: var(--border);
+				color: #94a3b8;
+			}
+			.bottom-affix {
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: #fff;
+				border-top: 1px solid var(--border);
+				padding: 12px 16px;
+				display: flex;
+				gap: 8px;
+				z-index: 20;
+			}
+			.bottom-affix .btn {
+				flex: 1;
+			}
+			.progress {
+				height: 8px;
+				background: #f1f5f9;
+				border-radius: 999px;
+				overflow: hidden;
+			}
+			.bar {
+				height: 100%;
+				background: var(--primary);
+				width: 0%;
+				transition: width 0.2s;
+			}
+			.capture {
+				display: flex;
+				gap: 12px;
+				align-items: center;
+			}
+			.capture .mock {
+				width: 96px;
+				height: 72px;
+				border: 1px dashed var(--border);
+				border-radius: 8px;
+				background: #fff;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: #94a3b8;
+				font-size: 12px;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="navbar">
+			<div class="title">PPE 会话采集</div>
+			<span class="badge">计划级 · 时窗级一次</span>
+		</div>
+		<div class="container">
+			<!-- 1. 选择今日实例（时窗） -->
+			<div class="card">
+				<div style="font-weight: 700; display: flex; justify-content: space-between; align-items: center">
+					<div>选择今日实例（时窗）</div>
+					<div class="small">计划：机组A日巡 · W33-1</div>
+				</div>
+				<div class="row" style="margin-top: 8px; flex-wrap: wrap; gap: 8px">
+					<span class="chip blue"><span class="dot"></span> 12:00–13:00 · 当前</span>
+					<span class="chip"><span class="dot"></span> 08:00–09:00 · 已过</span>
+					<span class="chip gray"><span class="dot"></span> 18:00–19:00 · 未到</span>
+				</div>
+				<div class="small" style="margin-top: 6px">默认选择：进行中＞可开始＞最近未到＞最近已完成</div>
+			</div>
+
+			<!-- 2. 安全与 PPE 要求（SSP/SOP 勾选） -->
+			<div class="card">
+				<div style="font-weight: 700">安全与 PPE 要求</div>
+				<div class="small" style="margin-top: 6px">
+					进入作业区前需穿戴：安全帽、护目镜、绝缘手套、防护鞋；现场至少两人（执行+监护）。
+				</div>
+				<div class="row" style="margin-top: 10px; align-items: flex-start; gap: 12px">
+					<label class="row" style="align-items: flex-start; gap: 8px">
+						<input type="checkbox" id="ssp" />
+						<span>我已阅读并同意本计划的 <b>SSP 安全要求</b>（必勾）</span></label
+					>
+				</div>
+				<div class="row" style="margin-top: 6px; align-items: flex-start; gap: 8px">
+					<label class="row" style="align-items: flex-start; gap: 8px">
+						<input type="checkbox" id="sop" />
+						<span>我已知悉本计划的 <b>SOP 作业指导</b>（必勾）</span></label
+					>
+				</div>
+			</div>
+
+			<!-- 3. 拍摄 PPE（带时间/位置水印：原型用占位） -->
+			<div class="card">
+				<div style="font-weight: 700">拍摄 PPE（合影 1 张）</div>
+				<div class="small" style="margin: 6px 0">拍摄时自动加水印：时间/地点/计划/执行人/监护人</div>
+				<div class="capture">
+					<div class="mock" id="mock">占位图</div>
+					<button class="btn btn-primary" onclick="capture()">拍摄 PPE</button>
+				</div>
+			</div>
+
+			<!-- 4. 回执（完成信息） -->
+			<div class="card">
+				<div style="font-weight: 700">回执信息</div>
+				<div class="small" id="receipt">尚未采集</div>
+				<div class="progress" style="margin-top: 8px"><div class="bar" id="bar" style="width: 0%"></div></div>
+			</div>
+		</div>
+
+		<div class="bottom-affix">
+			<a class="btn" href="task-list-aggregate_with-sessionbar_step2.html">返回列表</a>
+			<button id="go" class="btn btn-primary" disabled onclick="finish()">开始本时窗巡检</button>
+		</div>
+
+		<script>
+			let hasPhoto = false;
+			function capture() {
+				hasPhoto = true;
+				document.getElementById('mock').textContent = '已拍摄';
+				document.getElementById('bar').style.width = '66%';
+				updateBtn();
+				document.getElementById('receipt').textContent = '已拍摄 · 待勾选 SSP/SOP';
+			}
+			function updateBtn() {
+				const ok = hasPhoto && document.getElementById('ssp').checked && document.getElementById('sop').checked;
+				document.getElementById('go').disabled = !ok;
+				document.getElementById('bar').style.width = ok ? '100%' : hasPhoto ? '66%' : '0%';
+				if (ok) {
+					document.getElementById('receipt').textContent = '完成 · 12:01 · 站点A（示例）';
+				}
+			}
+			document.getElementById('ssp').addEventListener('change', updateBtn);
+			document.getElementById('sop').addEventListener('change', updateBtn);
+			function finish() {
+				alert('已完成 PPE + SSP/SOP 确认，返回原路径并恢复动作');
+				window.location.href = 'task-list-aggregate_with-sessionbar_step2.html';
+			}
+		</script>
+	</body>
+</html>

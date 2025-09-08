@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>计划视图 · 设备清单 / 完成率 / 路线顺序</title>
+		<style>
+			:root {
+				--primary: #2b6fff;
+				--primary-active: #1c54f0;
+				--primary-subtle: #e8eeff;
+				--success: #22c55e;
+				--warning: #f59e0b;
+				--danger: #ef4444;
+				--text: #0f172a;
+				--muted: #64748b;
+				--border: #e2e8f0;
+				--bg: #f8fafc;
+				--card: #ffffff;
+				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+			}
+			* {
+				box-sizing: border-box;
+				-webkit-tap-highlight-color: transparent;
+			}
+			body {
+				margin: 0;
+				padding: 0;
+				background: var(--bg);
+				color: var(--text);
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
+				font-size: 16px;
+				line-height: 1.5;
+				/* 禁用纵向滚动条但保留滚动功能 */
+				overflow-y: scroll;
+			}
+			/* Firefox 隐藏滚动条 */
+			html {
+				scrollbar-width: none;
+			}
+
+			/* 隐藏滚动条 */
+			::-webkit-scrollbar {
+				width: 0;
+				background: transparent;
+			}
+
+			/* IE/Edge 隐藏滚动条 */
+			-ms-overflow-style: none;
+			.container {
+				padding: 16px 16px 96px 16px;
+			}
+			.navbar {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				background: #fff;
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+			.navbar .title {
+				font-weight: 600;
+				font-size: 18px;
+			}
+			.badge {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				height: 20px;
+				padding: 0 8px;
+				border-radius: 999px;
+				background: #eef2ff;
+				color: #3730a3;
+				font-size: 12px;
+			}
+			.card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+				padding: 12px;
+			}
+			.card + .card {
+				margin-top: 12px;
+			}
+			.small {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.row {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+			}
+			.btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				height: 36px;
+				padding: 0 12px;
+				border-radius: 10px;
+				border: 1px solid var(--border);
+				background: #fff;
+				font-weight: 600;
+			}
+			.btn-primary {
+				background: var(--primary);
+				border-color: var(--primary);
+				color: #fff;
+			}
+			.btn-ghost {
+				background: #fff;
+				border-color: var(--border);
+				color: var(--text);
+			}
+			.grid {
+				display: grid;
+				grid-template-columns: 1fr 1fr;
+				gap: 12px;
+			}
+			.progress {
+				height: 8px;
+				background: #f1f5f9;
+				border-radius: 999px;
+				overflow: hidden;
+			}
+			.bar {
+				height: 8px;
+				background: var(--primary);
+				width: 45%;
+			}
+			.order {
+				width: 26px;
+				height: 26px;
+				border-radius: 999px;
+				background: var(--primary-subtle);
+				color: var(--primary);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 12px;
+				font-weight: 700;
+			}
+			.dev-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 10px 0;
+				border-top: 1px dashed var(--border);
+			}
+			.dev-row:first-child {
+				border-top: none;
+			}
+			.pill {
+				font-size: 12px;
+				border-radius: 999px;
+				padding: 4px 8px;
+				border: 1px solid var(--border);
+				background: #fff;
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+			}
+			.pill .dot {
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background: #94a3b8;
+			}
+			.pill.blue {
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.pill.red {
+				border-color: var(--danger);
+				color: var(--danger);
+			}
+			.pill.green {
+				border-color: #22c55e;
+				color: #22c55e;
+			}
+			.bottom-affix {
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: #fff;
+				border-top: 1px solid var(--border);
+				padding: 12px 16px;
+				display: flex;
+				gap: 8px;
+				z-index: 20;
+			}
+			.bottom-affix .btn {
+				flex: 1;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="navbar">
+			<div class="title">计划视图</div>
+			<span class="badge">演示：设备清单/完成率/顺序</span>
+		</div>
+		<div class="container">
+			<!-- 计划概要 -->
+			<div class="card">
+				<div style="display: flex; justify-content: space-between; align-items: center">
+					<div>
+						<div style="font-weight: 700">机组A日巡 · W33-1</div>
+						<div class="small">日期：2025-08-22 · 当前时窗：12:00–13:00</div>
+					</div>
+					<a class="btn btn-ghost" href="task-list-aggregate_with-sessionbar_step2.html">返回列表</a>
+				</div>
+				<div class="grid" style="margin-top: 10px">
+					<div class="card" style="padding: 10px">
+						<div class="small">总体完成率</div>
+						<div class="progress" style="margin-top: 6px"><div class="bar" style="width: 45%"></div></div>
+						<div class="small" style="margin-top: 6px">5/11 已完成 · 1 逾期</div>
+					</div>
+					<div class="card" style="padding: 10px">
+						<div class="small">PPE/SSP/SOP</div>
+						<div class="row" style="margin-top: 6px; gap: 12px">
+							<span class="pill green"><span class="dot"></span> PPE 已完成</span>
+							<span class="pill green"><span class="dot"></span> SSP 已确认</span>
+							<span class="pill green"><span class="dot"></span> SOP 已知悉</span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 设备清单（按顺序） -->
+			<div class="card">
+				<div style="font-weight: 700">设备清单（按路线顺序）</div>
+				<div class="dev-row">
+					<div class="order">1</div>
+					<div>供水泵#1</div>
+					<div class="pill blue"><span class="dot"></span> 可开始</div>
+				</div>
+				<div class="dev-row">
+					<div class="order">2</div>
+					<div>供水泵#2</div>
+					<div class="pill"><span class="dot"></span> 未到</div>
+				</div>
+				<div class="dev-row">
+					<div class="order">3</div>
+					<div>冷却塔#1</div>
+					<div class="pill red"><span class="dot"></span> 逾期</div>
+				</div>
+				<div class="dev-row">
+					<div class="order">4</div>
+					<div>配电柜A</div>
+					<div class="pill"><span class="dot"></span> 进行中</div>
+				</div>
+			</div>
+
+			<!-- 提示：顺序要求 -->
+			<div class="card">
+				<div style="font-weight: 700">顺序提示</div>
+				<div class="small">本计划要求按路线顺序执行；若越站将触发拦截与审批（演示文案）。</div>
+			</div>
+		</div>
+
+		<div class="bottom-affix">
+			<a class="btn" href="task-list-aggregate_with-sessionbar_step2.html">返回任务列表</a>
+			<a class="btn btn-primary" href="task-list-aggregate_with-sessionbar_step2.html">开始巡检</a>
+		</div>
+	</body>
+</html>

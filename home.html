@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+		<title>首页</title>
+		<style>
+			:root {
+				--primary: #2b6fff;
+				--primary-active: #1c54f0;
+				--primary-subtle: #e8eeff;
+				--success: #22c55e;
+				--warning: #f59e0b;
+				--danger: #ef4444;
+				--text: #0f172a;
+				--muted: #64748b;
+				--border: #e2e8f0;
+				--bg: #f8fafc;
+				--card: #ffffff;
+				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+			}
+			* {
+				box-sizing: border-box;
+				-webkit-tap-highlight-color: transparent;
+			}
+			body {
+				margin: 0;
+				padding: 0;
+				background: var(--bg);
+				color: var(--text);
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
+				font-size: 16px;
+				line-height: 1.5;
+				/* 禁用纵向滚动条但保留滚动功能 */
+				overflow-y: scroll;
+			}
+			/* Firefox 隐藏滚动条 */
+			html {
+				scrollbar-width: none;
+			}
+
+			/* 隐藏滚动条 */
+			::-webkit-scrollbar {
+				width: 0;
+				background: transparent;
+			}
+
+			/* IE/Edge 隐藏滚动条 */
+			-ms-overflow-style: none;
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
+			.container {
+				padding: 16px 16px 88px 16px;
+			} /* bottom space for tabbar */
+			.navbar {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				background: #fff;
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+			.navbar .title {
+				font-weight: 600;
+				font-size: 18px;
+			}
+			.badge {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				min-width: 16px;
+				height: 16px;
+				padding: 0 4px;
+				border-radius: 999px;
+				background: var(--danger);
+				color: #fff;
+				font-size: 12px;
+				line-height: 1;
+			}
+			.card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+			}
+			.card + .card {
+				margin-top: 12px;
+			}
+			.grid {
+				display: grid;
+				gap: 12px;
+			}
+			.grid.cols-3 {
+				grid-template-columns: repeat(3, 1fr);
+			}
+			.grid.cols-2 {
+				grid-template-columns: repeat(2, 1fr);
+			}
+			.grid-item {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+				padding: 12px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				min-height: 88px;
+				position: relative;
+			}
+			.grid-item .icon {
+				width: 28px;
+				height: 28px;
+				border-radius: 10px;
+				background: var(--primary-subtle);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				margin-bottom: 8px;
+			}
+			.grid-item .icon svg {
+				width: 18px;
+				height: 18px;
+				fill: var(--primary);
+			}
+			.grid-item .label {
+				font-size: 14px;
+				font-weight: 600;
+			}
+			.grid-item .corner {
+				position: absolute;
+				top: 6px;
+				right: 6px;
+			}
+			.kpi-bar {
+				display: flex;
+				gap: 8px;
+			}
+			.kpi {
+				flex: 1;
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+				padding: 12px;
+			}
+			.kpi .num {
+				font-weight: 700;
+				font-size: 18px;
+			}
+			.kpi .label {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				height: 44px;
+				padding: 0 16px;
+				border-radius: 12px;
+				border: 1px solid var(--border);
+				background: #fff;
+				font-weight: 600;
+			}
+			.btn:active {
+				transform: scale(0.98);
+			}
+			.btn-primary {
+				background: var(--primary);
+				border-color: var(--primary);
+				color: #fff;
+			}
+			.btn-primary:disabled {
+				background: #9db8ff;
+				border-color: #9db8ff;
+			}
+			.btn-ghost {
+				background: #fff;
+				border-color: var(--border);
+				color: var(--text);
+			}
+			.btn-danger {
+				background: var(--danger);
+				border-color: var(--danger);
+				color: #fff;
+			}
+			.btn-small {
+				height: 32px;
+				padding: 0 12px;
+				border-radius: 10px;
+				font-size: 14px;
+			}
+			.btn-block {
+				width: 100%;
+			}
+			.input,
+			.select,
+			.search {
+				height: 44px;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: 0 12px;
+				background: #fff;
+			}
+			.search {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+			.search input {
+				border: none;
+				outline: none;
+				flex: 1;
+				height: 42px;
+				font-size: 14px;
+			}
+			.filter-bar {
+				position: sticky;
+				top: 54px;
+				background: #fff;
+				z-index: 9;
+				border-bottom: 1px solid var(--border);
+				padding: 8px 16px;
+				display: flex;
+				gap: 8px;
+				align-items: center;
+				overflow: auto;
+			}
+			.chips {
+				display: flex;
+				gap: 8px;
+				overflow: auto;
+			}
+			.chip {
+				padding: 8px 12px;
+				border: 1px solid var(--border);
+				border-radius: 999px;
+				background: #fff;
+				font-size: 14px;
+				white-space: nowrap;
+			}
+			.chip.active {
+				background: var(--primary-subtle);
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.device-card {
+				padding: 12px;
+			}
+			.device-card .head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 8px;
+			}
+			.device-card .title {
+				font-weight: 700;
+				font-size: 16px;
+			}
+			.device-card .meta {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.pills {
+				display: flex;
+				gap: 6px;
+				flex-wrap: wrap;
+			}
+			.pill {
+				font-size: 12px;
+				border-radius: 999px;
+				padding: 4px 8px;
+				border: 1px solid var(--border);
+				background: #fff;
+			}
+			.pill.gray {
+				color: #475569;
+			}
+			.pill.blue {
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.pill.red {
+				border-color: var(--danger);
+				color: var(--danger);
+			}
+			.device-card .body {
+				margin: 8px 0 12px 0;
+			}
+			.task-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 8px 0;
+				border-top: 1px dashed var(--border);
+			}
+			.task-row:first-child {
+				border-top: none;
+			}
+			.countdown {
+				font-size: 12px;
+				color: var(--danger);
+			}
+			.card-actions {
+				display: flex;
+				gap: 8px;
+			}
+			.more {
+				position: relative;
+			}
+			.more-menu {
+				display: none;
+				position: absolute;
+				right: 0;
+				top: 46px;
+				background: #fff;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				box-shadow: var(--shadow);
+				padding: 8px;
+				min-width: 140px;
+			}
+			.more-menu a {
+				display: block;
+				padding: 8px 10px;
+				border-radius: 8px;
+			}
+			.more-menu a:hover {
+				background: var(--bg);
+			}
+			.more.open .more-menu {
+				display: block;
+			}
+			/* ScanBar */
+			.scanbar {
+				position: sticky;
+				top: 54px;
+				background: #fff;
+				border-bottom: 1px solid var(--border);
+				z-index: 9;
+				padding: 10px 16px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 12px;
+			}
+			.scanbar .state {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-weight: 600;
+			}
+			.scanbar .dot {
+				width: 10px;
+				height: 10px;
+				border-radius: 999px;
+				background: var(--muted);
+			}
+			.scanbar.scanned .dot {
+				background: var(--success);
+			}
+			.scanbar .desc {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			/* Sections (Project) */
+			.section {
+				background: #fff;
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+				padding: 12px;
+				margin: 12px 0;
+			}
+			.section .sec-head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 8px;
+			}
+			.section .sec-title {
+				font-weight: 700;
+			}
+			.tag {
+				font-size: 12px;
+				padding: 4px 8px;
+				border-radius: 999px;
+				border: 1px solid var(--border);
+			}
+			.tag.green {
+				border-color: var(--success);
+				color: var(--success);
+			}
+			.tag.red {
+				border-color: var(--danger);
+				color: var(--danger);
+			}
+			.tag.yellow {
+				border-color: var(--warning);
+				color: var(--warning);
+			}
+			.form-row {
+				margin: 8px 0;
+			}
+			.label {
+				font-size: 13px;
+				color: var(--muted);
+				margin-bottom: 6px;
+			}
+			.radio-group {
+				display: flex;
+				gap: 12px;
+			}
+			.radio {
+				display: flex;
+				align-items: center;
+				gap: 6px;
+				padding: 8px 10px;
+				border: 1px solid var(--border);
+				border-radius: 999px;
+			}
+			.radio.active {
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.textarea {
+				width: 100%;
+				min-height: 80px;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: 8px;
+				resize: vertical;
+			}
+			.photo-uploader {
+				display: flex;
+				gap: 8px;
+				flex-wrap: wrap;
+			}
+			.photo {
+				width: 72px;
+				height: 72px;
+				border-radius: 8px;
+				border: 1px dashed var(--border);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				color: var(--muted);
+				font-size: 12px;
+				cursor: pointer;
+			}
+			.required {
+				color: var(--danger);
+				margin-left: 4px;
+			}
+			/* Bottom Affix */
+			.bottom-affix {
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 64px;
+				background: #fff;
+				border-top: 1px solid var(--border);
+				padding: 12px 16px;
+				display: flex;
+				gap: 8px;
+				z-index: 20;
+			}
+			.bottom-affix .btn {
+				flex: 1;
+			}
+			/* TabBar */
+			.tabbar {
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: #fff;
+				border-top: 1px solid var(--border);
+				height: 64px;
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+				z-index: 30;
+			}
+			.tabbar .item {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				gap: 4px;
+				color: #475569;
+				width: 50%;
+				height: 64px;
+			}
+			.tabbar .item.active {
+				color: var(--primary);
+			}
+			.tabbar .item .ico {
+				width: 22px;
+				height: 22px;
+				border-radius: 8px;
+				background: var(--primary-subtle);
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.tabbar .item.active .ico {
+				background: rgba(43, 111, 255, 0.15);
+			}
+			.skeleton {
+				background: linear-gradient(90deg, #eee, #f5f5f5, #eee);
+				background-size: 200% 100%;
+				animation: s 1.4s infinite;
+			}
+			@keyframes s {
+				0% {
+					background-position: 200% 0;
+				}
+				100% {
+					background-position: -200% 0;
+				}
+			}
+			/* utility */
+			.row {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+			}
+			.space-between {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+			}
+			.mt-8 {
+				margin-top: 8px;
+			}
+			.mt-12 {
+				margin-top: 12px;
+			}
+			.mt-16 {
+				margin-top: 16px;
+			}
+			.mt-20 {
+				margin-top: 20px;
+			}
+			.mr-8 {
+				margin-right: 8px;
+			}
+			.small {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.center {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			.hide {
+				display: none !important;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="navbar">
+			<div class="title">首页</div>
+			<div class="row" style="margin-left: auto"><button class="btn btn-small">扫码</button></div>
+		</div>
+		<div class="container">
+			<div class="grid cols-3">
+				<!-- 宫格 -->
+				<a class="grid-item" href="#"
+					><div class="icon">
+						<svg viewBox="0 0 24 24"><path d="M4 4h16v6H4zm0 10h7v6H4zm9 0h7v6h-7z" /></svg>
+					</div>
+					<div class="label">巡检</div>
+					<span class="badge corner">8</span></a
+				>
+				<a class="grid-item" href="#"
+					><div class="icon">
+						<svg viewBox="0 0 24 24"><path d="M3 4h18v4H3zm0 6h18v4H3zm0 6h18v4H3z" /></svg>
+					</div>
+					<div class="label">点检</div>
+					<span class="badge corner">2</span></a
+				>
+				<a class="grid-item" href="#"
+					><div class="icon">
+						<svg viewBox="0 0 24 24"><path d="M12 2l4 7H8l4-7zm-6 9h12l2 11H4L6 11z" /></svg>
+					</div>
+					<div class="label">保养</div></a
+				>
+				<a class="grid-item" href="#"
+					><div class="icon">
+						<svg viewBox="0 0 24 24"><path d="M5 3h14v4H5zM3 9h18v12H3z" /></svg>
+					</div>
+					<div class="label">维修</div>
+					<span class="badge corner">3</span></a
+				>
+				<a class="grid-item" href="#"
+					><div class="icon">
+						<svg viewBox="0 0 24 24">
+							<path d="M12 2a7 7 0 110 14 7 7 0 010-14zm-8 20a8 8 0 0116 0H4z" />
+						</svg>
+					</div>
+					<div class="label">档案</div></a
+				>
+			</div>
+
+			<div class="mt-16">
+				<div class="kpi-bar">
+					<div class="kpi">
+						<div class="num">13</div>
+						<div class="label">今日待办</div>
+					</div>
+					<div class="kpi">
+						<div class="num">5</div>
+						<div class="label">进行中</div>
+					</div>
+					<div class="kpi">
+						<div class="num">2</div>
+						<div class="label">逾期</div>
+					</div>
+				</div>
+				<div class="mt-12 row">
+					<button class="btn btn-primary btn-block">打开相机扫码</button>
+				</div>
+				<div class="mt-8 row">
+					<button class="btn btn-ghost btn-block">草稿箱（2）</button>
+				</div>
+			</div>
+		</div>
+		<div class="tabbar">
+			<a class="item active" href="#"
+				><div class="ico"></div>
+				<div>首页</div></a
+			>
+			<a class="item" href="#"
+				><div class="ico"></div>
+				<div>我的</div></a
+			>
+		</div>
+	</body>
+</html>

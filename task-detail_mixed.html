@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>巡检 · 任务详情 · 混合（逾期+可开始+未到）</title>
+		<style>
+			:root {
+				--primary: #2b6fff;
+				--primary-active: #1c54f0;
+				--primary-subtle: #e8eeff;
+				--success: #22c55e;
+				--warning: #f59e0b;
+				--danger: #ef4444;
+				--text: #0f172a;
+				--muted: #64748b;
+				--border: #e2e8f0;
+				--bg: #f8fafc;
+				--card: #ffffff;
+				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
+			}
+			* {
+				box-sizing: border-box;
+				-webkit-tap-highlight-color: transparent;
+			}
+
+			body {
+				margin: 0;
+				padding: 0;
+				background: var(--bg);
+				color: var(--text);
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
+				font-size: 16px;
+				line-height: 1.5;
+				/* 禁用纵向滚动条但保留滚动功能 */
+				overflow-y: scroll;
+			}
+			/* Firefox 隐藏滚动条 */
+			html {
+				scrollbar-width: none;
+			}
+
+			/* 隐藏滚动条 */
+			::-webkit-scrollbar {
+				width: 0;
+				background: transparent;
+			}
+
+			/* IE/Edge 隐藏滚动条 */
+			-ms-overflow-style: none;
+			a {
+				color: inherit;
+				text-decoration: none;
+			}
+			.container {
+				padding: 16px 16px 96px 16px;
+			}
+			.navbar {
+				position: sticky;
+				top: 0;
+				z-index: 10;
+				background: #fff;
+				padding: 12px 16px;
+				border-bottom: 1px solid var(--border);
+				display: flex;
+				align-items: center;
+				gap: 12px;
+			}
+			.navbar .title {
+				font-weight: 600;
+				font-size: 18px;
+			}
+			.badge {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				height: 22px;
+				padding: 0 8px;
+				border-radius: 999px;
+				background: #eef2ff;
+				color: #3730a3;
+				font-size: 12px;
+				line-height: 1;
+			}
+			.card {
+				background: var(--card);
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+			}
+			.card + .card {
+				margin-top: 12px;
+			}
+			.btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				height: 44px;
+				padding: 0 16px;
+				border-radius: 12px;
+				border: 1px solid var(--border);
+				background: #fff;
+				font-weight: 600;
+			}
+			.btn-primary {
+				background: var(--primary);
+				border-color: var(--primary);
+				color: #fff;
+			}
+			.btn-ghost {
+				background: #fff;
+				border-color: var(--border);
+				color: var(--text);
+			}
+			.btn-danger {
+				background: var(--danger);
+				border-color: var(--danger);
+				color: #fff;
+			}
+			.btn-small {
+				height: 32px;
+				padding: 0 12px;
+				border-radius: 10px;
+				font-size: 14px;
+			}
+			.small {
+				font-size: 12px;
+				color: var(--muted);
+			}
+			.pills {
+				display: flex;
+				gap: 6px;
+				flex-wrap: wrap;
+			}
+			.pill {
+				font-size: 12px;
+				border-radius: 999px;
+				padding: 4px 8px;
+				border: 1px solid var(--border);
+				background: #fff;
+				display: inline-flex;
+				align-items: center;
+				gap: 6px;
+			}
+			.pill .dot {
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background: #94a3b8;
+			}
+			.pill.gray {
+				color: #475569;
+			}
+			.pill.blue {
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.pill.red {
+				border-color: var(--danger);
+				color: var(--danger);
+			}
+			.pill.green {
+				border-color: #22c55e;
+				color: #22c55e;
+			}
+			.pill.blue .dot {
+				background: #2b6fff;
+			}
+			.pill.red .dot {
+				background: #ef4444;
+			}
+			.pill.green .dot {
+				background: #22c55e;
+			}
+			.pill.gray .dot {
+				background: #94a3b8;
+			}
+			.section {
+				background: #fff;
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				box-shadow: var(--shadow);
+				padding: 12px;
+				margin: 4px 0;
+			}
+			.sec-head {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 8px;
+			}
+			.sec-title {
+				font-weight: 700;
+			}
+			.row {
+				display: flex;
+				gap: 8px;
+				align-items: center;
+			}
+			.task-row {
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				padding: 10px 0;
+				border-top: 1px dashed var(--border);
+			}
+			.task-row:first-child {
+				border-top: none;
+			}
+			.bottom-affix {
+				position: fixed;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background: #fff;
+				border-top: 1px solid var(--border);
+				padding: 12px 16px;
+				display: flex;
+				gap: 8px;
+				z-index: 20;
+			}
+			.bottom-affix .btn {
+				flex: 1;
+			}
+			/* chips & links */
+			.instance-switch {
+				display: flex;
+				gap: 8px;
+				flex-wrap: wrap;
+				margin: 12px 0;
+			}
+			.is-chip {
+				padding: 8px 12px;
+				border: 1px solid var(--border);
+				border-radius: 999px;
+				background: #fff;
+				font-size: 14px;
+			}
+			.is-chip.active {
+				background: var(--primary-subtle);
+				border-color: var(--primary);
+				color: var(--primary);
+			}
+			.is-chip.lock {
+				opacity: 0.6;
+			}
+			/* text button for 无法填写 */
+			.btn-text {
+				background: transparent;
+				border: none;
+				padding: 0;
+				font-size: 12px;
+				color: var(--muted);
+				text-decoration: underline;
+				cursor: pointer;
+			}
+			/* banners */
+			.banner {
+				margin: 12px 0;
+				padding: 10px 12px;
+				border-radius: 10px;
+				border: 1px solid var(--border);
+				background: #fff;
+			}
+			.banner.overdue {
+				border-color: #ef4444;
+				background: #fef2f2;
+				color: #991b1b;
+			}
+			.banner.done {
+				border-color: #22c55e;
+				background: #ecfdf5;
+				color: #14532d;
+			}
+			.banner.lock {
+				border-color: #cbd5e1;
+				background: #f1f5f9;
+				color: #334155;
+			}
+			/* modal */
+			.modal-backdrop {
+				position: fixed;
+				inset: 0;
+				background: rgba(15, 23, 42, 0.45);
+				display: none;
+				align-items: flex-end;
+				z-index: 99;
+			}
+			.modal {
+				background: #fff;
+				border-top-left-radius: 16px;
+				border-top-right-radius: 16px;
+				padding: 16px;
+				border: 1px solid var(--border);
+			}
+			.modal h3 {
+				margin: 0 0 8px 0;
+				font-size: 16px;
+			}
+			.modal .row {
+				display: flex;
+				gap: 8px;
+				margin: 8px 0;
+				flex-wrap: wrap;
+			}
+			.modal .chip {
+				padding: 6px 10px;
+				border-radius: 999px;
+				border: 1px solid var(--border);
+			}
+			.modal textarea {
+				width: 100%;
+				min-height: 80px;
+				border: 1px solid var(--border);
+				border-radius: 10px;
+				padding: 8px;
+			}
+			.modal .actions {
+				display: flex;
+				gap: 8px;
+				margin-top: 12px;
+			}
+			.modal .btn {
+				flex: 1;
+			}
+			.show {
+				display: flex;
+			}
+			/* 扫码条 */
+			.scanbar {
+				position: sticky;
+				top: 54px;
+				background: #fff;
+				border-bottom: 1px solid var(--border);
+				z-index: 9;
+				padding: 10px 16px;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				gap: 12px;
+			}
+			.scanbar .state {
+				display: flex;
+				align-items: center;
+				gap: 8px;
+				font-weight: 600;
+			}
+			.scanbar .dot {
+				width: 10px;
+				height: 10px;
+				border-radius: 999px;
+				background: var(--muted);
+			}
+			.scanbar.scanned .dot {
+				background: var(--success);
+			}
+			.scanbar .desc {
+				font-size: 12px;
+				color: var(--muted);
+			}
+		</style>
+	</head>
+	<body>
+		<div class="navbar">
+			<div class="title">巡检 · 任务详情</div>
+			<span class="badge">场景：混合（逾期+可开始+未到）</span>
+		</div>
+		<div class="container">
+			<!-- 顶部扫码条：已扫码，去扫码按钮禁用 -->
+			<div id="scanbar" class="scanbar">
+				<div>
+					<div class="state">
+						<div class="dot"></div>
+						<div id="scan-text">未扫码</div>
+					</div>
+					<div class="desc" id="scan-desc">请先到点扫码，完成位置与时间校验</div>
+				</div>
+				<a class="btn btn-small btn-primary" href="#">去扫码</a>
+			</div>
+
+			<!-- 设备卡 -->
+			<div class="card" style="padding: 12px">
+				<div class="row" style="justify-content: space-between">
+					<div>
+						<div style="font-weight: 700">供水泵#1 <span class="small">（DEV-001）</span></div>
+						<div class="small">一号厂 · 南区</div>
+					</div>
+					<div class="pill gray"><span class="dot"></span> 批次 2025W33</div>
+				</div>
+				<div class="small"><span class="btn-text" onclick="openDevUnavail()">设备无法巡检</span></div>
+			</div>
+
+			<!-- 实例切换 -->
+			<div class="section">
+				<div class="sec-head">
+					<div class="sec-title">选择今日实例</div>
+					<div class="small">时窗列表</div>
+				</div>
+				<div class="row" style="flex-wrap: wrap; gap: 8px">
+					<div class="pill blue">08:00–09:00 · 逾期</div>
+					<div class="pill gray">12:00–13:00 · 可开始</div>
+					<div class="pill gray">18:00–19:00 · 未到时间</div>
+				</div>
+			</div>
+
+			<!-- 项目清单 -->
+			<!-- 项目清单（混合场景当前实例为逾期，可开始记录；“无法填写”为可用并弹窗） -->
+			<div class="section">
+				<div class="sec-head">
+					<div class="sec-title">本实例项目清单</div>
+					<div class="small">当前实例：08:00–09:00 · 已逾期</div>
+				</div>
+
+				<div class="task-row">
+					<div>
+						<div>电流 <button class="btn-text" onclick='openProjUnavail("电流")'>无法填写</button></div>
+					</div>
+					<div class="row">
+						<span class="pill red"><span class="dot"></span> 逾期</span>
+						<a class="btn btn-primary btn-small" href="task-form_overdue.html">开始记录</a>
+					</div>
+				</div>
+
+				<div class="task-row">
+					<div>
+						<div>电压 <button class="btn-text" onclick='openProjUnavail("电压")'>无法填写</button></div>
+					</div>
+					<div class="row">
+						<span class="pill red"><span class="dot"></span> 逾期</span>
+						<a class="btn btn-primary btn-small" href="task-form_overdue.html">开始记录</a>
+					</div>
+				</div>
+
+				<div class="task-row">
+					<div>
+						<div>振动 <button class="btn-text" onclick='openProjUnavail("振动")'>无法填写</button></div>
+					</div>
+					<div class="row">
+						<span class="pill red"><span class="dot"></span> 逾期</span>
+						<a class="btn btn-primary btn-small" href="task-form_overdue.html">开始记录</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- 底部固定操作条：开始记录（可用） -->
+		<div class="bottom-affix">
+			<a class="btn btn-danger" href="#">异常报修</a>
+			<a class="btn btn-primary" href="task-form.html">开始记录</a>
+		</div>
+
+		<!-- Modals -->
+		<div id="dev-unavail" class="modal-backdrop">
+			<div class="modal" style="width: 100%">
+				<h3>设备无法巡检</h3>
+				<div class="row">
+					<div class="chip">停电/断电</div>
+					<div class="chip">设备检修中</div>
+					<div class="chip">安全风险</div>
+					<div class="chip">无权限进入</div>
+					<div class="chip">其他</div>
+				</div>
+				<textarea id="dev-reason" placeholder="请补充具体原因（必填）"></textarea>
+				<div class="actions">
+					<button class="btn" onclick="closeDevUnavail()">取消</button
+					><button class="btn btn-primary" onclick="submitDevUnavail()">提交</button>
+				</div>
+			</div>
+		</div>
+		<div id="proj-unavail" class="modal-backdrop">
+			<div class="modal" style="width: 100%">
+				<h3 id="proj-title">项目无法填写</h3>
+				<div class="row">
+					<div class="chip">无法接近测点</div>
+					<div class="chip">仪表损坏</div>
+					<div class="chip">工况不允许</div>
+					<div class="chip">其他</div>
+				</div>
+				<textarea id="proj-reason" placeholder="请补充具体原因（必填）"></textarea>
+				<div class="actions">
+					<button class="btn" onclick="closeProjUnavail()">取消</button
+					><button class="btn btn-primary" onclick="submitProjUnavail()">提交</button>
+				</div>
+			</div>
+		</div>
+		<script>
+			function openDevUnavail() {
+				document.getElementById('dev-unavail').classList.add('show');
+			}
+			function closeDevUnavail() {
+				document.getElementById('dev-unavail').classList.remove('show');
+			}
+			function submitDevUnavail() {
+				const t = document.getElementById('dev-reason').value.trim();
+				if (!t) {
+					alert('请填写原因');
+					return;
+				}
+				alert('已记录：' + t);
+				closeDevUnavail();
+			}
+			let currentProj = '';
+			function openProjUnavail(n) {
+				currentProj = n;
+				document.getElementById('proj-title').textContent = '项目无法填写 · ' + n;
+				document.getElementById('proj-unavail').classList.add('show');
+			}
+			function closeProjUnavail() {
+				document.getElementById('proj-unavail').classList.remove('show');
+			}
+			function submitProjUnavail() {
+				const t = document.getElementById('proj-reason').value.trim();
+				if (!t) {
+					alert('请填写原因');
+					return;
+				}
+				alert('已记录[' + currentProj + ']：' + t);
+				closeProjUnavail();
+			}
+		</script>
+	</body>
+</html>
