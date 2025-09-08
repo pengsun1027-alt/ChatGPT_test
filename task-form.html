@@ -4,7 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
 		<title>任务表单（三页版·执行）</title>
-		<style>
+		<link rel="stylesheet" href="styles.css">
+                <style>
 			:root {
 				--primary: #2b6fff;
 				--primary-active: #1c54f0;
@@ -28,9 +29,9 @@
 				padding: 0;
 				background: var(--bg);
 				color: var(--text);
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
-				font-size: 16px;
-				line-height: 1.5;
+				font-family: var(--font-family);
+				font-size: var(--font-size);
+				line-height: var(--line-height);
 				/* 禁用纵向滚动条但保留滚动功能 */
 				overflow-y: scroll;
 			}
@@ -52,18 +53,18 @@
 				text-decoration: none;
 			}
 			.container {
-				padding: 16px 16px 88px 16px;
+				padding: var(--spacing) 16px 88px 16px;
 			}
 			.navbar {
 				position: sticky;
 				top: 0;
 				z-index: 10;
 				background: #fff;
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				border-bottom: 1px solid var(--border);
 				display: flex;
 				align-items: center;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 			}
 			.navbar .title {
 				font-weight: 600;
@@ -74,7 +75,7 @@
 				border: 1px solid var(--border);
 				border-radius: 12px;
 				box-shadow: var(--shadow);
-				padding: 12px;
+				padding: calc(var(--spacing) * 0.75);
 				margin: 4px 0;
 			}
 			.sec-head {
@@ -112,7 +113,7 @@
 			.unit-row {
 				display: flex;
 				align-items: center;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 			}
 			.input {
 				width: 100%;
@@ -127,7 +128,7 @@
 				min-height: 80px;
 				border: 1px solid var(--border);
 				border-radius: 10px;
-				padding: 8px;
+				padding: calc(var(--spacing) * 0.5);
 			}
 			.helper {
 				font-size: 12px;
@@ -169,14 +170,14 @@
 			}
 			.row {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				align-items: center;
 			}
 			.actions {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				margin-top: 8px;
+				margin-top: calc(var(--spacing) * 0.5);
 			}
 			.bottom-affix {
 				position: fixed;
@@ -185,9 +186,9 @@
 				bottom: 0;
 				background: #fff;
 				border-top: 1px solid var(--border);
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				z-index: 20;
 			}
 			.bottom-affix .btn {
@@ -208,7 +209,7 @@
 			.scaninfo .state {
 				display: flex;
 				align-items: center;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				font-weight: 600;
 			}
 			.scaninfo .dot {
@@ -234,16 +235,16 @@
 				background: #fff;
 				border-top-left-radius: 16px;
 				border-top-right-radius: 16px;
-				padding: 16px;
+				padding: var(--spacing);
 				border: 1px solid var(--border);
 			}
 			.modal h3 {
 				margin: 0 0 8px 0;
-				font-size: 16px;
+				font-size: var(--font-size);
 			}
 			.modal .row {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				margin: 8px 0;
 				flex-wrap: wrap;
 			}
@@ -257,12 +258,12 @@
 				min-height: 80px;
 				border: 1px solid var(--border);
 				border-radius: 10px;
-				padding: 8px;
+				padding: calc(var(--spacing) * 0.5);
 			}
 			.modal .actions {
 				display: flex;
-				gap: 8px;
-				margin-top: 12px;
+				gap: calc(var(--spacing) * 0.5);
+				margin-top: calc(var(--spacing) * 0.75);
 			}
 			.modal .btn {
 				flex: 1;

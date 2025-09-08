@@ -4,7 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<title>PPE 会话采集</title>
-		<style>
+		<link rel="stylesheet" href="styles.css">
+                <style>
 			:root {
 				--primary: #2b6fff;
 				--primary-active: #1c54f0;
@@ -28,9 +29,9 @@
 				padding: 0;
 				background: var(--bg);
 				color: var(--text);
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
-				font-size: 16px;
-				line-height: 1.5;
+				font-family: var(--font-family);
+				font-size: var(--font-size);
+				line-height: var(--line-height);
 				/* 禁用纵向滚动条但保留滚动功能 */
 				overflow-y: scroll;
 			}
@@ -53,18 +54,18 @@
 				text-decoration: none;
 			}
 			.container {
-				padding: 16px 16px 120px 16px;
+				padding: var(--spacing) 16px 120px 16px;
 			}
 			.navbar {
 				position: sticky;
 				top: 0;
 				z-index: 10;
 				background: #fff;
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				border-bottom: 1px solid var(--border);
 				display: flex;
 				align-items: center;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 			}
 			.navbar .title {
 				font-weight: 600;
@@ -77,14 +78,14 @@
 				box-shadow: var(--shadow);
 			}
 			.card + .card {
-				margin-top: 12px;
+				margin-top: calc(var(--spacing) * 0.75);
 			}
 			.section {
 				background: #fff;
 				border: 1px solid var(--border);
 				border-radius: 12px;
 				box-shadow: var(--shadow);
-				padding: 12px;
+				padding: calc(var(--spacing) * 0.75);
 				margin: 12px 0;
 			}
 			.sec-head {
@@ -98,13 +99,13 @@
 			}
 			.row {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				align-items: center;
 			}
 			.pill {
 				font-size: 14px;
 				border-radius: 999px;
-				padding: 8px 12px;
+				padding: calc(var(--spacing) * 0.5) 12px;
 				border: 1px solid var(--border);
 				background: #fff;
 				display: inline-flex;
@@ -150,7 +151,7 @@
 			.capture {
 				border: 1px dashed var(--border);
 				border-radius: 12px;
-				padding: 16px;
+				padding: var(--spacing);
 				text-align: center;
 				background: #fff;
 			}
@@ -164,7 +165,7 @@
 				align-items: center;
 				justify-content: center;
 				color: #94a3b8;
-				margin-top: 8px;
+				margin-top: calc(var(--spacing) * 0.5);
 			}
 			.bottom-affix {
 				position: fixed;
@@ -173,9 +174,9 @@
 				bottom: 0;
 				background: #fff;
 				border-top: 1px solid var(--border);
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				z-index: 20;
 			}
 			.bottom-affix .btn {
@@ -191,7 +192,7 @@
 					<div class="sec-title">选择今日实例（时窗）</div>
 					<div class="small">用于确定证据归属</div>
 				</div>
-				<div id="tw" class="row" style="flex-wrap: wrap; gap: 8px"></div>
+				<div id="tw" class="row" style="flex-wrap: wrap; gap: calc(var(--spacing) * 0.5)"></div>
 				<div class="small" id="twHint" style="margin-top: 6px; color: #475569"></div>
 			</div>
 
@@ -207,7 +208,7 @@
 				</ul>
 				<div class="capture">
 					<div>拍摄 PPE 合影</div>
-					<button id="capBtn" class="btn btn-primary" style="margin-top: 8px">拍摄</button>
+					<button id="capBtn" class="btn btn-primary" style="margin-top: calc(var(--spacing) * 0.5)">拍摄</button>
 					<div id="thumb" class="thumb">尚未采集</div>
 				</div>
 			</div>

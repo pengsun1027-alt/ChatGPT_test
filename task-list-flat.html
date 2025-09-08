@@ -4,7 +4,8 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1" />
 		<title>巡检任务 · 扁平列表（含 PPE 状态）</title>
-		<style>
+		<link rel="stylesheet" href="styles.css">
+                <style>
 			:root {
 				--primary: #2b6fff;
 				--primary-active: #1c54f0;
@@ -28,9 +29,9 @@
 				padding: 0;
 				background: var(--bg);
 				color: var(--text);
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', Roboto, Arial;
-				font-size: 16px;
-				line-height: 1.5;
+				font-family: var(--font-family);
+				font-size: var(--font-size);
+				line-height: var(--line-height);
 				/* 禁用纵向滚动条但保留滚动功能 */
 				overflow-y: scroll;
 			}
@@ -52,18 +53,18 @@
 				text-decoration: none;
 			}
 			.container {
-				padding: 16px;
+				padding: var(--spacing);
 			}
 			.navbar {
 				position: sticky;
 				top: 0;
 				z-index: 10;
 				background: #fff;
-				padding: 12px 16px;
+				padding: calc(var(--spacing) * 0.75) 16px;
 				border-bottom: 1px solid var(--border);
 				display: flex;
 				align-items: center;
-				gap: 12px;
+				gap: calc(var(--spacing) * 0.75);
 			}
 			.navbar .title {
 				font-weight: 600;
@@ -73,7 +74,7 @@
 				margin-left: auto;
 				display: flex;
 				align-items: center;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				border: 1px solid var(--border);
 				border-radius: 10px;
 				padding: 0 12px;
@@ -97,11 +98,11 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 			}
 			.ppe-bar .state {
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				align-items: center;
 				font-weight: 600;
 			}
@@ -127,14 +128,14 @@
 				background: #fff;
 				z-index: 8;
 				border-bottom: 1px solid var(--border);
-				padding: 8px 16px;
+				padding: calc(var(--spacing) * 0.5) 16px;
 				display: flex;
-				gap: 8px;
+				gap: calc(var(--spacing) * 0.5);
 				align-items: center;
 				overflow: auto;
 			}
 			.chip {
-				padding: 8px 12px;
+				padding: calc(var(--spacing) * 0.5) 12px;
 				border: 1px solid var(--border);
 				border-radius: 999px;
 				background: #fff;
@@ -153,10 +154,10 @@
 				box-shadow: var(--shadow);
 			}
 			.card + .card {
-				margin-top: 12px;
+				margin-top: calc(var(--spacing) * 0.75);
 			}
 			.task-item {
-				padding: 12px;
+				padding: calc(var(--spacing) * 0.75);
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
@@ -166,7 +167,7 @@
 			}
 			.title {
 				font-weight: 700;
-				font-size: 16px;
+				font-size: var(--font-size);
 			}
 			.meta {
 				font-size: 12px;
@@ -231,7 +232,7 @@
 				<div class="dot"></div>
 				<div id="ppeText">本时窗 PPE：未完成</div>
 			</div>
-			<div style="display: flex; gap: 8px; align-items: center">
+			<div style="display: flex; gap: calc(var(--spacing) * 0.5); align-items: center">
 				<span id="ppeMeta" class="small"></span>
 				<a id="ppeBtn" class="btn btn-primary" href="ppe-session.html?from=task-list-flat.html">去采集</a>
 			</div>
