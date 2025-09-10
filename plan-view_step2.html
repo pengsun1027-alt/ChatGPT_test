@@ -12,7 +12,8 @@
 
 		<style>
 			body {
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+					sans-serif;
 				background: #f7f8fa;
 			}
 			.safe-bottom {
@@ -22,14 +23,19 @@
 	</head>
 	<body>
 		<!-- 顶部导航栏 -->
-		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+		<header
+			class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50"
+		>
 			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 				</svg>
 			</button>
 			<h1 class="text-base font-semibold">计划视图</h1>
-			<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+			<span
+				class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
+				style="background-color: #eff6ff; color: #2563eb"
+			>
 				演示版本
 			</span>
 		</header>
@@ -37,13 +43,16 @@
 		<!-- 主要内容区域 -->
 		<main class="mt-12 px-4 pb-20 space-y-4">
 			<!-- 计划概要 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-start justify-between mb-4">
 					<div class="flex-1">
 						<h2 class="text-lg font-bold text-slate-800 mb-1">机组A日巡 · W33-1</h2>
 						<p class="text-sm text-slate-600">日期：2025-08-22 · 当前时窗：12:00–13:00</p>
 					</div>
-					<a href="task-list-aggregate_with-sessionbar_step2.html" class="px-3 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-200">
+					<a
+						href="task-list-aggregate_with-sessionbar_step2.html"
+						class="px-3 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded hover:bg-slate-200"
+					>
 						返回列表
 					</a>
 				</div>
@@ -52,20 +61,26 @@
 					<div class="bg-slate-50 rounded-xl p-3">
 						<div class="text-xs text-slate-500 mb-2">总体完成率</div>
 						<div class="w-full bg-slate-200 rounded-full h-2 mb-2">
-							<div class="bg-blue-500 h-2 rounded-full" style="width: 45%"></div>
+							<div class="h-2 rounded-full" style="width: 45%; background-color: #2563eb"></div>
 						</div>
 						<div class="text-xs text-slate-600">5/11 已完成 · 1 逾期</div>
 					</div>
 					<div class="bg-slate-50 rounded-xl p-3">
 						<div class="text-xs text-slate-500 mb-2">PPE/SSP/SOP</div>
 						<div class="flex flex-wrap gap-1">
-							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+							<span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700"
+							>
 								PPE ✓
 							</span>
-							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+							<span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700"
+							>
 								SSP ✓
 							</span>
-							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+							<span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700"
+							>
 								SOP ✓
 							</span>
 						</div>
@@ -74,53 +89,74 @@
 			</div>
 
 			<!-- 设备清单（按顺序） -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<h3 class="font-semibold text-slate-800 mb-3">设备清单（按路线顺序）</h3>
 				<div class="space-y-3">
 					<div class="flex items-center justify-between py-2 border-b border-dashed border-slate-200">
 						<div class="flex items-center space-x-3">
-							<div class="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">
+							<div
+								class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+								style="background-color: #eff6ff; color: #2563eb"
+							>
 								1
 							</div>
 							<span class="text-sm font-medium text-slate-800">供水泵#1</span>
 						</div>
-						<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+						<span
+							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
+							style="background-color: #eff6ff; color: #2563eb"
+						>
 							可开始
 						</span>
 					</div>
 
 					<div class="flex items-center justify-between py-2 border-b border-dashed border-slate-200">
 						<div class="flex items-center space-x-3">
-							<div class="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">
+							<div
+								class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+								style="background-color: #eff6ff; color: #2563eb"
+							>
 								2
 							</div>
 							<span class="text-sm font-medium text-slate-800">供水泵#2</span>
 						</div>
-						<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+						<span
+							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+						>
 							未到
 						</span>
 					</div>
 
 					<div class="flex items-center justify-between py-2 border-b border-dashed border-slate-200">
 						<div class="flex items-center space-x-3">
-							<div class="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">
+							<div
+								class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+								style="background-color: #eff6ff; color: #2563eb"
+							>
 								3
 							</div>
 							<span class="text-sm font-medium text-slate-800">冷却塔#1</span>
 						</div>
-						<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+						<span
+							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700"
+						>
 							逾期
 						</span>
 					</div>
 
 					<div class="flex items-center justify-between py-2">
 						<div class="flex items-center space-x-3">
-							<div class="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">
+							<div
+								class="w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold"
+								style="background-color: #eff6ff; color: #2563eb"
+							>
 								4
 							</div>
 							<span class="text-sm font-medium text-slate-800">配电柜A</span>
 						</div>
-						<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
+						<span
+							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700"
+						>
 							进行中
 						</span>
 					</div>
@@ -128,16 +164,23 @@
 			</div>
 
 			<!-- 顺序提示 -->
-			<div class="bg-blue-50 border border-blue-200 rounded-2xl p-4">
+			<div class="rounded-lg p-4" style="background-color: #eff6ff; border: 1px solid #bfdbfe">
 				<div class="flex items-start space-x-3">
-					<div class="w-5 h-5 text-blue-600 mt-0.5">
+					<div class="w-5 h-5 mt-0.5" style="color: #2563eb">
 						<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+							/>
 						</svg>
 					</div>
 					<div>
-						<h4 class="font-semibold text-blue-800 mb-1">顺序提示</h4>
-						<p class="text-sm text-blue-700">本计划要求按路线顺序执行；若越站将触发拦截与审批（演示文案）。</p>
+						<h4 class="font-semibold mb-1" style="color: #1e40af">顺序提示</h4>
+						<p class="text-sm" style="color: #2563eb">
+							本计划要求按路线顺序执行；若越站将触发拦截与审批（演示文案）。
+						</p>
 					</div>
 				</div>
 			</div>
@@ -146,10 +189,19 @@
 		<!-- 底部操作栏 -->
 		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="px-4 py-3 flex space-x-3">
-				<a href="task-list-aggregate_with-sessionbar_step2.html" class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 text-center">
+				<a
+					href="task-list-aggregate_with-sessionbar_step2.html"
+					class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 text-center"
+				>
 					返回任务列表
 				</a>
-				<a href="task-list-aggregate_with-sessionbar_step2.html" class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 text-center">
+				<a
+					href="task-list-aggregate_with-sessionbar_step2.html"
+					class="flex-1 py-3 text-white font-medium rounded text-center"
+					style="background-color: #2563eb"
+					onmouseover="this.style.backgroundColor='#1D4ED8'"
+					onmouseout="this.style.backgroundColor='#2563EB'"
+				>
 					开始巡检
 				</a>
 			</div>

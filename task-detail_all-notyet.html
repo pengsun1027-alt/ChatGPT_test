@@ -41,7 +41,7 @@
 				</div>
 				<div class="text-xs text-slate-500">请先到点扫码，完成位置与时间校验</div>
 			</div>
-			<button class="px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-lg hover:bg-blue-600">
+			<button class="px-3 py-1 text-white text-xs font-medium rounded" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
 				去扫码
 			</button>
 		</div>
@@ -71,7 +71,7 @@
 					<span class="text-xs text-slate-500">时窗列表</span>
 				</div>
 				<div class="flex flex-wrap gap-2">
-					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700 border border-blue-200">
+					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border" style="background-color: #dbeafe; color: #2563EB; border-color: #93c5fd;">
 						08:00–09:00 · 未到时间
 					</span>
 					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">
@@ -91,7 +91,7 @@
 				</div>
 				<p class="text-sm text-slate-600 mb-3">1) 以测温枪对电机壳体三点求平均；2) 抄录运行电流；3) 测振沿轴/径两向取平均。</p>
 				<label class="flex items-center space-x-2">
-					<input type="checkbox" disabled class="form-checkbox h-4 w-4 text-blue-600" />
+					<input type="checkbox" disabled class="form-checkbox h-4 w-4" style="color: #2563EB;" />
 					<span class="text-sm text-slate-600">我已知悉操作步骤与风险</span>
 				</label>
 			</div>
@@ -112,7 +112,7 @@
 							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
 								未到时间
 							</span>
-							<button class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded-lg" disabled>
+							<button class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded" disabled>
 								开始记录
 							</button>
 						</div>
@@ -127,7 +127,7 @@
 							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
 								未到时间
 							</span>
-							<button class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded-lg" disabled>
+							<button class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded" disabled>
 								开始记录
 							</button>
 						</div>
@@ -142,7 +142,7 @@
 							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
 								未到时间
 							</span>
-							<button class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded-lg" disabled>
+							<button class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded" disabled>
 								开始记录
 							</button>
 						</div>
@@ -154,10 +154,10 @@
 		<!-- 底部操作栏 -->
 		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="px-4 py-3 flex space-x-3">
-				<button class="flex-1 py-3 bg-red-500 text-white font-medium rounded-lg hover:bg-red-600">
+				<button class="flex-1 py-3 bg-red-500 text-white font-medium rounded hover:bg-red-600">
 					异常报修
 				</button>
-				<button class="flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded-lg" disabled>
+				<button class="flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded" disabled>
 					开始记录
 				</button>
 			</div>

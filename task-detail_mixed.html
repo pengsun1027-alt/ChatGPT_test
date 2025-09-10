@@ -46,7 +46,7 @@
 						<div id="scan-desc" class="text-xs text-slate-500">请先到点扫码，完成位置与时间校验</div>
 					</div>
 				</div>
-				<a class="px-3 py-1 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600" href="#">
+				<a class="px-3 py-1 text-white text-sm font-medium rounded" href="#" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
 					去扫码
 				</a>
 			</div>
@@ -83,7 +83,7 @@
 					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
 						08:00–09:00 · 逾期
 					</span>
-					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium" style="background-color: #dbeafe; color: #2563EB;">
 						12:00–13:00 · 可开始
 					</span>
 					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
@@ -113,7 +113,7 @@
 							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
 								逾期
 							</span>
-							<a class="px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-lg hover:bg-blue-600" href="task-form_overdue.html">
+							<a class="px-3 py-1 text-white text-xs font-medium rounded" href="task-form_overdue.html" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
 								开始记录
 							</a>
 						</div>
@@ -130,7 +130,7 @@
 							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
 								逾期
 							</span>
-							<a class="px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-lg hover:bg-blue-600" href="task-form_overdue.html">
+							<a class="px-3 py-1 text-white text-xs font-medium rounded" href="task-form_overdue.html" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
 								开始记录
 							</a>
 						</div>
@@ -147,7 +147,7 @@
 							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
 								逾期
 							</span>
-							<a class="px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-lg hover:bg-blue-600" href="task-form_overdue.html">
+							<a class="px-3 py-1 text-white text-xs font-medium rounded" href="task-form_overdue.html" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
 								开始记录
 							</a>
 						</div>
@@ -159,10 +159,10 @@
 		<!-- 底部操作栏 -->
 		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="px-4 py-3 flex space-x-3">
-				<a class="flex-1 py-3 bg-red-500 text-white font-medium rounded-lg text-center hover:bg-red-600 active:bg-red-700" href="#">
+				<a class="flex-1 py-3 bg-red-500 text-white font-medium rounded text-center active:bg-red-700" href="#">
 					异常报修
 				</a>
-				<a class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg text-center hover:bg-blue-600 active:bg-blue-700" href="task-form.html">
+				<a class="flex-1 py-3 text-white font-medium rounded text-center active:bg-blue-800" href="task-form.html" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
 					开始记录
 				</a>
 			</div>
@@ -181,10 +181,10 @@
 				</div>
 				<textarea id="dev-reason" class="w-full min-h-20 border border-slate-300 rounded-lg p-3 text-sm resize-none" placeholder="请补充具体原因（必填）"></textarea>
 				<div class="flex space-x-3 mt-4">
-					<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200" onclick="closeDevUnavail()">
+					<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200" onclick="closeDevUnavail()">
 						取消
 					</button>
-					<button class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600" onclick="submitDevUnavail()">
+					<button class="flex-1 py-3 text-white font-medium rounded" onclick="submitDevUnavail()" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
 						提交
 					</button>
 				</div>
@@ -203,10 +203,10 @@
 				</div>
 				<textarea id="proj-reason" class="w-full min-h-20 border border-slate-300 rounded-lg p-3 text-sm resize-none" placeholder="请补充具体原因（必填）"></textarea>
 				<div class="flex space-x-3 mt-4">
-					<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200" onclick="closeProjUnavail()">
+					<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200" onclick="closeProjUnavail()">
 						取消
 					</button>
-					<button class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600" onclick="submitProjUnavail()">
+					<button class="flex-1 py-3 text-white font-medium rounded" onclick="submitProjUnavail()" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
 						提交
 					</button>
 				</div>

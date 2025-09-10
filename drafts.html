@@ -12,7 +12,8 @@
 
 		<style>
 			body {
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+					sans-serif;
 				background: #f7f8fa;
 			}
 			.safe-bottom {
@@ -22,16 +23,23 @@
 	</head>
 	<body>
 		<!-- 顶部导航栏 -->
-		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+		<header
+			class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50"
+		>
 			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 				</svg>
 			</button>
 			<h1 class="text-base font-semibold">草稿箱</h1>
 			<button class="w-8 h-8 flex items-center justify-center">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zM12 13a1 1 0 110-2 1 1 0 010 2zM12 20a1 1 0 110-2 1 1 0 010 2z"/>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zM12 13a1 1 0 110-2 1 1 0 010 2zM12 20a1 1 0 110-2 1 1 0 010 2z"
+					/>
 				</svg>
 			</button>
 		</header>
@@ -43,17 +51,17 @@
 				<div class="flex items-center">
 					<div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-3">
 						<svg class="w-4 h-4 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
-							<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+							<path
+								d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+							/>
 						</svg>
 					</div>
-					<div class="text-sm text-orange-800">
-						离线中：暂不可提交，仅可删除或编辑
-					</div>
+					<div class="text-sm text-orange-800">离线中：暂不可提交，仅可删除或编辑</div>
 				</div>
 			</div>
 
 			<!-- 任务草稿卡片 -->
-			<div class="bg-white rounded-2xl shadow-sm">
+			<div class="bg-white rounded-lg shadow-sm">
 				<div class="px-4 py-4 border-b border-slate-100">
 					<div class="flex items-center justify-between">
 						<h3 class="font-semibold text-slate-800">任务草稿（3）</h3>
@@ -71,7 +79,9 @@
 							<div class="flex items-center space-x-2">
 								<div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
 									<svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-										<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+										<path
+											d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+										/>
 									</svg>
 								</div>
 								<div>
@@ -81,10 +91,14 @@
 							</div>
 						</div>
 						<div class="flex items-center space-x-2">
-							<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+							<button
+								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
+							>
 								编辑
 							</button>
-							<button class="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-lg hover:bg-red-200">
+							<button
+								class="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded hover:bg-red-200"
+							>
 								删除
 							</button>
 						</div>
@@ -96,7 +110,9 @@
 							<div class="flex items-center space-x-2">
 								<div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
 									<svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 24 24">
-										<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+										<path
+											d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+										/>
 									</svg>
 								</div>
 								<div>
@@ -106,10 +122,14 @@
 							</div>
 						</div>
 						<div class="flex items-center space-x-2">
-							<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+							<button
+								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
+							>
 								编辑
 							</button>
-							<button class="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-lg hover:bg-red-200">
+							<button
+								class="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded hover:bg-red-200"
+							>
 								删除
 							</button>
 						</div>
@@ -121,7 +141,9 @@
 							<div class="flex items-center space-x-2">
 								<div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
 									<svg class="w-4 h-4 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
-										<path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+										<path
+											d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"
+										/>
 									</svg>
 								</div>
 								<div>
@@ -131,10 +153,14 @@
 							</div>
 						</div>
 						<div class="flex items-center space-x-2">
-							<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+							<button
+								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
+							>
 								编辑
 							</button>
-							<button class="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-lg hover:bg-red-200">
+							<button
+								class="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded hover:bg-red-200"
+							>
 								删除
 							</button>
 						</div>
@@ -155,7 +181,9 @@
 							<div class="flex items-center space-x-2">
 								<div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
 									<svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 24 24">
-										<path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+										<path
+											d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"
+										/>
 									</svg>
 								</div>
 								<div>
@@ -165,10 +193,14 @@
 							</div>
 						</div>
 						<div class="flex items-center space-x-2">
-							<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+							<button
+								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
+							>
 								编辑
 							</button>
-							<button class="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-lg hover:bg-red-200">
+							<button
+								class="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded hover:bg-red-200"
+							>
 								删除
 							</button>
 						</div>
@@ -181,7 +213,12 @@
 				<div class="text-center py-16">
 					<div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
 						<svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+							/>
 						</svg>
 					</div>
 					<h3 class="text-slate-800 font-semibold mb-2">暂无草稿</h3>
@@ -193,10 +230,17 @@
 		<!-- 底部操作栏 -->
 		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="px-4 py-3 flex space-x-3">
-				<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 active:bg-slate-300">
+				<button
+					class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 active:bg-slate-300"
+				>
 					删除所选
 				</button>
-				<button id="submit" class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 active:bg-blue-700 disabled:bg-slate-300 disabled:text-slate-500" onclick="submit()" disabled>
+				<button
+				id="submit"
+				class="flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded"
+				onclick="submit()"
+				disabled
+			>
 					提交所选
 				</button>
 			</div>
@@ -214,7 +258,15 @@
 			document.querySelectorAll('.chk').forEach((c) => c.addEventListener('change', lock));
 			function lock() {
 				const any = [...document.querySelectorAll('.chk')].some((c) => c.checked);
-				document.getElementById('submit').disabled = !any;
+				const submitBtn = document.getElementById('submit');
+				submitBtn.disabled = !any;
+				if (!any) {
+					submitBtn.className = 'flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded';
+					submitBtn.style.backgroundColor = '';
+				} else {
+					submitBtn.className = 'flex-1 py-3 text-white font-medium rounded hover:bg-blue-700 active:bg-blue-800';
+					submitBtn.style.backgroundColor = '#2563eb';
+				}
 			}
 			function submit() {
 				alert('提交成功：3 条');

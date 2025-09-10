@@ -61,7 +61,7 @@
 				<div class="mb-4">
 					<label class="block text-sm font-medium text-slate-600 mb-2">数值记录</label>
 					<div class="flex items-center space-x-2">
-						<input id="temp" type="text" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="请输入数值 (建议范围：60-80°C)" value="72" />
+						<input id="temp" type="text" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:border-blue-500" style="--tw-ring-color: #2563EB;" placeholder="请输入数值 (建议范围：60-80°C)" value="72" />
 						<span class="text-sm text-slate-500">°C</span>
 					</div>
 				</div>
@@ -85,7 +85,7 @@
 					<button class="text-sm text-slate-500 underline" onclick="openCant('项目1：电机温度')">
 						无法完成
 					</button>
-					<button id="btn-temp" class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600" onclick="submitTemp()">
+					<button id="btn-temp" class="px-4 py-2 text-white text-sm font-medium rounded" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'" onclick="submitTemp()">
 						提交项目
 					</button>
 				</div>
@@ -103,7 +103,7 @@
 				<div class="mb-4">
 					<label class="block text-sm font-medium text-slate-600 mb-2">数值记录</label>
 					<div class="flex items-center space-x-2">
-						<input id="amp" type="text" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="请输入数值 (建议范围：15-25A)" />
+						<input id="amp" type="text" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:border-blue-500" style="--tw-ring-color: #2563EB;" placeholder="请输入数值 (建议范围：15-25A)" />
 						<span class="text-sm text-slate-500">A</span>
 					</div>
 				</div>
@@ -127,7 +127,7 @@
 					<button class="text-sm text-slate-500 underline" onclick="openCant('项目2：运行电流')">
 						无法完成
 					</button>
-					<button id="btn-amp" class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600" onclick="submitAmp()">
+					<button id="btn-amp" class="px-4 py-2 text-white text-sm font-medium rounded" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'" onclick="submitAmp()">
 						提交项目
 					</button>
 				</div>
@@ -145,7 +145,7 @@
 				<div class="mb-4">
 					<label class="block text-sm font-medium text-slate-600 mb-2">数值记录</label>
 					<div class="flex items-center space-x-2">
-						<input id="vib" type="text" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="请输入数值 (建议范围：< 2.5mm/s)" />
+						<input id="vib" type="text" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:border-blue-500" style="--tw-ring-color: #2563EB;" placeholder="请输入数值 (建议范围：< 2.5mm/s)" />
 						<span class="text-sm text-slate-500">mm/s</span>
 					</div>
 				</div>
@@ -169,7 +169,7 @@
 					<button class="text-sm text-slate-500 underline" onclick="openCant('项目3：轴承振动')">
 						无法完成
 					</button>
-					<button id="btn-vib" class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600" onclick="submitVib()">
+					<button id="btn-vib" class="px-4 py-2 text-white text-sm font-medium rounded" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'" onclick="submitVib()">
 						提交项目
 					</button>
 				</div>
@@ -186,12 +186,12 @@
 
 				<div class="mb-4">
 					<label class="block text-sm font-medium text-slate-600 mb-2">本次巡检总结</label>
-					<textarea id="remark" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-20 resize-none" placeholder="请填写本次巡检的整体情况"></textarea>
+					<textarea id="remark" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:border-blue-500 min-h-20 resize-none" style="--tw-ring-color: #2563EB;" placeholder="请填写本次巡检的整体情况"></textarea>
 					<div class="text-xs text-slate-500 mt-1">必填项</div>
 				</div>
 
 				<div class="flex justify-end">
-					<button id="btn-rmk" class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600" onclick="submitRmk()">
+					<button id="btn-rmk" class="px-4 py-2 text-white text-sm font-medium rounded" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'" onclick="submitRmk()">
 						提交备注
 					</button>
 				</div>
@@ -201,10 +201,10 @@
 		<!-- 底部操作栏 -->
 		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="px-4 py-3 flex space-x-3">
-				<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 active:bg-slate-300" onclick="saveDraft()">
+				<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 active:bg-slate-300" onclick="saveDraft()">
 					保存草稿
 				</button>
-				<button id="submitAll" class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 active:bg-blue-700 disabled:bg-slate-300 disabled:text-slate-500" onclick="submitForm()" disabled>
+				<button id="submitAll" class="flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded" onclick="submitForm()" disabled>
 					提交
 				</button>
 			</div>
@@ -222,10 +222,10 @@
 				</div>
 				<textarea id="cant-reason" class="w-full min-h-20 border border-slate-300 rounded-lg p-3 text-sm resize-none" placeholder="请补充具体原因（必填）"></textarea>
 				<div class="flex space-x-3 mt-4">
-					<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200" onclick="closeCant()">
+					<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200" onclick="closeCant()">
 						取消
 					</button>
-					<button class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600" onclick="submitCant()">
+					<button class="flex-1 py-3 text-white font-medium rounded" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'" onclick="submitCant()">
 						提交原因
 					</button>
 				</div>
@@ -255,7 +255,15 @@
 
 			function lockAll() {
 				const all = ['tag-temp', 'tag-amp', 'tag-vib', 'tag-rmk'].every(sectionDone);
-				document.getElementById('submitAll').disabled = !all;
+				const submitAllBtn = document.getElementById('submitAll');
+				submitAllBtn.disabled = !all;
+				if (!all) {
+					submitAllBtn.className = 'flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded';
+					submitAllBtn.style.backgroundColor = '';
+				} else {
+					submitAllBtn.className = 'flex-1 py-3 text-white font-medium rounded hover:opacity-90 active:opacity-75';
+					submitAllBtn.style.backgroundColor = '#2563eb';
+				}
 			}
 
 			function submitTemp() {

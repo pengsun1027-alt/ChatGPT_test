@@ -31,65 +31,66 @@
 
 		<main class="mt-12 p-4 space-y-4">
 			<!-- 主题概览（保持内容不变） -->
-			<section class="bg-white rounded-2xl shadow-sm overflow-hidden">
-				<div class="bg-gradient-to-br from-indigo-400 to-purple-600 text-white p-6 pb-4">
-					<div class="text-xl font-semibold">设备巡检系统</div>
-					<div class="text-sm/6 opacity-90">移动端设计规范 v1.0</div>
+			<section class="bg-white rounded-lg shadow-sm overflow-hidden">
+				<div class="text-white p-6 pb-4" style="background-color: #2563eb">
+					<div class="text-xl font-semibold">工业移动巡检应用</div>
+					<div class="text-sm/6 opacity-90">Design Guideline v1.0</div>
 				</div>
 				<div class="p-6">
 					<p class="text-sm text-slate-600">
-						蓝青系主题，以专业、清晰、高效为设计理念，为设备巡检人员提供优秀的移动端体验。
+						功能优先 · 简洁克制 · 专业可靠。为工业设备巡检人员在复杂环境中提供清晰、高效的移动端操作界面。
 					</p>
 				</div>
 			</section>
 
 			<!-- 设计基线（颜色、字体、圆角、间距、触控命中区、状态色、图标说明） -->
-			<section class="bg-white rounded-2xl shadow-sm overflow-hidden">
+			<section class="bg-white rounded-lg shadow-sm overflow-hidden">
 				<div class="p-6 space-y-6">
 					<!-- 主色彩 -->
 					<div class="space-y-3">
 						<div class="flex items-center text-slate-800 font-semibold text-sm">
 							<span
-								class="w-5 h-5 rounded bg-indigo-500 text-white text-[10px] grid place-items-center mr-2"
+								class="w-5 h-5 rounded text-white text-[10px] grid place-items-center mr-2"
+								style="background-color: #2563eb"
 								>🎨</span
 							>
-							主色彩 (Design Tokens)
+							主色彩系统 (单主色策略)
 						</div>
 						<div class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3">
 							<!-- 每个色块 -->
 							<div class="text-center">
 								<div
-									class="h-12 rounded-lg flex items-center justify-center text-white text-xs font-semibold"
-									style="background: #2b6fff"
+									class="h-12 rounded flex items-center justify-center text-white text-xs font-semibold"
+									style="background: #2563eb"
 								>
 									Primary
 								</div>
-								<div class="text-[13px] font-semibold text-slate-800 mt-2">主色</div>
-								<div class="text-[11px] text-slate-500 font-mono">#2B6FFF</div>
+								<div class="text-[13px] font-semibold text-slate-800 mt-2">主品牌色</div>
+								<div class="text-[11px] text-slate-500 font-mono">#2563EB</div>
 							</div>
 							<div class="text-center">
 								<div
-									class="h-12 rounded-lg flex items-center justify-center text-white text-xs font-semibold"
-									style="background: #1c54f0"
+									class="h-12 rounded flex items-center justify-center text-white text-xs font-semibold"
+									style="background: #1d4ed8"
 								>
-									Active
+									Hover
 								</div>
-								<div class="text-[13px] font-semibold text-slate-800 mt-2">主色激活</div>
-								<div class="text-[11px] text-slate-500 font-mono">#1C54F0</div>
+								<div class="text-[13px] font-semibold text-slate-800 mt-2">悬停状态</div>
+								<div class="text-[11px] text-slate-500 font-mono">#1D4ED8</div>
 							</div>
 							<div class="text-center">
 								<div
-									class="h-12 rounded-lg flex items-center justify-center text-xs font-semibold"
-									style="background: #e8eeff; color: #333"
+									class="h-12 rounded flex items-center justify-center text-xs font-semibold"
+									style="background: #eff6ff; color: #2563eb"
 								>
-									Subtle
+									Light
 								</div>
 								<div class="text-[13px] font-semibold text-slate-800 mt-2">主色浅色</div>
-								<div class="text-[11px] text-slate-500 font-mono">#E8EEFF</div>
+								<div class="text-[11px] text-slate-500 font-mono">#EFF6FF</div>
 							</div>
 							<div class="text-center">
 								<div
-									class="h-12 rounded-lg flex items-center justify-center text-white text-xs font-semibold"
+									class="h-12 rounded flex items-center justify-center text-white text-xs font-semibold"
 									style="background: #22c55e"
 								>
 									Success
@@ -99,7 +100,7 @@
 							</div>
 							<div class="text-center">
 								<div
-									class="h-12 rounded-lg flex items-center justify-center text-white text-xs font-semibold"
+									class="h-12 rounded flex items-center justify-center text-white text-xs font-semibold"
 									style="background: #f59e0b"
 								>
 									Warning
@@ -109,7 +110,7 @@
 							</div>
 							<div class="text-center">
 								<div
-									class="h-12 rounded-lg flex items-center justify-center text-white text-xs font-semibold"
+									class="h-12 rounded flex items-center justify-center text-white text-xs font-semibold"
 									style="background: #ef4444"
 								>
 									Danger
@@ -119,7 +120,7 @@
 							</div>
 							<div class="text-center">
 								<div
-									class="h-12 rounded-lg flex items-center justify-center text-white text-xs font-semibold"
+									class="h-12 rounded flex items-center justify-center text-white text-xs font-semibold"
 									style="background: #06b6d4"
 								>
 									Info
@@ -134,7 +135,7 @@
 							<div class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
 								<div class="text-center">
 									<div
-										class="h-12 rounded-lg flex items-center justify-center text-white text-xs font-semibold"
+										class="h-12 rounded flex items-center justify-center text-white text-xs font-semibold"
 										style="background: #0f172a"
 									>
 										Text
@@ -144,7 +145,7 @@
 								</div>
 								<div class="text-center">
 									<div
-										class="h-12 rounded-lg flex items-center justify-center text-white text-xs font-semibold"
+										class="h-12 rounded flex items-center justify-center text-white text-xs font-semibold"
 										style="background: #334155"
 									>
 										Text-2
@@ -154,7 +155,7 @@
 								</div>
 								<div class="text-center">
 									<div
-										class="h-12 rounded-lg flex items-center justify-center text-white text-xs font-semibold"
+										class="h-12 rounded flex items-center justify-center text-white text-xs font-semibold"
 										style="background: #64748b"
 									>
 										Muted
@@ -164,7 +165,7 @@
 								</div>
 								<div class="text-center">
 									<div
-										class="h-12 rounded-lg flex items-center justify-center text-white text-xs font-semibold"
+										class="h-12 rounded flex items-center justify-center text-white text-xs font-semibold"
 										style="background: #94a3b8"
 									>
 										Light
@@ -174,7 +175,7 @@
 								</div>
 								<div class="text-center">
 									<div
-										class="h-12 rounded-lg flex items-center justify-center text-xs font-semibold"
+										class="h-12 rounded flex items-center justify-center text-xs font-semibold"
 										style="background: #e2e8f0; color: #333"
 									>
 										Border
@@ -184,7 +185,7 @@
 								</div>
 								<div class="text-center">
 									<div
-										class="h-12 rounded-lg flex items-center justify-center text-xs font-semibold"
+										class="h-12 rounded flex items-center justify-center text-xs font-semibold"
 										style="background: #f8fafc; color: #333"
 									>
 										BG
@@ -252,9 +253,9 @@
 							圆角与阴影
 						</div>
 						<ul class="list-disc pl-5 text-sm text-slate-600 space-y-2">
-							<li><strong>卡片圆角：</strong> 12px</li>
-							<li><strong>按钮圆角：</strong> 12px</li>
-							<li><strong>输入框圆角：</strong> 10px</li>
+							<li><strong>卡片圆角：</strong> 8px</li>
+							<li><strong>按钮圆角：</strong> 4px</li>
+							<li><strong>输入框圆角：</strong> 4px</li>
 							<li>
 								<strong>卡片阴影：</strong>
 								<code class="bg-slate-100 px-1.5 py-0.5 rounded">0 6px 16px rgba(16,24,40,0.06)</code>
@@ -367,65 +368,87 @@
 			</section>
 
 			<!-- 组件示例（用 Tailwind 还原：按钮、标签、徽章） -->
-			<section class="bg-white rounded-2xl shadow-sm overflow-hidden">
+			<section class="bg-white rounded-lg shadow-sm overflow-hidden">
 				<div class="p-6 space-y-6">
 					<div class="flex items-center text-slate-800 font-semibold text-sm">
-						<span class="w-5 h-5 rounded bg-indigo-500 text-white text-[10px] grid place-items-center mr-2"
+						<span
+							class="w-5 h-5 rounded text-white text-[10px] grid place-items-center mr-2"
+							style="background-color: #2563eb"
 							>🧩</span
 						>
-						组件示例
+						按钮与标签示例
 					</div>
 
-					<!-- 按钮 -->
+					<!-- 操作按钮：微圆角 -->
 					<div>
-						<div class="text-xs text-slate-500 mb-2">按钮</div>
+						<div class="text-xs text-slate-500 mb-2">操作按钮 (微圆角 rounded)</div>
 						<div class="flex flex-wrap gap-2">
 							<button
-								class="px-3.5 h-9 rounded-xl bg-[#2b6fff] text-white text-sm font-medium shadow hover:opacity-95"
+								class="px-3.5 h-9 rounded text-white text-sm font-medium shadow hover:opacity-95"
+								style="background-color: #2563eb"
 							>
-								主要按钮
+								进入
 							</button>
 							<button
-								class="px-3.5 h-9 rounded-xl bg-white text-slate-700 ring-1 ring-slate-200 text-sm font-medium hover:bg-slate-50"
+								class="px-3.5 h-9 rounded bg-slate-100 text-slate-700 text-sm font-medium hover:bg-slate-200"
 							>
-								次要按钮
+								查看
 							</button>
 							<button
-								class="px-3.5 h-9 rounded-xl bg-[#ef4444] text-white text-sm font-medium shadow hover:opacity-95"
+								class="px-3.5 h-9 rounded bg-red-600 text-white text-sm font-medium shadow hover:opacity-95"
 							>
-								危险按钮
-							</button>
-							<button
-								class="px-3.5 h-9 rounded-xl border border-slate-300 text-slate-700 text-sm font-medium bg-transparent"
-							>
-								线性按钮
+								异常报修
 							</button>
 						</div>
 					</div>
 
-					<!-- 标签 -->
+					<!-- 切换按钮：完全圆角 -->
 					<div>
-						<div class="text-xs text-slate-500 mb-2">标签</div>
+						<div class="text-xs text-slate-500 mb-2">切换按钮 (完全圆角 rounded-full)</div>
+						<div class="flex flex-wrap gap-2">
+							<button
+								class="px-4 py-2 rounded-full text-white text-sm font-medium"
+								style="background-color: #2563eb"
+							>
+								全部
+							</button>
+							<button
+								class="px-4 py-2 rounded-full bg-slate-100 text-slate-600 text-sm font-medium hover:bg-slate-200"
+							>
+								可开始
+							</button>
+							<button
+								class="px-4 py-2 rounded-full bg-slate-100 text-slate-600 text-sm font-medium hover:bg-slate-200"
+							>
+								进行中
+							</button>
+						</div>
+					</div>
+
+					<!-- 状态标签：完全圆角 + 语义化颜色 -->
+					<div>
+						<div class="text-xs text-slate-500 mb-2">状态标签 (完全圆角 rounded-full)</div>
 						<div class="flex flex-wrap gap-2">
 							<span
-								class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium bg-[#e8eeff] text-[#2b6fff]"
-								>巡检中</span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100"
+								style="color: #2563eb"
+								>可开始</span
 							>
 							<span
-								class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium bg-[#dcfce7] text-[#16a34a]"
-								>已完成</span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700"
+								>在办</span
 							>
 							<span
-								class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium bg-[#fef3c7] text-[#b45309]"
-								>草稿</span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700"
+								>处理中</span
 							>
 							<span
-								class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium bg-[#fee2e2] text-[#b91c1c]"
-								>异常</span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700"
+								>逾期</span
 							>
 							<span
-								class="inline-flex items-center h-7 px-2.5 rounded-full text-xs font-medium border border-slate-300 text-slate-700"
-								>待处理</span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+								>未到</span
 							>
 						</div>
 					</div>

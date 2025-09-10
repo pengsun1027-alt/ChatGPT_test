@@ -56,7 +56,8 @@
 				</div>
 				<a
 					id="ppeBtn"
-					class="px-3 py-1 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600"
+					class="px-3 py-1 text-white text-sm font-medium rounded hover:bg-blue-700"
+					style="background-color: #2563eb"
 					href="ppe-session.html?from=task-list-aggregate.html"
 				>
 					去采集
@@ -67,7 +68,10 @@
 		<!-- 筛选栏 -->
 		<div class="fixed inset-x-0 top-28 bg-white border-b border-slate-200 z-30">
 			<div class="flex space-x-1 px-4 py-3 overflow-x-auto">
-				<button class="px-4 py-2 text-sm font-medium rounded-full bg-blue-500 text-white whitespace-nowrap">
+				<button
+					class="px-4 py-2 text-sm font-medium rounded-full text-white whitespace-nowrap"
+					style="background-color: #2563eb"
+				>
 					全部
 				</button>
 				<button
@@ -91,7 +95,7 @@
 		<!-- 主要内容区域 -->
 		<main class="mt-44 px-4 pb-6 space-y-4">
 			<!-- 设备聚合卡片 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-start justify-between mb-4">
 					<div class="flex-1">
 						<div class="flex items-center space-x-2 mb-1">
@@ -113,7 +117,7 @@
 					<div class="relative">
 						<button
 							id="moreBtn"
-							class="px-3 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-200"
+							class="px-3 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded hover:bg-slate-200"
 							onclick="toggleMore()"
 						>
 							更多
@@ -144,7 +148,7 @@
 					</div>
 					<div class="flex space-x-2">
 						<a
-							class="px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-200 need-ppe"
+							class="px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded hover:bg-slate-200 need-ppe"
 							data-action="detail"
 							href="task-detail_mixed.html"
 						>
@@ -152,7 +156,8 @@
 						</a>
 						<button
 							id="claimBtn"
-							class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 need-ppe"
+							class="px-4 py-2 text-white text-sm font-medium rounded hover:bg-blue-700 need-ppe"
+							style="background-color: #2563eb"
 							data-action="claim"
 						>
 							本设备全部领取
@@ -319,10 +324,11 @@
 				const disabled = state === 'NOT_YET' || state === 'DONE';
 				const buttonText = disabled ? '查看' : '进入';
 				const buttonClass = disabled
-					? 'px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200'
-					: 'px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-lg hover:bg-blue-600';
+					? 'px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200'
+					: 'px-3 py-1 text-white text-xs font-medium rounded hover:bg-blue-700';
+				const buttonStyle = disabled ? '' : ' style="background-color: #2563EB;"';
 				const href = disabled ? 'task-detail_all-notyet.html' : 'task-detail_mixed.html';
-				return `<a class="${buttonClass} need-ppe" href="${href}">${buttonText}</a>`;
+				return `<a class="${buttonClass} need-ppe" href="${href}"${buttonStyle}>${buttonText}</a>`;
 			}
 
 			// 更新统计数据
@@ -332,7 +338,7 @@
 			const sOver = rows.filter((x) => x.state === 'OVERDUE').length;
 
 			let statHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">未到 ${sNotYet}</span>`;
-			statHtml += `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">在办 ${sOpen}</span>`;
+			statHtml += `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">在办 ${sOpen}</span>`;
 			if (sOver > 0) {
 				statHtml += `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">逾期 ${sOver}</span>`;
 			}
@@ -349,13 +355,13 @@
 
 				toShow.forEach((r) => {
 					const row = document.createElement('div');
-					row.className = 'flex items-center justify-between p-3 border border-slate-200 rounded-lg';
+					row.className = 'flex items-center justify-between p-2 border-b border-slate-200 last:border-b-0';
 					row.innerHTML = `
 						<div class="flex-1 min-w-0">
-							<div class="text-sm font-medium text-slate-800">${r.p.name}</div>
-							<div class="text-xs text-slate-500">${r.w.start}–${r.w.end}</div>
+							<div class="text-base font-semibold text-slate-900">${r.p.name}</div>
+							<div class="text-xs text-slate-600 mt-1">${r.w.start}–${r.w.end}</div>
 						</div>
-						<div class="flex items-center space-x-2 ml-3">
+						<div class="flex items-center space-x-3 ml-3">
 							${getStatusBadge(r.state)}
 							${getActionButton(r.state)}
 						</div>

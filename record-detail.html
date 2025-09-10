@@ -12,7 +12,8 @@
 
 		<style>
 			body {
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+					sans-serif;
 				background: #f7f8fa;
 			}
 			.safe-bottom {
@@ -22,10 +23,12 @@
 	</head>
 	<body>
 		<!-- 顶部导航栏 -->
-		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+		<header
+			class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50"
+		>
 			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 				</svg>
 			</button>
 			<h1 class="text-base font-semibold">记录详情</h1>
@@ -35,24 +38,26 @@
 		<!-- 主要内容区域 -->
 		<main class="mt-14 px-4 pb-6 space-y-4">
 			<!-- 设备信息卡片 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-start justify-between">
 					<div class="flex-1">
 						<h2 class="text-lg font-bold text-slate-800 mb-1">供水泵#1 · 电机温度</h2>
 						<p class="text-sm text-slate-600">2025-08-18 10:15 · 执行人：张三 · 批次 2025W33</p>
 					</div>
-					<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+					<span
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700"
+					>
 						正常
 					</span>
 				</div>
 			</div>
 
 			<!-- 采集数据 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">采集数据</h3>
 				</div>
-				
+
 				<div class="space-y-3">
 					<div class="flex items-center justify-between py-2 border-b border-dashed border-slate-200">
 						<span class="text-sm text-slate-600">温度（°C）</span>
@@ -74,41 +79,45 @@
 			</div>
 
 			<!-- 现场图片 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">现场图片</h3>
 				</div>
-				
+
 				<div class="flex flex-wrap gap-3">
-					<div class="w-20 h-20 bg-slate-100 rounded-lg flex items-center justify-center text-xs text-slate-600 border border-slate-200">
+					<div
+						class="w-20 h-20 bg-slate-100 rounded-lg flex items-center justify-center text-xs text-slate-600 border border-slate-200"
+					>
 						IMG
 					</div>
-					<div class="w-20 h-20 bg-slate-100 rounded-lg flex items-center justify-center text-xs text-slate-600 border border-slate-200">
+					<div
+						class="w-20 h-20 bg-slate-100 rounded-lg flex items-center justify-center text-xs text-slate-600 border border-slate-200"
+					>
 						IMG
 					</div>
-					<div class="w-20 h-20 bg-slate-100 rounded-lg flex items-center justify-center text-xs text-slate-600 border border-slate-200">
+					<div
+						class="w-20 h-20 bg-slate-100 rounded-lg flex items-center justify-center text-xs text-slate-600 border border-slate-200"
+					>
 						IMG
 					</div>
 				</div>
 			</div>
 
 			<!-- 定位与审计 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">定位与审计</h3>
 				</div>
-				
-				<div class="text-sm text-slate-600">
-					到点时间：2025-08-18 10:12 · 坐标(31.23,121.47) · 距离 3m
-				</div>
+
+				<div class="text-sm text-slate-600">到点时间：2025-08-18 10:12 · 坐标(31.23,121.47) · 距离 3m</div>
 			</div>
 
 			<!-- 操作历史 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">操作历史</h3>
 				</div>
-				
+
 				<div class="space-y-3">
 					<div class="flex items-start space-x-3">
 						<div class="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
@@ -118,7 +127,7 @@
 						</div>
 					</div>
 					<div class="flex items-start space-x-3">
-						<div class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+						<div class="w-2 h-2 rounded-full mt-2 flex-shrink-0" style="background-color: #2563eb"></div>
 						<div class="flex-1">
 							<div class="text-sm font-medium text-slate-800">到点扫码</div>
 							<div class="text-xs text-slate-500">2025-08-18 10:12 · 张三</div>

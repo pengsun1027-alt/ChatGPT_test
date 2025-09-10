@@ -12,7 +12,8 @@
 
 		<style>
 			body {
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+					sans-serif;
 				background: #f7f8fa;
 			}
 			.safe-bottom {
@@ -22,10 +23,12 @@
 	</head>
 	<body>
 		<!-- 顶部导航栏 -->
-		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+		<header
+			class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50"
+		>
 			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 				</svg>
 			</button>
 			<h1 class="text-base font-semibold">点检执行 · 供水泵#1</h1>
@@ -42,7 +45,11 @@
 						<div id="scan-desc" class="text-xs text-slate-500">到点后解锁提交</div>
 					</div>
 				</div>
-				<button class="px-3 py-1 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600" onclick="toggleScan()">
+				<button
+					class="px-3 py-1 text-white text-sm font-medium rounded hover:opacity-90"
+					style="background-color: #2563eb"
+					onclick="toggleScan()"
+				>
 					去扫码
 				</button>
 			</div>
@@ -51,38 +58,60 @@
 		<!-- 主要内容区域 -->
 		<main class="mt-28 px-4 pb-20 space-y-4">
 			<!-- 实例选择卡片 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-3">
 					<h3 class="font-semibold text-slate-800">选择今日实例</h3>
 					<span class="text-xs text-slate-500">时窗</span>
 				</div>
 				<div id="chips" class="flex flex-wrap gap-2 mb-2">
-					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 cursor-pointer" data-key="08:00-09:00" data-state="DONE">
+					<span
+						class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 cursor-pointer"
+						data-key="08:00-09:00"
+						data-state="DONE"
+					>
 						08:00–09:00 · 已完成
 					</span>
-					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700 cursor-pointer active" data-key="12:00-13:00" data-state="OPEN">
+					<span
+						class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700 border border-blue-200 cursor-pointer active"
+						data-key="12:00-13:00"
+						data-state="OPEN"
+					>
 						12:00–13:00 · 可开始
 					</span>
-					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 cursor-pointer" data-key="18:00-19:00" data-state="NOT_YET">
+					<span
+						class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 cursor-pointer"
+						data-key="18:00-19:00"
+						data-state="NOT_YET"
+					>
 						18:00–19:00 · 未到时间
 					</span>
 				</div>
 				<div id="instTips" class="text-xs text-slate-500">当前实例：12:00–13:00 · 可开始</div>
 			</div>
 			<!-- 项目1：外观检查 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">外观检查</h3>
-					<span id="tag1" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+					<span
+						id="tag1"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+					>
 						未填
 					</span>
 				</div>
 
 				<div class="flex space-x-3 mb-3" data-name="p1" onclick="selectRadio(event)">
-					<button class="px-4 py-2 border border-blue-500 bg-blue-50 text-blue-700 rounded-full text-sm font-medium active" data-value="正常">
+					<button
+						class="px-4 py-2 border text-white rounded-full text-sm font-medium active"
+						style="background-color: #2563eb; border-color: #2563eb"
+						data-value="正常"
+					>
 						正常
 					</button>
-					<button class="px-4 py-2 border border-slate-300 text-slate-600 rounded-full text-sm font-medium" data-value="故障">
+					<button
+						class="px-4 py-2 border border-slate-300 text-slate-600 rounded-full text-sm font-medium"
+						data-value="故障"
+					>
 						故障
 					</button>
 				</div>
@@ -91,12 +120,27 @@
 
 				<div id="p1-extra" class="space-y-3 hidden">
 					<div>
-						<div class="text-sm font-medium text-slate-600 mb-2">现场照片 <span class="text-red-500">*</span></div>
+						<div class="text-sm font-medium text-slate-600 mb-2">
+							现场照片 <span class="text-red-500">*</span>
+						</div>
 						<div class="flex space-x-3" id="p1-photos" data-min="1" data-count="0">
-							<button class="w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-500 hover:border-slate-400" onclick="addPhoto('p1-photos')">
+							<button
+								class="w-20 h-20 border-2 border-dashed border-slate-300 rounded flex items-center justify-center text-slate-500 hover:border-slate-400"
+								onclick="addPhoto('p1-photos')"
+							>
 								<div class="text-center">
-									<svg class="w-6 h-6 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+									<svg
+										class="w-6 h-6 mx-auto mb-1"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M12 4v16m8-8H4"
+										/>
 									</svg>
 									<span class="text-xs">拍照</span>
 								</div>
@@ -104,8 +148,15 @@
 						</div>
 					</div>
 					<div>
-						<div class="text-sm font-medium text-slate-600 mb-2">备注 <span class="text-red-500">*</span></div>
-						<textarea id="p1-remark" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-20 resize-none" placeholder="请填写故障现象"></textarea>
+						<div class="text-sm font-medium text-slate-600 mb-2">
+							备注 <span class="text-red-500">*</span>
+						</div>
+						<textarea
+							id="p1-remark"
+							class="w-full px-3 py-2 border border-slate-300 rounded focus:ring-2 min-h-20 resize-none"
+							style="--tw-ring-color: #2563EB; focus:border-color: #2563EB"
+							placeholder="请填写故障现象"
+						></textarea>
 					</div>
 				</div>
 
@@ -113,26 +164,41 @@
 					<button class="text-sm text-slate-500 underline" onclick="openCantModal(1,'外观检查')">
 						无法完成
 					</button>
-					<button id="btn1" class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500" onclick="submitSection('1')">
+					<button
+						id="btn1"
+						class="px-4 py-2 text-white text-sm font-medium rounded hover:opacity-90 disabled:bg-slate-300 disabled:text-slate-500"
+						style="background-color: #2563eb"
+						onclick="submitSection('1')"
+					>
 						提交本项目
 					</button>
 				</div>
 			</div>
 
 			<!-- 项目2：运转声音 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">运转声音</h3>
-					<span id="tag2" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+					<span
+						id="tag2"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+					>
 						未填
 					</span>
 				</div>
 
 				<div class="flex space-x-3 mb-3" data-name="p2" onclick="selectRadio(event)">
-					<button class="px-4 py-2 border border-blue-500 bg-blue-50 text-blue-700 rounded-full text-sm font-medium active" data-value="正常">
+					<button
+						class="px-4 py-2 border text-white rounded-full text-sm font-medium active"
+						style="background-color: #2563eb; border-color: #2563eb"
+						data-value="正常"
+					>
 						正常
 					</button>
-					<button class="px-4 py-2 border border-slate-300 text-slate-600 rounded-full text-sm font-medium" data-value="故障">
+					<button
+						class="px-4 py-2 border border-slate-300 text-slate-600 rounded-full text-sm font-medium"
+						data-value="故障"
+					>
 						故障
 					</button>
 				</div>
@@ -141,12 +207,27 @@
 
 				<div id="p2-extra" class="space-y-3 hidden">
 					<div>
-						<div class="text-sm font-medium text-slate-600 mb-2">现场照片 <span class="text-red-500">*</span></div>
+						<div class="text-sm font-medium text-slate-600 mb-2">
+							现场照片 <span class="text-red-500">*</span>
+						</div>
 						<div class="flex space-x-3" id="p2-photos" data-min="1" data-count="0">
-							<button class="w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-500 hover:border-slate-400" onclick="addPhoto('p2-photos')">
+							<button
+								class="w-20 h-20 border-2 border-dashed border-slate-300 rounded flex items-center justify-center text-slate-500 hover:border-slate-400"
+								onclick="addPhoto('p2-photos')"
+							>
 								<div class="text-center">
-									<svg class="w-6 h-6 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+									<svg
+										class="w-6 h-6 mx-auto mb-1"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M12 4v16m8-8H4"
+										/>
 									</svg>
 									<span class="text-xs">拍照</span>
 								</div>
@@ -154,8 +235,15 @@
 						</div>
 					</div>
 					<div>
-						<div class="text-sm font-medium text-slate-600 mb-2">备注 <span class="text-red-500">*</span></div>
-						<textarea id="p2-remark" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-20 resize-none" placeholder="请填写故障现象"></textarea>
+						<div class="text-sm font-medium text-slate-600 mb-2">
+							备注 <span class="text-red-500">*</span>
+						</div>
+						<textarea
+							id="p2-remark"
+							class="w-full px-3 py-2 border border-slate-300 rounded focus:ring-2 min-h-20 resize-none"
+							style="--tw-ring-color: #2563EB; focus:border-color: #2563EB"
+							placeholder="请填写故障现象"
+						></textarea>
 					</div>
 				</div>
 
@@ -163,26 +251,41 @@
 					<button class="text-sm text-slate-500 underline" onclick="openCantModal(2,'运转声音')">
 						无法完成
 					</button>
-					<button id="btn2" class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500" onclick="submitSection('2')">
+					<button
+						id="btn2"
+						class="px-4 py-2 text-white text-sm font-medium rounded hover:opacity-90 disabled:bg-slate-300 disabled:text-slate-500"
+						style="background-color: #2563eb"
+						onclick="submitSection('2')"
+					>
 						提交本项目
 					</button>
 				</div>
 			</div>
 
 			<!-- 项目3：安全防护 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">安全防护</h3>
-					<span id="tag3" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+					<span
+						id="tag3"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+					>
 						未填
 					</span>
 				</div>
 
 				<div class="flex space-x-3 mb-3" data-name="p3" onclick="selectRadio(event)">
-					<button class="px-4 py-2 border border-blue-500 bg-blue-50 text-blue-700 rounded-full text-sm font-medium active" data-value="正常">
+					<button
+						class="px-4 py-2 border text-white rounded-full text-sm font-medium active"
+						style="background-color: #2563eb; border-color: #2563eb"
+						data-value="正常"
+					>
 						正常
 					</button>
-					<button class="px-4 py-2 border border-slate-300 text-slate-600 rounded-full text-sm font-medium" data-value="故障">
+					<button
+						class="px-4 py-2 border border-slate-300 text-slate-600 rounded-full text-sm font-medium"
+						data-value="故障"
+					>
 						故障
 					</button>
 				</div>
@@ -191,12 +294,27 @@
 
 				<div id="p3-extra" class="space-y-3 hidden">
 					<div>
-						<div class="text-sm font-medium text-slate-600 mb-2">现场照片 <span class="text-red-500">*</span></div>
+						<div class="text-sm font-medium text-slate-600 mb-2">
+							现场照片 <span class="text-red-500">*</span>
+						</div>
 						<div class="flex space-x-3" id="p3-photos" data-min="1" data-count="0">
-							<button class="w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-500 hover:border-slate-400" onclick="addPhoto('p3-photos')">
+							<button
+								class="w-20 h-20 border-2 border-dashed border-slate-300 rounded flex items-center justify-center text-slate-500 hover:border-slate-400"
+								onclick="addPhoto('p3-photos')"
+							>
 								<div class="text-center">
-									<svg class="w-6 h-6 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+									<svg
+										class="w-6 h-6 mx-auto mb-1"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M12 4v16m8-8H4"
+										/>
 									</svg>
 									<span class="text-xs">拍照</span>
 								</div>
@@ -204,8 +322,15 @@
 						</div>
 					</div>
 					<div>
-						<div class="text-sm font-medium text-slate-600 mb-2">备注 <span class="text-red-500">*</span></div>
-						<textarea id="p3-remark" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-20 resize-none" placeholder="请填写故障现象"></textarea>
+						<div class="text-sm font-medium text-slate-600 mb-2">
+							备注 <span class="text-red-500">*</span>
+						</div>
+						<textarea
+							id="p3-remark"
+							class="w-full px-3 py-2 border border-slate-300 rounded focus:ring-2 min-h-20 resize-none"
+							style="--tw-ring-color: #2563EB; focus:border-color: #2563EB"
+							placeholder="请填写故障现象"
+						></textarea>
 					</div>
 				</div>
 
@@ -213,7 +338,12 @@
 					<button class="text-sm text-slate-500 underline" onclick="openCantModal(3,'安全防护')">
 						无法完成
 					</button>
-					<button id="btn3" class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500" onclick="submitSection('3')">
+					<button
+						id="btn3"
+						class="px-4 py-2 text-white text-sm font-medium rounded hover:opacity-90 disabled:bg-slate-300 disabled:text-slate-500"
+						style="background-color: #2563eb"
+						onclick="submitSection('3')"
+					>
 						提交本项目
 					</button>
 				</div>
@@ -223,10 +353,17 @@
 		<!-- 底部操作栏 -->
 		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="px-4 py-3 flex space-x-3">
-				<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 active:bg-slate-300">
+				<button
+					class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 active:bg-slate-300"
+				>
 					保存草稿
 				</button>
-				<button id="submitAll" class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 active:bg-blue-700 disabled:bg-slate-300 disabled:text-slate-500" onclick="submitAll()" disabled>
+				<button
+					id="submitAll"
+					class="flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded"
+					onclick="submitAll()"
+					disabled
+				>
 					批量提交
 				</button>
 			</div>
@@ -237,17 +374,36 @@
 			<div class="bg-white rounded-t-2xl w-full p-6">
 				<h3 id="cant-title" class="text-lg font-semibold mb-4">项目无法完成</h3>
 				<div class="flex flex-wrap gap-2 mb-4">
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">无法接近测点</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">仪表损坏</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">工况不允许</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">其他</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						无法接近测点
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						仪表损坏
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						工况不允许
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						其他
+					</button>
 				</div>
-				<textarea id="cant-reason" class="w-full min-h-20 border border-slate-300 rounded-lg p-3 text-sm resize-none" placeholder="请补充具体原因（必填）"></textarea>
+				<textarea
+					id="cant-reason"
+					class="w-full min-h-20 border border-slate-300 rounded p-3 text-sm resize-none"
+					placeholder="请补充具体原因（必填）"
+				></textarea>
 				<div class="flex space-x-3 mt-4">
-					<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200" onclick="closeCantModal()">
+					<button
+						class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200"
+						onclick="closeCantModal()"
+					>
 						取消
 					</button>
-					<button class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600" onclick="submitCant()">
+					<button
+						class="flex-1 py-3 text-white font-medium rounded hover:opacity-90"
+						style="background-color: #2563eb"
+						onclick="submitCant()"
+					>
 						提交原因
 					</button>
 				</div>
@@ -264,7 +420,10 @@
 			function setInstanceState(state, key) {
 				currentState = state;
 				const tips = document.getElementById('instTips');
-				tips.textContent = '当前实例：' + key.replace('-', '–') + ' · ' + 
+				tips.textContent =
+					'当前实例：' +
+					key.replace('-', '–') +
+					' · ' +
 					{ OPEN: '可开始', NOT_YET: '未到时间', DONE: '已完成' }[state];
 				updateLocks();
 			}
@@ -273,11 +432,14 @@
 			Array.from(document.querySelectorAll('#chips span')).forEach((chip) => {
 				chip.addEventListener('click', () => {
 					Array.from(document.querySelectorAll('#chips span')).forEach((x) => {
-						x.classList.remove('bg-blue-100', 'text-blue-700');
+						x.style.backgroundColor = '';
+						x.style.color = '';
+						x.style.borderColor = '';
+						x.classList.remove('text-white', 'text-blue-700', 'bg-blue-100', 'border', 'border-blue-200');
 						x.classList.add('bg-slate-100', 'text-slate-600');
 					});
 					chip.classList.remove('bg-slate-100', 'text-slate-600');
-					chip.classList.add('bg-blue-100', 'text-blue-700');
+					chip.classList.add('bg-blue-100', 'text-blue-700', 'border', 'border-blue-200');
 					setInstanceState(chip.dataset.state, chip.dataset.key);
 				});
 			});
@@ -288,7 +450,7 @@
 				const dot = scanbar.querySelector('.w-2');
 				const scanText = document.getElementById('scan-text');
 				const scanDesc = document.getElementById('scan-desc');
-				
+
 				if (scanned) {
 					dot.className = 'w-2 h-2 bg-green-500 rounded-full';
 					scanText.textContent = '已扫码';
@@ -304,20 +466,24 @@
 			function selectRadio(e) {
 				const btn = e.target.closest('button[data-value]');
 				if (!btn) return;
-				
+
 				const group = btn.parentNode;
 				[...group.children].forEach((b) => {
-					b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-700');
+					b.style.backgroundColor = '';
+					b.style.borderColor = '';
+					b.classList.remove('text-white');
 					b.classList.add('border-slate-300', 'text-slate-600');
 				});
-				
+
 				btn.classList.remove('border-slate-300', 'text-slate-600');
-				btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-700');
-				
+				btn.classList.add('text-white');
+				btn.style.backgroundColor = '#2563EB';
+				btn.style.borderColor = '#2563EB';
+
 				const name = group.getAttribute('data-name');
 				const val = btn.getAttribute('data-value');
 				const extra = document.getElementById(name + '-extra');
-				
+
 				if (extra) {
 					if (val === '故障') {
 						extra.classList.remove('hidden');
@@ -331,7 +497,7 @@
 			function addPhoto(id) {
 				const wrap = document.getElementById(id);
 				const ph = document.createElement('div');
-				ph.className = 'w-20 h-20 bg-slate-100 rounded-lg flex items-center justify-center text-xs text-slate-600';
+				ph.className = 'w-20 h-20 bg-slate-100 rounded flex items-center justify-center text-xs text-slate-600';
 				ph.textContent = 'IMG';
 				wrap.insertBefore(ph, wrap.lastElementChild);
 				const count = parseInt(wrap.getAttribute('data-count') || '0') + 1;
@@ -351,11 +517,11 @@
 				if (ts === 'GREEN' || ts === 'RED') return true;
 				if (currentState !== 'OPEN') return false;
 				if (!scanned) return false;
-				
+
 				const group = document.querySelector(`[data-name="p${idx}"]`);
-				const active = group.querySelector('.bg-blue-50').getAttribute('data-value');
+				const active = group.querySelector('.text-white').getAttribute('data-value');
 				if (active === '正常') return true;
-				
+
 				const photos = parseInt(document.getElementById(`p${idx}-photos`).getAttribute('data-count') || '0');
 				const remark = document.getElementById(`p${idx}-remark`).value.trim();
 				return photos >= 1 && remark.length > 0;
@@ -366,10 +532,18 @@
 					const btn = document.getElementById('btn' + i);
 					btn.disabled = !sectionValid(i);
 				});
-				
+
 				const all = [1, 2, 3].every(sectionValid);
-				document.getElementById('submitAll').disabled = !all;
-				
+				const submitAllBtn = document.getElementById('submitAll');
+				submitAllBtn.disabled = !all;
+				if (!all) {
+					submitAllBtn.className = 'flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded';
+					submitAllBtn.style.backgroundColor = '';
+				} else {
+					submitAllBtn.className = 'flex-1 py-3 text-white font-medium rounded hover:opacity-90 active:opacity-75';
+					submitAllBtn.style.backgroundColor = '#2563eb';
+				}
+
 				if (currentState === 'NOT_YET') {
 					document.getElementById('scan-desc').textContent = '未到时间，待时窗生效后可扫码';
 				} else if (!scanned) {
@@ -379,11 +553,12 @@
 
 			function submitSection(idx) {
 				if (!sectionValid(idx)) return alert('未满足提交条件');
-				
+
 				const tag = document.getElementById('tag' + idx);
-				tag.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700';
+				tag.className =
+					'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700';
 				tag.textContent = '已提交';
-				
+
 				alert('项目 ' + idx + ' 提交成功');
 				updateLocks();
 			}
@@ -392,7 +567,8 @@
 				alert('批量提交成功：3/3');
 				['tag1', 'tag2', 'tag3'].forEach((id) => {
 					const el = document.getElementById(id);
-					el.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700';
+					el.className =
+						'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700';
 					el.textContent = '已提交';
 				});
 				updateLocks();
@@ -420,14 +596,15 @@
 					alert('请填写原因');
 					return;
 				}
-				
+
 				const tag = document.getElementById('tag' + cantIdx);
-				tag.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700';
+				tag.className =
+					'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700';
 				tag.textContent = '无法完成';
-				
+
 				const btn = document.getElementById('btn' + cantIdx);
 				if (btn) btn.disabled = true;
-				
+
 				closeCantModal();
 				updateLocks();
 				alert('已记录无法完成：' + cantName + '；原因：' + reason);
