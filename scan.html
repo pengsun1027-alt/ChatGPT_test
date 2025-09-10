@@ -12,7 +12,8 @@
 
 		<style>
 			body {
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+					sans-serif;
 				background: #f7f8fa;
 			}
 			.safe-bottom {
@@ -26,34 +27,61 @@
 				height: 20px;
 				border: 2px solid #fff;
 			}
-			.scan-corner.top-left { border-right: none; border-bottom: none; }
-			.scan-corner.top-right { border-left: none; border-bottom: none; }
-			.scan-corner.bottom-left { border-right: none; border-top: none; }
-			.scan-corner.bottom-right { border-left: none; border-top: none; }
+			.scan-corner.top-left {
+				border-right: none;
+				border-bottom: none;
+			}
+			.scan-corner.top-right {
+				border-left: none;
+				border-bottom: none;
+			}
+			.scan-corner.bottom-left {
+				border-right: none;
+				border-top: none;
+			}
+			.scan-corner.bottom-right {
+				border-left: none;
+				border-top: none;
+			}
 			.scan-line {
 				height: 2px;
 				background: linear-gradient(90deg, transparent, #fff, transparent);
 				animation: scan 2s infinite;
 			}
 			@keyframes scan {
-				0% { transform: translateY(-100px); opacity: 0; }
-				50% { opacity: 1; }
-				100% { transform: translateY(100px); opacity: 0; }
+				0% {
+					transform: translateY(-100px);
+					opacity: 0;
+				}
+				50% {
+					opacity: 1;
+				}
+				100% {
+					transform: translateY(100px);
+					opacity: 0;
+				}
 			}
 		</style>
 	</head>
 	<body>
 		<!-- 顶部导航栏 -->
-		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+		<header
+			class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50"
+		>
 			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 				</svg>
 			</button>
 			<h1 class="text-base font-semibold">扫码识别</h1>
 			<button class="w-8 h-8 flex items-center justify-center">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zM12 13a1 1 0 110-2 1 1 0 010 2zM12 20a1 1 0 110-2 1 1 0 010 2z"/>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zM12 13a1 1 0 110-2 1 1 0 010 2zM12 20a1 1 0 110-2 1 1 0 010 2z"
+					/>
 				</svg>
 			</button>
 		</header>
@@ -61,7 +89,7 @@
 		<!-- 主要内容区域 -->
 		<main class="mt-14 px-4 space-y-6">
 			<!-- 扫码取景框 -->
-			<div class="scan-frame rounded-2xl overflow-hidden relative" style="height: 280px;">
+			<div class="scan-frame rounded-lg overflow-hidden relative" style="height: 280px">
 				<div class="absolute inset-0 flex items-center justify-center">
 					<div class="relative w-48 h-48">
 						<!-- 扫码框四个角 -->
@@ -69,15 +97,17 @@
 						<div class="scan-corner top-right absolute top-0 right-0"></div>
 						<div class="scan-corner bottom-left absolute bottom-0 left-0"></div>
 						<div class="scan-corner bottom-right absolute bottom-0 right-0"></div>
-						
+
 						<!-- 扫描线 -->
 						<div class="absolute inset-x-4 scan-line"></div>
-						
+
 						<!-- 中心点 -->
-						<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white/60 rounded-full"></div>
+						<div
+							class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white/60 rounded-full"
+						></div>
 					</div>
 				</div>
-				
+
 				<!-- 底部提示文字 -->
 				<div class="absolute bottom-8 inset-x-0 text-center">
 					<div class="text-white text-sm">请将设备二维码放入框内</div>
@@ -86,11 +116,11 @@
 			</div>
 
 			<!-- 操作说明 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center space-x-3 mb-3">
-					<div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background-color: #eff6ff;">
-						<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" style="color: #2563EB;">
-							<path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+					<div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background-color: #eff6ff">
+						<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" style="color: #2563eb">
+							<path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
 						</svg>
 					</div>
 					<h3 class="font-semibold text-slate-800">使用说明</h3>
@@ -112,25 +142,25 @@
 			</div>
 
 			<!-- 模拟测试按钮 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<h3 class="font-semibold text-slate-800 mb-4">模拟测试（仅开发环境）</h3>
 				<div class="space-y-3">
-					<button 
+					<button
 						class="w-full py-3 text-white font-medium rounded active:bg-blue-700"
-						style="background-color: #2563EB;"
+						style="background-color: #2563eb"
 						onmouseover="this.style.backgroundColor='#1d4ed8'"
 						onmouseout="this.style.backgroundColor='#2563EB'"
 						onclick="route('point')"
 					>
 						模拟识别：点检当期待办
 					</button>
-					<button 
+					<button
 						class="w-full py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 active:bg-slate-300"
 						onclick="route('patrol')"
 					>
 						模拟识别：巡检当期待办
 					</button>
-					<button 
+					<button
 						class="w-full py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 active:bg-slate-300"
 						onclick="route('none')"
 					>
@@ -140,18 +170,28 @@
 			</div>
 
 			<!-- 快捷功能 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<h3 class="font-semibold text-slate-800 mb-4">快捷功能</h3>
 				<div class="grid grid-cols-2 gap-3">
 					<button class="flex items-center justify-center p-3 bg-slate-50 rounded active:bg-slate-100">
 						<svg class="w-5 h-5 text-slate-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+							/>
 						</svg>
 						<span class="text-sm font-medium text-slate-700">手动输入</span>
 					</button>
 					<button class="flex items-center justify-center p-3 bg-slate-50 rounded active:bg-slate-100">
 						<svg class="w-5 h-5 text-slate-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+							/>
 						</svg>
 						<span class="text-sm font-medium text-slate-700">历史记录</span>
 					</button>

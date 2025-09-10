@@ -12,7 +12,8 @@
 
 		<style>
 			body {
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+					sans-serif;
 				background: #f7f8fa;
 			}
 			.safe-bottom {
@@ -22,16 +23,23 @@
 	</head>
 	<body>
 		<!-- 顶部导航栏 -->
-		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+		<header
+			class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50"
+		>
 			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 				</svg>
 			</button>
 			<h1 class="text-base font-semibold">任务表单</h1>
 			<button class="w-8 h-8 flex items-center justify-center">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+					/>
 				</svg>
 			</button>
 		</header>
@@ -50,10 +58,13 @@
 		<!-- 主要内容区域 -->
 		<main class="mt-28 px-4 pb-20 space-y-4">
 			<!-- 项目一：电机温度 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">项目1：电机温度</h3>
-					<span id="tag-temp" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+					<span
+						id="tag-temp"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800"
+					>
 						正常
 					</span>
 				</div>
@@ -61,7 +72,14 @@
 				<div class="mb-4">
 					<label class="block text-sm font-medium text-slate-600 mb-2">数值记录</label>
 					<div class="flex items-center space-x-2">
-						<input id="temp" type="text" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:border-blue-500" style="--tw-ring-color: #2563EB;" placeholder="请输入数值 (建议范围：60-80°C)" value="72" />
+						<input
+							id="temp"
+							type="text"
+							class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:border-blue-500"
+							style="--tw-ring-color: #2563eb"
+							placeholder="请输入数值 (建议范围：60-80°C)"
+							value="72"
+						/>
 						<span class="text-sm text-slate-500">°C</span>
 					</div>
 				</div>
@@ -69,10 +87,18 @@
 				<div class="mb-4">
 					<label class="block text-sm font-medium text-slate-600 mb-2">现场照片</label>
 					<div class="flex space-x-3">
-						<button class="w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-500 hover:border-slate-400 active:bg-slate-50" onclick="openPhoto()">
+						<button
+							class="w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-500 hover:border-slate-400 active:bg-slate-50"
+							onclick="openPhoto()"
+						>
 							<div class="text-center">
 								<svg class="w-6 h-6 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M12 4v16m8-8H4"
+									/>
 								</svg>
 								<span class="text-xs">拍照</span>
 							</div>
@@ -85,17 +111,27 @@
 					<button class="text-sm text-slate-500 underline" onclick="openCant('项目1：电机温度')">
 						无法完成
 					</button>
-					<button id="btn-temp" class="px-4 py-2 text-white text-sm font-medium rounded" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'" onclick="submitTemp()">
+					<button
+						id="btn-temp"
+						class="px-4 py-2 text-white text-sm font-medium rounded"
+						style="background-color: #2563eb"
+						onmouseover="this.style.backgroundColor='#1d4ed8'"
+						onmouseout="this.style.backgroundColor='#2563EB'"
+						onclick="submitTemp()"
+					>
 						提交项目
 					</button>
 				</div>
 			</div>
 
 			<!-- 项目二：运行电流 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">项目2：运行电流</h3>
-					<span id="tag-amp" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+					<span
+						id="tag-amp"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+					>
 						待提交
 					</span>
 				</div>
@@ -103,7 +139,13 @@
 				<div class="mb-4">
 					<label class="block text-sm font-medium text-slate-600 mb-2">数值记录</label>
 					<div class="flex items-center space-x-2">
-						<input id="amp" type="text" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:border-blue-500" style="--tw-ring-color: #2563EB;" placeholder="请输入数值 (建议范围：15-25A)" />
+						<input
+							id="amp"
+							type="text"
+							class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:border-blue-500"
+							style="--tw-ring-color: #2563eb"
+							placeholder="请输入数值 (建议范围：15-25A)"
+						/>
 						<span class="text-sm text-slate-500">A</span>
 					</div>
 				</div>
@@ -111,10 +153,18 @@
 				<div class="mb-4">
 					<label class="block text-sm font-medium text-slate-600 mb-2">现场照片</label>
 					<div class="flex space-x-3">
-						<button class="w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-500 hover:border-slate-400 active:bg-slate-50" onclick="openPhoto()">
+						<button
+							class="w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-500 hover:border-slate-400 active:bg-slate-50"
+							onclick="openPhoto()"
+						>
 							<div class="text-center">
 								<svg class="w-6 h-6 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M12 4v16m8-8H4"
+									/>
 								</svg>
 								<span class="text-xs">拍照</span>
 							</div>
@@ -127,17 +177,27 @@
 					<button class="text-sm text-slate-500 underline" onclick="openCant('项目2：运行电流')">
 						无法完成
 					</button>
-					<button id="btn-amp" class="px-4 py-2 text-white text-sm font-medium rounded" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'" onclick="submitAmp()">
+					<button
+						id="btn-amp"
+						class="px-4 py-2 text-white text-sm font-medium rounded"
+						style="background-color: #2563eb"
+						onmouseover="this.style.backgroundColor='#1d4ed8'"
+						onmouseout="this.style.backgroundColor='#2563EB'"
+						onclick="submitAmp()"
+					>
 						提交项目
 					</button>
 				</div>
 			</div>
 
 			<!-- 项目三：轴承振动 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">项目3：轴承振动</h3>
-					<span id="tag-vib" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+					<span
+						id="tag-vib"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+					>
 						待提交
 					</span>
 				</div>
@@ -145,7 +205,13 @@
 				<div class="mb-4">
 					<label class="block text-sm font-medium text-slate-600 mb-2">数值记录</label>
 					<div class="flex items-center space-x-2">
-						<input id="vib" type="text" class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:border-blue-500" style="--tw-ring-color: #2563EB;" placeholder="请输入数值 (建议范围：< 2.5mm/s)" />
+						<input
+							id="vib"
+							type="text"
+							class="flex-1 px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:border-blue-500"
+							style="--tw-ring-color: #2563eb"
+							placeholder="请输入数值 (建议范围：< 2.5mm/s)"
+						/>
 						<span class="text-sm text-slate-500">mm/s</span>
 					</div>
 				</div>
@@ -153,10 +219,18 @@
 				<div class="mb-4">
 					<label class="block text-sm font-medium text-slate-600 mb-2">现场照片</label>
 					<div class="flex space-x-3">
-						<button class="w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-500 hover:border-slate-400 active:bg-slate-50" onclick="openPhoto()">
+						<button
+							class="w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-500 hover:border-slate-400 active:bg-slate-50"
+							onclick="openPhoto()"
+						>
 							<div class="text-center">
 								<svg class="w-6 h-6 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M12 4v16m8-8H4"
+									/>
 								</svg>
 								<span class="text-xs">拍照</span>
 							</div>
@@ -169,29 +243,51 @@
 					<button class="text-sm text-slate-500 underline" onclick="openCant('项目3：轴承振动')">
 						无法完成
 					</button>
-					<button id="btn-vib" class="px-4 py-2 text-white text-sm font-medium rounded" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'" onclick="submitVib()">
+					<button
+						id="btn-vib"
+						class="px-4 py-2 text-white text-sm font-medium rounded"
+						style="background-color: #2563eb"
+						onmouseover="this.style.backgroundColor='#1d4ed8'"
+						onmouseout="this.style.backgroundColor='#2563EB'"
+						onclick="submitVib()"
+					>
 						提交项目
 					</button>
 				</div>
 			</div>
 
 			<!-- 整体备注 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">整体备注</h3>
-					<span id="tag-rmk" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+					<span
+						id="tag-rmk"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+					>
 						待提交
 					</span>
 				</div>
 
 				<div class="mb-4">
 					<label class="block text-sm font-medium text-slate-600 mb-2">本次巡检总结</label>
-					<textarea id="remark" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:border-blue-500 min-h-20 resize-none" style="--tw-ring-color: #2563EB;" placeholder="请填写本次巡检的整体情况"></textarea>
+					<textarea
+						id="remark"
+						class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:border-blue-500 min-h-20 resize-none"
+						style="--tw-ring-color: #2563eb"
+						placeholder="请填写本次巡检的整体情况"
+					></textarea>
 					<div class="text-xs text-slate-500 mt-1">必填项</div>
 				</div>
 
 				<div class="flex justify-end">
-					<button id="btn-rmk" class="px-4 py-2 text-white text-sm font-medium rounded" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'" onclick="submitRmk()">
+					<button
+						id="btn-rmk"
+						class="px-4 py-2 text-white text-sm font-medium rounded"
+						style="background-color: #2563eb"
+						onmouseover="this.style.backgroundColor='#1d4ed8'"
+						onmouseout="this.style.backgroundColor='#2563EB'"
+						onclick="submitRmk()"
+					>
 						提交备注
 					</button>
 				</div>
@@ -201,10 +297,18 @@
 		<!-- 底部操作栏 -->
 		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="px-4 py-3 flex space-x-3">
-				<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 active:bg-slate-300" onclick="saveDraft()">
+				<button
+					class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 active:bg-slate-300"
+					onclick="saveDraft()"
+				>
 					保存草稿
 				</button>
-				<button id="submitAll" class="flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded" onclick="submitForm()" disabled>
+				<button
+					id="submitAll"
+					class="flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded"
+					onclick="submitForm()"
+					disabled
+				>
 					提交
 				</button>
 			</div>
@@ -215,17 +319,38 @@
 			<div class="bg-white rounded-t-2xl w-full p-6">
 				<h3 id="cant-title" class="text-lg font-semibold mb-4">项目无法完成</h3>
 				<div class="flex flex-wrap gap-2 mb-4">
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">无法接近测点</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">仪表损坏</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">工况不允许</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">其他</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						无法接近测点
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						仪表损坏
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						工况不允许
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						其他
+					</button>
 				</div>
-				<textarea id="cant-reason" class="w-full min-h-20 border border-slate-300 rounded-lg p-3 text-sm resize-none" placeholder="请补充具体原因（必填）"></textarea>
+				<textarea
+					id="cant-reason"
+					class="w-full min-h-20 border border-slate-300 rounded-lg p-3 text-sm resize-none"
+					placeholder="请补充具体原因（必填）"
+				></textarea>
 				<div class="flex space-x-3 mt-4">
-					<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200" onclick="closeCant()">
+					<button
+						class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200"
+						onclick="closeCant()"
+					>
 						取消
 					</button>
-					<button class="flex-1 py-3 text-white font-medium rounded" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'" onclick="submitCant()">
+					<button
+						class="flex-1 py-3 text-white font-medium rounded"
+						style="background-color: #2563eb"
+						onmouseover="this.style.backgroundColor='#1d4ed8'"
+						onmouseout="this.style.backgroundColor='#2563EB'"
+						onclick="submitCant()"
+					>
 						提交原因
 					</button>
 				</div>
@@ -239,11 +364,14 @@
 			function markTag(id, state) {
 				const el = document.getElementById(id);
 				if (state === '异常' || state === '无法完成') {
-					el.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700';
+					el.className =
+						'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700';
 				} else if (state === '已提交') {
-					el.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700';
+					el.className =
+						'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700';
 				} else {
-					el.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600';
+					el.className =
+						'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600';
 				}
 				el.textContent = state;
 			}
@@ -261,7 +389,8 @@
 					submitAllBtn.className = 'flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded';
 					submitAllBtn.style.backgroundColor = '';
 				} else {
-					submitAllBtn.className = 'flex-1 py-3 text-white font-medium rounded hover:opacity-90 active:opacity-75';
+					submitAllBtn.className =
+						'flex-1 py-3 text-white font-medium rounded hover:opacity-90 active:opacity-75';
 					submitAllBtn.style.backgroundColor = '#2563eb';
 				}
 			}
@@ -326,7 +455,7 @@
 			function submitCant() {
 				const reason = document.getElementById('cant-reason').value.trim();
 				if (!reason) return alert('请填写具体原因');
-				
+
 				// 根据项目标记状态
 				if (currentCantProj.includes('项目1')) {
 					markTag('tag-temp', '无法完成');
@@ -353,7 +482,12 @@
 			}
 
 			function submitForm() {
-				if (!sectionDone('tag-temp') || !sectionDone('tag-amp') || !sectionDone('tag-vib') || !sectionDone('tag-rmk')) {
+				if (
+					!sectionDone('tag-temp') ||
+					!sectionDone('tag-amp') ||
+					!sectionDone('tag-vib') ||
+					!sectionDone('tag-rmk')
+				) {
 					return alert('请先完成所有项目');
 				}
 				alert('提交成功！');

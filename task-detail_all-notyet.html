@@ -12,7 +12,8 @@
 
 		<style>
 			body {
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+					sans-serif;
 				background: #f7f8fa;
 			}
 			.safe-bottom {
@@ -22,10 +23,12 @@
 	</head>
 	<body>
 		<!-- 顶部导航栏 -->
-		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+		<header
+			class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50"
+		>
 			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 				</svg>
 			</button>
 			<h1 class="text-base font-semibold">任务详情（全未到时间）</h1>
@@ -33,7 +36,9 @@
 		</header>
 
 		<!-- 扫码状态栏 -->
-		<div class="fixed inset-x-0 top-12 h-16 bg-slate-50 border-b border-slate-200 z-40 flex items-center justify-between px-4">
+		<div
+			class="fixed inset-x-0 top-12 h-16 bg-slate-50 border-b border-slate-200 z-40 flex items-center justify-between px-4"
+		>
 			<div>
 				<div class="flex items-center space-x-2">
 					<div class="w-2 h-2 bg-slate-400 rounded-full"></div>
@@ -41,7 +46,12 @@
 				</div>
 				<div class="text-xs text-slate-500">请先到点扫码，完成位置与时间校验</div>
 			</div>
-			<button class="px-3 py-1 text-white text-xs font-medium rounded" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
+			<button
+				class="px-3 py-1 text-white text-xs font-medium rounded"
+				style="background-color: #2563eb"
+				onmouseover="this.style.backgroundColor='#1d4ed8'"
+				onmouseout="this.style.backgroundColor='#2563EB'"
+			>
 				去扫码
 			</button>
 		</div>
@@ -49,13 +59,17 @@
 		<!-- 主要内容区域 -->
 		<main class="mt-28 px-4 pb-20 space-y-4">
 			<!-- 设备信息 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-start justify-between">
 					<div class="flex-1">
-						<h2 class="text-lg font-bold text-slate-800 mb-1">供水泵#1 <span class="text-sm text-slate-500">（DEV-001）</span></h2>
+						<h2 class="text-lg font-bold text-slate-800 mb-1">
+							供水泵#1 <span class="text-sm text-slate-500">（DEV-001）</span>
+						</h2>
 						<p class="text-sm text-slate-600">一号厂 · 南区</p>
 					</div>
-					<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+					<span
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+					>
 						批次 2025W33
 					</span>
 				</div>
@@ -65,39 +79,48 @@
 			</div>
 
 			<!-- 选择今日实例 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-3">
 					<h3 class="font-semibold text-slate-800">选择今日实例</h3>
 					<span class="text-xs text-slate-500">时窗列表</span>
 				</div>
 				<div class="flex flex-wrap gap-2">
-					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border" style="background-color: #dbeafe; color: #2563EB; border-color: #93c5fd;">
+					<span
+						class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border"
+						style="background-color: #dbeafe; color: #2563eb; border-color: #93c5fd"
+					>
 						08:00–09:00 · 未到时间
 					</span>
-					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">
+					<span
+						class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200"
+					>
 						12:00–13:00 · 未到时间
 					</span>
-					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">
+					<span
+						class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200"
+					>
 						18:00–19:00 · 未到时间
 					</span>
 				</div>
 			</div>
 
 			<!-- 项目说明（SOP） -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-3">
 					<h3 class="font-semibold text-slate-800">项目说明（SOP）</h3>
 					<span class="text-xs text-slate-500">时窗：08:00–09:00</span>
 				</div>
-				<p class="text-sm text-slate-600 mb-3">1) 以测温枪对电机壳体三点求平均；2) 抄录运行电流；3) 测振沿轴/径两向取平均。</p>
+				<p class="text-sm text-slate-600 mb-3">
+					1) 以测温枪对电机壳体三点求平均；2) 抄录运行电流；3) 测振沿轴/径两向取平均。
+				</p>
 				<label class="flex items-center space-x-2">
-					<input type="checkbox" disabled class="form-checkbox h-4 w-4" style="color: #2563EB;" />
+					<input type="checkbox" disabled class="form-checkbox h-4 w-4" style="color: #2563eb" />
 					<span class="text-sm text-slate-600">我已知悉操作步骤与风险</span>
 				</label>
 			</div>
 
 			<!-- 本实例项目清单 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-3">
 					<h3 class="font-semibold text-slate-800">本实例项目清单</h3>
 					<span class="text-xs text-slate-500">到点前不开放填写</span>
@@ -106,10 +129,14 @@
 					<div class="flex items-center justify-between py-2 border-b border-dashed border-slate-200">
 						<div class="flex flex-col">
 							<span class="text-sm font-medium text-slate-800">电机温度</span>
-							<button class="text-xs text-slate-400 underline text-left opacity-60" disabled>无法填写</button>
+							<button class="text-xs text-slate-400 underline text-left opacity-60" disabled>
+								无法填写
+							</button>
 						</div>
 						<div class="flex items-center space-x-2">
-							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+							<span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+							>
 								未到时间
 							</span>
 							<button class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded" disabled>
@@ -121,10 +148,14 @@
 					<div class="flex items-center justify-between py-2 border-b border-dashed border-slate-200">
 						<div class="flex flex-col">
 							<span class="text-sm font-medium text-slate-800">运行电流</span>
-							<button class="text-xs text-slate-400 underline text-left opacity-60" disabled>无法填写</button>
+							<button class="text-xs text-slate-400 underline text-left opacity-60" disabled>
+								无法填写
+							</button>
 						</div>
 						<div class="flex items-center space-x-2">
-							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+							<span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+							>
 								未到时间
 							</span>
 							<button class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded" disabled>
@@ -136,10 +167,14 @@
 					<div class="flex items-center justify-between py-2">
 						<div class="flex flex-col">
 							<span class="text-sm font-medium text-slate-800">轴承振动</span>
-							<button class="text-xs text-slate-400 underline text-left opacity-60" disabled>无法填写</button>
+							<button class="text-xs text-slate-400 underline text-left opacity-60" disabled>
+								无法填写
+							</button>
 						</div>
 						<div class="flex items-center space-x-2">
-							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+							<span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+							>
 								未到时间
 							</span>
 							<button class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded" disabled>
@@ -154,12 +189,8 @@
 		<!-- 底部操作栏 -->
 		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="px-4 py-3 flex space-x-3">
-				<button class="flex-1 py-3 bg-red-500 text-white font-medium rounded hover:bg-red-600">
-					异常报修
-				</button>
-				<button class="flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded" disabled>
-					开始记录
-				</button>
+				<button class="flex-1 py-3 bg-red-500 text-white font-medium rounded hover:bg-red-600">异常报修</button>
+				<button class="flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded" disabled>开始记录</button>
 			</div>
 		</div>
 

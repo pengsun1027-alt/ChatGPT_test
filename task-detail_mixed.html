@@ -12,7 +12,8 @@
 
 		<style>
 			body {
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+					sans-serif;
 				background: #f7f8fa;
 			}
 			.safe-bottom {
@@ -22,16 +23,23 @@
 	</head>
 	<body>
 		<!-- 顶部导航栏 -->
-		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+		<header
+			class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50"
+		>
 			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 				</svg>
 			</button>
 			<h1 class="text-base font-semibold">任务详情</h1>
 			<button class="w-8 h-8 flex items-center justify-center">
 				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zM12 13a1 1 0 110-2 1 1 0 010 2zM12 20a1 1 0 110-2 1 1 0 010 2z"/>
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zM12 13a1 1 0 110-2 1 1 0 010 2zM12 20a1 1 0 110-2 1 1 0 010 2z"
+					/>
 				</svg>
 			</button>
 		</header>
@@ -46,7 +54,13 @@
 						<div id="scan-desc" class="text-xs text-slate-500">请先到点扫码，完成位置与时间校验</div>
 					</div>
 				</div>
-				<a class="px-3 py-1 text-white text-sm font-medium rounded" href="#" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
+				<a
+					class="px-3 py-1 text-white text-sm font-medium rounded"
+					href="#"
+					style="background-color: #2563eb"
+					onmouseover="this.style.backgroundColor='#1d4ed8'"
+					onmouseout="this.style.backgroundColor='#2563EB'"
+				>
 					去扫码
 				</a>
 			</div>
@@ -55,7 +69,7 @@
 		<!-- 主要内容区域 -->
 		<main class="mt-24 px-4 pb-20 space-y-4">
 			<!-- 设备信息卡片 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-start justify-between mb-3">
 					<div class="flex-1">
 						<div class="flex items-center space-x-2 mb-1">
@@ -64,36 +78,43 @@
 						</div>
 						<div class="text-sm text-slate-600">一号厂 · 南区</div>
 					</div>
-					<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+					<span
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+					>
 						批次 2025W33
 					</span>
 				</div>
-				<button class="text-sm text-slate-500 underline" onclick="openDevUnavail()">
-					设备无法巡检
-				</button>
+				<button class="text-sm text-slate-500 underline" onclick="openDevUnavail()">设备无法巡检</button>
 			</div>
 
 			<!-- 时窗实例选择 -->
-			<div class="bg-white rounded-2xl shadow-sm p-4">
+			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-3">
 					<h3 class="font-semibold text-slate-800">选择今日实例</h3>
 					<span class="text-xs text-slate-500">时窗列表</span>
 				</div>
 				<div class="flex flex-wrap gap-2">
-					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+					<span
+						class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700"
+					>
 						08:00–09:00 · 逾期
 					</span>
-					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium" style="background-color: #dbeafe; color: #2563EB;">
+					<span
+						class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium"
+						style="background-color: #dbeafe; color: #2563eb"
+					>
 						12:00–13:00 · 可开始
 					</span>
-					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+					<span
+						class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+					>
 						18:00–19:00 · 未到时间
 					</span>
 				</div>
 			</div>
 
 			<!-- 项目清单 -->
-			<div class="bg-white rounded-2xl shadow-sm">
+			<div class="bg-white rounded-lg shadow-sm">
 				<div class="px-4 py-4 border-b border-slate-100">
 					<div class="flex items-center justify-between">
 						<h3 class="font-semibold text-slate-800">本实例项目清单</h3>
@@ -110,10 +131,18 @@
 							</button>
 						</div>
 						<div class="flex items-center space-x-2">
-							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+							<span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700"
+							>
 								逾期
 							</span>
-							<a class="px-3 py-1 text-white text-xs font-medium rounded" href="task-form_overdue.html" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
+							<a
+								class="px-3 py-1 text-white text-xs font-medium rounded"
+								href="task-form_overdue.html"
+								style="background-color: #2563eb"
+								onmouseover="this.style.backgroundColor='#1d4ed8'"
+								onmouseout="this.style.backgroundColor='#2563EB'"
+							>
 								开始记录
 							</a>
 						</div>
@@ -127,10 +156,18 @@
 							</button>
 						</div>
 						<div class="flex items-center space-x-2">
-							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+							<span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700"
+							>
 								逾期
 							</span>
-							<a class="px-3 py-1 text-white text-xs font-medium rounded" href="task-form_overdue.html" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
+							<a
+								class="px-3 py-1 text-white text-xs font-medium rounded"
+								href="task-form_overdue.html"
+								style="background-color: #2563eb"
+								onmouseover="this.style.backgroundColor='#1d4ed8'"
+								onmouseout="this.style.backgroundColor='#2563EB'"
+							>
 								开始记录
 							</a>
 						</div>
@@ -144,10 +181,18 @@
 							</button>
 						</div>
 						<div class="flex items-center space-x-2">
-							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+							<span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700"
+							>
 								逾期
 							</span>
-							<a class="px-3 py-1 text-white text-xs font-medium rounded" href="task-form_overdue.html" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
+							<a
+								class="px-3 py-1 text-white text-xs font-medium rounded"
+								href="task-form_overdue.html"
+								style="background-color: #2563eb"
+								onmouseover="this.style.backgroundColor='#1d4ed8'"
+								onmouseout="this.style.backgroundColor='#2563EB'"
+							>
 								开始记录
 							</a>
 						</div>
@@ -162,7 +207,13 @@
 				<a class="flex-1 py-3 bg-red-500 text-white font-medium rounded text-center active:bg-red-700" href="#">
 					异常报修
 				</a>
-				<a class="flex-1 py-3 text-white font-medium rounded text-center active:bg-blue-800" href="task-form.html" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
+				<a
+					class="flex-1 py-3 text-white font-medium rounded text-center active:bg-blue-800"
+					href="task-form.html"
+					style="background-color: #2563eb"
+					onmouseover="this.style.backgroundColor='#1d4ed8'"
+					onmouseout="this.style.backgroundColor='#2563EB'"
+				>
 					开始记录
 				</a>
 			</div>
@@ -173,18 +224,41 @@
 			<div class="bg-white rounded-t-2xl w-full p-6">
 				<h3 class="text-lg font-semibold mb-4">设备无法巡检</h3>
 				<div class="flex flex-wrap gap-2 mb-4">
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">停电/断电</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">设备检修中</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">安全风险</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">无权限进入</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">其他</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						停电/断电
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						设备检修中
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						安全风险
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						无权限进入
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						其他
+					</button>
 				</div>
-				<textarea id="dev-reason" class="w-full min-h-20 border border-slate-300 rounded-lg p-3 text-sm resize-none" placeholder="请补充具体原因（必填）"></textarea>
+				<textarea
+					id="dev-reason"
+					class="w-full min-h-20 border border-slate-300 rounded-lg p-3 text-sm resize-none"
+					placeholder="请补充具体原因（必填）"
+				></textarea>
 				<div class="flex space-x-3 mt-4">
-					<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200" onclick="closeDevUnavail()">
+					<button
+						class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200"
+						onclick="closeDevUnavail()"
+					>
 						取消
 					</button>
-					<button class="flex-1 py-3 text-white font-medium rounded" onclick="submitDevUnavail()" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
+					<button
+						class="flex-1 py-3 text-white font-medium rounded"
+						onclick="submitDevUnavail()"
+						style="background-color: #2563eb"
+						onmouseover="this.style.backgroundColor='#1d4ed8'"
+						onmouseout="this.style.backgroundColor='#2563EB'"
+					>
 						提交
 					</button>
 				</div>
@@ -196,17 +270,38 @@
 			<div class="bg-white rounded-t-2xl w-full p-6">
 				<h3 id="proj-title" class="text-lg font-semibold mb-4">项目无法填写</h3>
 				<div class="flex flex-wrap gap-2 mb-4">
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">无法接近测点</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">仪表损坏</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">工况不允许</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">其他</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						无法接近测点
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						仪表损坏
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						工况不允许
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						其他
+					</button>
 				</div>
-				<textarea id="proj-reason" class="w-full min-h-20 border border-slate-300 rounded-lg p-3 text-sm resize-none" placeholder="请补充具体原因（必填）"></textarea>
+				<textarea
+					id="proj-reason"
+					class="w-full min-h-20 border border-slate-300 rounded-lg p-3 text-sm resize-none"
+					placeholder="请补充具体原因（必填）"
+				></textarea>
 				<div class="flex space-x-3 mt-4">
-					<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200" onclick="closeProjUnavail()">
+					<button
+						class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200"
+						onclick="closeProjUnavail()"
+					>
 						取消
 					</button>
-					<button class="flex-1 py-3 text-white font-medium rounded" onclick="submitProjUnavail()" style="background-color: #2563EB;" onmouseover="this.style.backgroundColor='#1d4ed8'" onmouseout="this.style.backgroundColor='#2563EB'">
+					<button
+						class="flex-1 py-3 text-white font-medium rounded"
+						onclick="submitProjUnavail()"
+						style="background-color: #2563eb"
+						onmouseover="this.style.backgroundColor='#1d4ed8'"
+						onmouseout="this.style.backgroundColor='#2563EB'"
+					>
 						提交
 					</button>
 				</div>
