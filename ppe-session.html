@@ -2,273 +2,164 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<title>PPE 会话采集</title>
-		<link rel="stylesheet" href="styles.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设备巡检系统 - PPE会话采集</title>
+
+		<!-- Vant 4 CSS -->
+		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
 		<style>
-			:root {
-				--primary: #2b6fff;
-				--primary-active: #1c54f0;
-				--primary-subtle: #e8eeff;
-				--success: #22c55e;
-				--warning: #f59e0b;
-				--danger: #ef4444;
-				--text: #0f172a;
-				--muted: #64748b;
-				--border: #e2e8f0;
-				--bg: #f8fafc;
-				--card: #ffffff;
-				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
-			}
-			* {
-				box-sizing: border-box;
-				-webkit-tap-highlight-color: transparent;
-			}
 			body {
-				margin: 0;
-				padding: 0;
-				background: var(--bg);
-				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-				/* 禁用纵向滚动条但保留滚动功能 */
-				overflow-y: scroll;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				background: #f7f8fa;
 			}
-			/* Firefox 隐藏滚动条 */
-			html {
-				scrollbar-width: none;
-			}
-
-			/* 隐藏滚动条 */
-			::-webkit-scrollbar {
-				width: 0;
-				background: transparent;
-			}
-
-			/* IE/Edge 隐藏滚动条 */
-			-ms-overflow-style: none;
-
-			a {
-				color: inherit;
-				text-decoration: none;
-			}
-			.container {
-				padding: var(--spacing) 16px 120px 16px;
-			}
-			.navbar {
-				position: sticky;
-				top: 0;
-				z-index: 10;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.navbar .title {
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.card {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-			}
-			.card + .card {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.section {
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-				margin-bottom: calc(var(--spacing) * 0.5);
-			}
-			.sec-head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.sec-title {
-				font-weight: 700;
-			}
-			.row {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-			}
-			.pill {
-				font-size: 14px;
-				border-radius: 999px;
-				padding: calc(var(--spacing) * 0.5) 12px;
-				border: 1px solid var(--border);
-				background: #fff;
-				display: inline-flex;
-				align-items: center;
-				gap: 6px;
-			}
-			.pill.active {
-				background: var(--primary-subtle);
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.btn {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 44px;
-				padding: 0 16px;
-				border-radius: 12px;
-				border: 1px solid var(--border);
-				background: #fff;
-				font-weight: 600;
-			}
-			.btn-primary {
-				background: var(--primary);
-				border-color: var(--primary);
-				color: #fff;
-			}
-			.btn:disabled {
-				background: #f3f4f6;
-				border-color: var(--border);
-				color: #94a3b8;
-			}
-			.btn-small {
-				height: 36px;
-				padding: 0 12px;
-				border-radius: 10px;
-				font-size: 14px;
-			}
-			.capture {
-				border: 1px dashed var(--border);
-				border-radius: 12px;
-				padding: var(--spacing);
-				text-align: center;
-				background: #fff;
-			}
-			.thumb {
-				width: 100%;
-				height: 160px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				background: #f8fafc;
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				color: #94a3b8;
-				margin-top: calc(var(--spacing) * 0.5);
-			}
-			.bottom-affix {
-				position: fixed;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: #fff;
-				border-top: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.75) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				z-index: 20;
-			}
-			.bottom-affix .btn {
-				flex: 1;
+			.safe-bottom {
+				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
 		</style>
 	</head>
 	<body>
-		<div class="navbar"><div class="title">安全与 PPE 采集</div></div>
-		<div class="container">
-			<div class="section">
-				<div class="sec-head">
-					<div class="sec-title">选择今日实例（时窗）</div>
-					<div class="small">用于确定证据归属</div>
+		<!-- 顶部导航栏 -->
+		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+				</svg>
+			</button>
+			<h1 class="text-base font-semibold">安全与 PPE 采集</h1>
+			<div class="w-8"></div>
+		</header>
+
+		<!-- 主要内容区域 -->
+		<main class="mt-12 px-4 pb-20 space-y-4">
+			<!-- 选择今日实例 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<div class="flex items-center justify-between mb-4">
+					<h3 class="font-semibold text-slate-800">选择今日实例（时窗）</h3>
+					<span class="text-xs text-slate-500">用于确定证据归属</span>
 				</div>
-				<div id="tw" class="row" style="flex-wrap: wrap; gap: calc(var(--spacing) * 0.5)"></div>
-				<div class="small" id="twHint" style="margin-top: 6px; color: #475569"></div>
+				<div id="tw" class="flex flex-wrap gap-2 mb-3"></div>
+				<div id="twHint" class="text-xs text-slate-600"></div>
 			</div>
 
-			<div class="section">
-				<div class="sec-head">
-					<div class="sec-title">穿戴要求</div>
-					<div class="small">本时窗一次采集，后续设备复用</div>
+			<!-- 穿戴要求 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<div class="flex items-center justify-between mb-4">
+					<h3 class="font-semibold text-slate-800">穿戴要求</h3>
+					<span class="text-xs text-slate-500">本时窗一次采集，后续设备复用</span>
 				</div>
-				<ul class="small" style="margin: 0 0 8px 18px">
-					<li>两人在场：执行人 + 监护人；</li>
-					<li>按规范穿戴劳保用品；</li>
-					<li>照片自动加水印：时间/地点/计划/人员。</li>
+				
+				<ul class="text-sm text-slate-600 mb-4 pl-4 space-y-1">
+					<li class="flex items-start">
+						<span class="w-1 h-1 bg-slate-400 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+						两人在场：执行人 + 监护人；
+					</li>
+					<li class="flex items-start">
+						<span class="w-1 h-1 bg-slate-400 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+						按规范穿戴劳保用品；
+					</li>
+					<li class="flex items-start">
+						<span class="w-1 h-1 bg-slate-400 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+						照片自动加水印：时间/地点/计划/人员。
+					</li>
 				</ul>
-				<div class="capture">
-					<div>拍摄 PPE 合影</div>
-					<button id="capBtn" class="btn btn-primary" style="margin-top: calc(var(--spacing) * 0.5)">
-						拍摄
-					</button>
-					<div id="thumb" class="thumb">尚未采集</div>
+
+				<div class="border-2 border-dashed border-slate-300 rounded-2xl p-6 text-center bg-slate-50">
+					<div class="mb-4">
+						<svg class="w-8 h-8 mx-auto text-slate-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"/>
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"/>
+						</svg>
+						<div class="text-sm font-medium text-slate-700 mb-2">拍摄 PPE 合影</div>
+						<button id="capBtn" class="px-6 py-2 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600">
+							拍摄
+						</button>
+					</div>
+					<div id="thumb" class="w-full h-40 bg-white border border-slate-200 rounded-lg flex items-center justify-center text-slate-400 text-sm">
+						尚未采集
+					</div>
 				</div>
 			</div>
 
-			<div class="section" id="receipt" style="display: none">
-				<div class="sec-head">
-					<div class="sec-title">采集完成</div>
-					<span class="small" id="rcTime"></span>
+			<!-- 采集完成状态 -->
+			<div id="receipt" class="bg-green-50 border border-green-200 rounded-2xl p-4 hidden">
+				<div class="flex items-center justify-between mb-2">
+					<h3 class="font-semibold text-green-800">采集完成</h3>
+					<span id="rcTime" class="text-xs text-green-600"></span>
 				</div>
-				<div class="small">执行人：张三　监护人：李四　地点：厂区南门附近</div>
+				<div class="text-sm text-green-700">执行人：张三　监护人：李四　地点：厂区南门附近</div>
+			</div>
+		</main>
+
+		<!-- 底部操作栏 -->
+		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
+			<div class="px-4 py-3 flex space-x-3">
+				<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200" onclick="history.back()">
+					返回
+				</button>
+				<button id="goBtn" class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500" disabled>
+					开始本时窗巡检
+				</button>
 			</div>
 		</div>
-		<div class="bottom-affix">
-			<a class="btn" href="javascript:history.back()">返回</a>
-			<button id="goBtn" class="btn btn-primary" disabled>开始本时窗巡检</button>
-		</div>
+
+		<!-- Vant 4 JS -->
+		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
 
 		<script>
-			// --- Demo 数据 ---
+			// Demo 数据
 			const TIME_WINDOWS = [
 				{ key: '08:00-09:00', name: '08:00–09:00' },
 				{ key: '12:00-13:00', name: '12:00–13:00' },
 				{ key: '18:00-19:00', name: '18:00–19:00' },
 			];
 			const NOW = '11:30';
+
 			function pickDefaultTW() {
-				// 进行中 > 可开始(近似用当前/即将) > 最近未到 > 最近已完成（这里以当前时间简化）
 				// 11:30 -> 12:00–13:00 为最近合理
 				return '12:00-13:00';
 			}
 
-			// --- 渲染时窗 ---
+			// 渲染时窗
 			let twSelected = pickDefaultTW();
 			const twEl = document.getElementById('tw');
 			TIME_WINDOWS.forEach((w) => {
-				const el = document.createElement('div');
-				el.className = 'pill' + (w.key === twSelected ? ' active' : '');
+				const el = document.createElement('button');
+				el.className = w.key === twSelected ? 
+					'px-4 py-2 text-sm font-medium rounded-full bg-blue-100 text-blue-700 border border-blue-200' :
+					'px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200';
 				el.textContent = w.name;
 				el.dataset.key = w.key;
 				el.onclick = () => {
 					twSelected = w.key;
-					Array.from(twEl.children).forEach((c) => c.classList.remove('active'));
-					el.classList.add('active');
+					Array.from(twEl.children).forEach((c) => {
+						c.className = 'px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200';
+					});
+					el.className = 'px-4 py-2 text-sm font-medium rounded-full bg-blue-100 text-blue-700 border border-blue-200';
+					document.getElementById('twHint').textContent = '当前选择：' + twSelected.replace('-', '–') + '（可切换）';
 				};
 				twEl.appendChild(el);
 			});
+
+			// 处理URL参数
 			const from = new URLSearchParams(location.search).get('from');
 			const twParam = new URLSearchParams(location.search).get('tw');
 			if (twParam) {
 				twSelected = twParam;
 				Array.from(twEl.children).forEach((c) => {
-					c.classList.toggle('active', c.dataset.key === twSelected);
+					if (c.dataset.key === twSelected) {
+						c.className = 'px-4 py-2 text-sm font-medium rounded-full bg-blue-100 text-blue-700 border border-blue-200';
+					} else {
+						c.className = 'px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200';
+					}
 				});
 			}
 
 			document.getElementById('twHint').textContent = '当前选择：' + twSelected.replace('-', '–') + '（可切换）';
 
-			// --- 拍摄模拟 ---
+			// 拍摄模拟
 			const capBtn = document.getElementById('capBtn');
 			const thumb = document.getElementById('thumb');
 			const rc = document.getElementById('receipt');
@@ -280,21 +171,21 @@
 				const t = new Date();
 				const hh = String(t.getHours()).padStart(2, '0');
 				const mm = String(t.getMinutes()).padStart(2, '0');
+				
 				thumb.textContent = hh + ':' + mm + ' PPE 已采集（示意图位置信息水印）';
-				thumb.style.color = '#0F172A';
-				rc.style.display = '';
+				thumb.className = 'w-full h-40 bg-green-50 border border-green-200 rounded-lg flex items-center justify-center text-green-700 text-sm font-medium';
+				
+				rc.classList.remove('hidden');
 				rcTime.textContent = hh + ':' + mm;
 				goBtn.disabled = false;
+
 				// 存储本时窗 PPE 状态
-				localStorage.setItem(
-					'ppe_state',
-					JSON.stringify({
-						state: 'COMPLETED',
-						window: twSelected,
-						time: hh + ':' + mm,
-						operators: '张三/李四',
-					})
-				);
+				localStorage.setItem('ppe_state', JSON.stringify({
+					state: 'COMPLETED',
+					window: twSelected,
+					time: hh + ':' + mm,
+					operators: '张三/李四',
+				}));
 			};
 
 			goBtn.onclick = () => {

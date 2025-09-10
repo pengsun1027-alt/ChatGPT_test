@@ -2,399 +2,219 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<title>巡检任务 · 聚合（含 PPE 状态）</title>
-		<link rel="stylesheet" href="styles.css">
-                <style>
-			:root {
-				--primary: #2b6fff;
-				--primary-active: #1c54f0;
-				--primary-subtle: #e8eeff;
-				--success: #22c55e;
-				--warning: #f59e0b;
-				--danger: #ef4444;
-				--text: #0f172a;
-				--muted: #64748b;
-				--border: #e2e8f0;
-				--bg: #f8fafc;
-				--card: #ffffff;
-				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
-			}
-			* {
-				box-sizing: border-box;
-				-webkit-tap-highlight-color: transparent;
-			}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设备巡检系统 - 聚合任务</title>
+
+		<!-- Vant 4 CSS -->
+		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<style>
 			body {
-				margin: 0;
-				padding: 0;
-				background: var(--bg);
-				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-				/* 禁用纵向滚动条但保留滚动功能 */
-				overflow-y: scroll;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+					sans-serif;
+				background: #f7f8fa;
 			}
-			/* Firefox 隐藏滚动条 */
-			html {
-				scrollbar-width: none;
-			}
-
-			/* 隐藏滚动条 */
-			::-webkit-scrollbar {
-				width: 0;
-				background: transparent;
-			}
-
-			/* IE/Edge 隐藏滚动条 */
-			-ms-overflow-style: none;
-			a {
-				color: inherit;
-				text-decoration: none;
-			}
-			.container {
-				padding: var(--spacing);
-			}
-			.navbar {
-				position: sticky;
-				top: 0;
-				z-index: 10;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.navbar .title {
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.search {
-				margin-left: auto;
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: 0 12px;
-				background: #fff;
-				height: 44px;
-			}
-			.search input {
-				border: none;
-				outline: none;
-				flex: 1;
-				height: 42px;
-				font-size: 14px;
-			}
-			.ppe-bar {
-				position: sticky;
-				top: 54px;
-				z-index: 9;
-				background: #fff;
-				border-bottom: 1px solid var(--border);
-				padding: 10px 16px;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.ppe-bar .state {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-				font-weight: 600;
-			}
-			.ppe-bar .dot {
-				width: 10px;
-				height: 10px;
-				border-radius: 50%;
-				background: #ef4444;
-			}
-			.ppe-bar.done .dot {
-				background: #22c55e;
-			}
-			.ppe-bar.expired .dot {
-				background: #f59e0b;
-			}
-			.ppe-bar .small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.btn {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 36px;
-				padding: 0 12px;
-				border-radius: 10px;
-				border: 1px solid var(--border);
-				background: #fff;
-				font-weight: 600;
-			}
-			.btn-primary {
-				background: var(--primary);
-				border-color: var(--primary);
-				color: #fff;
-			}
-			.filter-bar {
-				position: sticky;
-				top: 104px;
-				background: #fff;
-				z-index: 8;
-				border-bottom: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.5) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-				overflow: auto;
-			}
-			.chip {
-				padding: calc(var(--spacing) * 0.5) 12px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-				background: #fff;
-				font-size: 14px;
-				white-space: nowrap;
-			}
-			.chip.active {
-				background: var(--primary-subtle);
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.card {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-			}
-			.card + .card {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.device-card {
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.device-card .head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.device-card .title {
-				font-weight: 700;
-				font-size: var(--font-size);
-			}
-			.device-card .meta {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.pills {
-				display: flex;
-				gap: 6px;
-				flex-wrap: wrap;
-			}
-			.pill {
-				font-size: 12px;
-				border-radius: 999px;
-				padding: 4px 8px;
-				border: 1px solid var(--border);
-				background: #fff;
-				display: inline-flex;
-				align-items: center;
-				gap: 6px;
-			}
-			.pill .dot {
-				width: 6px;
-				height: 6px;
-				border-radius: 50%;
-				background: #94a3b8;
-			}
-			.pill.blue .dot {
-				background: #2b6fff;
-			}
-			.pill.red .dot {
-				background: #ef4444;
-			}
-			.pill.green .dot {
-				background: #22c55e;
-			}
-			.pill.gray .dot {
-				background: #94a3b8;
-			}
-			.task-row {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 10px 0;
-				border-top: 1px dashed var(--border);
-			}
-			.task-row:first-child {
-				border-top: none;
-			}
-			.small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.footer {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.more {
-				position: relative;
-			}
-			.more-menu {
-				display: none;
-				position: absolute;
-				left: 0;
-				bottom: 40px;
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.5);
-				min-width: 160px;
-			}
-			.more-menu a {
-				display: block;
-				padding: calc(var(--spacing) * 0.5) 10px;
-				border-radius: 8px;
-			}
-			.more.open .more-menu {
-				display: block;
-			}
-			.btn-small {
-				height: 32px;
-				padding: 0 12px;
-				border-radius: 10px;
-				font-size: 14px;
+			.safe-bottom {
+				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
 		</style>
 	</head>
 	<body>
-		<div class="navbar">
-			<div class="title">巡检任务 · 聚合</div>
-			<div class="search"><input placeholder="搜索设备/项目" /></div>
-		</div>
+		<!-- 顶部导航栏 -->
+		<header
+			class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50"
+		>
+			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+				</svg>
+			</button>
+			<h1 class="text-base font-semibold">聚合任务</h1>
+			<button class="w-8 h-8 flex items-center justify-center">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+					/>
+				</svg>
+			</button>
+		</header>
 
-		<!-- PPE 会话状态条（显式入口） -->
-		<div id="ppeBar" class="ppe-bar">
-			<div class="state">
-				<div class="dot"></div>
-				<div id="ppeText">本时窗 PPE：未完成</div>
-			</div>
-			<div style="display: flex; gap: calc(var(--spacing) * 0.5); align-items: center">
-				<span id="ppeMeta" class="small"></span>
-				<a id="ppeBtn" class="btn btn-primary" href="ppe-session.html?from=task-list-aggregate.html">去采集</a>
-			</div>
-		</div>
-
-		<div class="filter-bar">
-			<div class="chip active">全部</div>
-			<div class="chip">可开始</div>
-			<div class="chip">进行中</div>
-			<div class="chip">逾期</div>
-		</div>
-
-		<div class="container">
-			<!-- 单个设备聚合卡（示例） -->
-			<div class="card device-card" id="card">
-				<div class="head">
+		<!-- PPE 状态栏 -->
+		<div id="ppeBar" class="fixed inset-x-0 top-12 bg-white border-b border-slate-200 z-40">
+			<div class="flex items-center justify-between px-4 py-3">
+				<div class="flex items-center space-x-3">
+					<div id="ppeDot" class="w-2 h-2 bg-red-500 rounded-full"></div>
 					<div>
-						<div class="title"><span id="devName"></span> <span class="small" id="devId"></span></div>
-						<div class="meta" id="devSite"></div>
+						<div id="ppeText" class="text-sm font-medium text-slate-800">本时窗 PPE：未完成</div>
+						<div id="ppeMeta" class="text-xs text-slate-500"></div>
 					</div>
-					<div class="pills" id="stat"></div>
+				</div>
+				<a
+					id="ppeBtn"
+					class="px-3 py-1 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600"
+					href="ppe-session.html?from=task-list-aggregate.html"
+				>
+					去采集
+				</a>
+			</div>
+		</div>
+
+		<!-- 筛选栏 -->
+		<div class="fixed inset-x-0 top-28 bg-white border-b border-slate-200 z-30">
+			<div class="flex space-x-1 px-4 py-3 overflow-x-auto">
+				<button class="px-4 py-2 text-sm font-medium rounded-full bg-blue-500 text-white whitespace-nowrap">
+					全部
+				</button>
+				<button
+					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+				>
+					可开始
+				</button>
+				<button
+					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+				>
+					进行中
+				</button>
+				<button
+					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+				>
+					逾期
+				</button>
+			</div>
+		</div>
+
+		<!-- 主要内容区域 -->
+		<main class="mt-44 px-4 pb-6 space-y-4">
+			<!-- 设备聚合卡片 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<div class="flex items-start justify-between mb-4">
+					<div class="flex-1">
+						<div class="flex items-center space-x-2 mb-1">
+							<h3 id="devName" class="text-lg font-bold text-slate-800">供水泵#1</h3>
+							<span id="devId" class="text-sm text-slate-500">(DEV-001)</span>
+						</div>
+						<div id="devSite" class="text-sm text-slate-600">一号厂 · 南区</div>
+					</div>
+					<div id="stat" class="flex flex-wrap gap-1"></div>
 				</div>
 
-				<div id="rows"></div>
-				<div class="small" style="margin-top: calc(var(--spacing) * 0.5)"><a href="#" id="toggleMore">查看更多</a></div>
+				<div id="rows" class="space-y-3"></div>
 
-				<div class="footer">
-					<!-- 左下角：更多 -->
-					<div class="more" id="more">
+				<div class="mt-3">
+					<button id="toggleMore" class="text-sm text-blue-500 underline">查看更多</button>
+				</div>
+
+				<div class="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
+					<div class="relative">
 						<button
-							class="btn btn-small"
-							onclick="document.getElementById('more').classList.toggle('open')"
+							id="moreBtn"
+							class="px-3 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-200"
+							onclick="toggleMore()"
 						>
 							更多
 						</button>
-						<div class="more-menu">
-							<a href="#" class="need-ppe" data-action="scan">扫码到点</a>
-							<a href="#" onclick="alert('新建报修单');">异常报修</a>
-							<a href="#" onclick="showUnavail()">设备无法巡检</a>
+						<div
+							id="moreMenu"
+							class="hidden absolute left-0 bottom-full mb-2 w-40 bg-white rounded-lg shadow-lg border border-slate-200 py-2 z-50"
+						>
+							<a
+								href="#"
+								class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 need-ppe"
+								data-action="scan"
+								>扫码到点</a
+							>
+							<a
+								href="#"
+								class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+								onclick="alert('新建报修单');"
+								>异常报修</a
+							>
+							<a
+								href="#"
+								class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
+								onclick="showUnavail()"
+								>设备无法巡检</a
+							>
 						</div>
 					</div>
-					<!-- 右侧主操作 -->
-					<div style="display: flex; gap: calc(var(--spacing) * 0.5)">
-						<a class="btn need-ppe" data-action="detail" href="task-detail_mixed.html">任务详情</a>
-						<a id="claimBtn" class="btn btn-primary need-ppe" data-action="claim" href="#"
-							>本设备全部领取</a
+					<div class="flex space-x-2">
+						<a
+							class="px-4 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-200 need-ppe"
+							data-action="detail"
+							href="task-detail_mixed.html"
 						>
+							任务详情
+						</a>
+						<button
+							id="claimBtn"
+							class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 need-ppe"
+							data-action="claim"
+						>
+							本设备全部领取
+						</button>
 					</div>
 				</div>
 
-				<div class="small" style="margin-top: calc(var(--spacing) * 0.5); color: var(--muted)">
+				<div class="text-xs text-slate-500 mt-3 p-3 bg-slate-50 rounded-lg">
 					说明：默认仅展示 3
-					条；未到时间标为「未到时间」，可查看不可开始；“更多”在左下角；主操作“全部领取”靠右，便于右手操作。
+					条；未到时间标为「未到时间」，可查看不可开始；"更多"在左下角；主操作"全部领取"靠右，便于右手操作。
 				</div>
 			</div>
-		</div>
+		</main>
 
-		<!-- 设备无法巡检弹窗 -->
-		<div
-			id="unavail-modal"
-			class="modal-backdrop"
-			style="
-				position: fixed;
-				inset: 0;
-				background: rgba(15, 23, 42, 0.45);
-				display: none;
-				align-items: flex-end;
-				z-index: 99;
-			"
-		>
-			<div
-				class="modal"
-				style="
-					width: 100%;
-					background: #fff;
-					border-top-left-radius: 16px;
-					border-top-right-radius: 16px;
-					padding: var(--spacing);
-					border: 1px solid var(--border);
-				"
-			>
-				<h3 style="margin: 0 0 8px 0; font-size: 16px">设备无法巡检</h3>
-				<div class="row" style="display: flex; gap: calc(var(--spacing) * 0.5); margin: 8px 0; flex-wrap: wrap">
-					<div class="chip">停电/断电</div>
-					<div class="chip">设备检修中</div>
-					<div class="chip">安全风险</div>
-					<div class="chip">无权限进入</div>
-					<div class="chip">其他</div>
+		<!-- 底部弹窗 - 设备无法巡检 -->
+		<div id="unavail-modal" class="fixed inset-0 bg-black/50 hidden items-end z-50">
+			<div class="bg-white rounded-t-2xl w-full p-6">
+				<h3 class="text-lg font-semibold mb-4">设备无法巡检</h3>
+				<div class="flex flex-wrap gap-2 mb-4">
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						停电/断电
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						设备检修中
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						安全风险
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						无权限进入
+					</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+						其他
+					</button>
 				</div>
 				<textarea
 					id="unavail-reason"
-					style="
-						width: 100%;
-						min-height: 80px;
-						border: 1px solid var(--border);
-						border-radius: 10px;
-						padding: calc(var(--spacing) * 0.5);
-					"
+					class="w-full min-h-20 border border-slate-300 rounded-lg p-3 text-sm resize-none"
 					placeholder="请补充具体原因（必填）"
 				></textarea>
-				<div class="row" style="display: flex; gap: calc(var(--spacing) * 0.5); margin-top: calc(var(--spacing) * 0.75)">
-					<button class="btn" onclick="hideUnavail()">取消</button>
-					<button class="btn btn-primary" onclick="saveUnavail()">提交</button>
+				<div class="flex space-x-3 mt-4">
+					<button
+						class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200"
+						onclick="hideUnavail()"
+					>
+						取消
+					</button>
+					<button
+						class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600"
+						onclick="saveUnavail()"
+					>
+						提交
+					</button>
 				</div>
 			</div>
 		</div>
 
+		<!-- Vant 4 JS -->
+		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
+
 		<script>
-			// ===== PPE 状态读取与显隐 =====
+			// PPE 状态读取与显隐
 			function readPPE() {
 				try {
 					return JSON.parse(localStorage.getItem('ppe_state') || 'null');
@@ -402,17 +222,20 @@
 					return null;
 				}
 			}
+
 			function cmp(a, b) {
 				return a.localeCompare(b);
 			}
+
 			const TIME_WINDOWS = [
 				{ key: '08:00-09:00', start: '08:00', end: '09:00' },
 				{ key: '12:00-13:00', start: '12:00', end: '13:00' },
 				{ key: '18:00-19:00', start: '18:00', end: '19:00' },
 			];
+
 			const NOW = '11:30';
+
 			function pickWindow() {
-				// 进行中 > 即将开始 > 最近未到 > 最近已完成
 				for (const w of TIME_WINDOWS) {
 					if (cmp(NOW, w.start) >= 0 && cmp(NOW, w.end) <= 0) return w;
 				}
@@ -421,20 +244,23 @@
 				}
 				return TIME_WINDOWS[TIME_WINDOWS.length - 1];
 			}
+
 			const curW = pickWindow();
 			const ppe = readPPE();
-			const ppeBar = document.getElementById('ppeBar');
+			const ppeDot = document.getElementById('ppeDot');
 			const ppeText = document.getElementById('ppeText');
 			const ppeMeta = document.getElementById('ppeMeta');
 			const ppeBtn = document.getElementById('ppeBtn');
+
 			function isExpired() {
 				if (!ppe || ppe.state !== 'COMPLETED') return false;
 				const w = TIME_WINDOWS.find((x) => x.key === ppe.window);
 				if (!w) return true;
-				return cmp(NOW, w.end) > 0 && curW.key !== ppe.window; // 简化过期逻辑
+				return cmp(NOW, w.end) > 0 && curW.key !== ppe.window;
 			}
+
 			if (ppe && ppe.state === 'COMPLETED' && ppe.window === curW.key && !isExpired()) {
-				ppeBar.classList.add('done');
+				ppeDot.className = 'w-2 h-2 bg-green-500 rounded-full';
 				ppeText.textContent = '本时窗 PPE：已完成';
 				ppeMeta.textContent = ppe.time + ' · ' + (ppe.operators || '');
 				ppeBtn.textContent = '查看留痕';
@@ -444,7 +270,7 @@
 					alert('PPE 留痕：' + ppe.time + ' ' + (ppe.operators || ''));
 				};
 			} else if (ppe && isExpired()) {
-				ppeBar.classList.add('expired');
+				ppeDot.className = 'w-2 h-2 bg-orange-500 rounded-full';
 				ppeText.textContent = '本时窗 PPE：已过期';
 				ppeMeta.textContent = '目标时窗：' + curW.key.replace('-', '–');
 				ppeBtn.textContent = '重新采集';
@@ -456,10 +282,10 @@
 				ppeBtn.href = 'ppe-session.html?from=task-list-aggregate.html&tw=' + encodeURIComponent(curW.key);
 			}
 
-			// ===== 示例设备数据 =====
+			// 示例设备数据
 			const dev = { id: 'DEV-001', name: '供水泵#1', site: '一号厂 · 南区' };
 			document.getElementById('devName').textContent = dev.name;
-			document.getElementById('devId').textContent = '（' + dev.id + '）';
+			document.getElementById('devId').textContent = '(' + dev.id + ')';
 			document.getElementById('devSite').textContent = dev.site;
 
 			const PROJECTS = [
@@ -467,6 +293,7 @@
 				{ id: 'AMP', name: '运行电流' },
 				{ id: 'VIB', name: '轴承振动' },
 			];
+
 			const rows = [];
 			TIME_WINDOWS.forEach((w) => PROJECTS.forEach((p) => rows.push({ w, p, state: 'UNSTARTED' })));
 			rows.forEach((r) => {
@@ -475,81 +302,76 @@
 				else r.state = Math.random() < 0.3 ? 'IN_PROGRESS' : 'OPEN';
 			});
 
-			function pill(s) {
-				const map = {
-					NOT_YET: '未到时间',
-					UNSTARTED: '待领',
-					OPEN: '可开始',
-					IN_PROGRESS: '进行中',
-					OVERDUE: '逾期',
-					DONE: '已完成',
+			function getStatusBadge(state) {
+				const statusMap = {
+					NOT_YET: { text: '未到时间', color: 'bg-slate-100 text-slate-600' },
+					UNSTARTED: { text: '待领', color: 'bg-slate-100 text-slate-600' },
+					OPEN: { text: '可开始', color: 'bg-blue-100 text-blue-700' },
+					IN_PROGRESS: { text: '进行中', color: 'bg-green-100 text-green-700' },
+					OVERDUE: { text: '逾期', color: 'bg-red-100 text-red-700' },
+					DONE: { text: '已完成', color: 'bg-green-100 text-green-700' },
 				};
-				const cls =
-					{
-						NOT_YET: 'gray',
-						UNSTARTED: 'gray',
-						OPEN: 'blue',
-						IN_PROGRESS: 'blue',
-						OVERDUE: 'red',
-						DONE: 'green',
-					}[s] || 'gray';
-				return '<span class="pill ' + cls + '"><span class="dot"></span> ' + map[s] + '</span>';
-			}
-			function rowCtaLabel(s) {
-				return s === 'NOT_YET' || s === 'DONE' ? '查看' : '进入';
+				const status = statusMap[state] || statusMap.UNSTARTED;
+				return `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${status.color}">${status.text}</span>`;
 			}
 
+			function getActionButton(state) {
+				const disabled = state === 'NOT_YET' || state === 'DONE';
+				const buttonText = disabled ? '查看' : '进入';
+				const buttonClass = disabled
+					? 'px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200'
+					: 'px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-lg hover:bg-blue-600';
+				const href = disabled ? 'task-detail_all-notyet.html' : 'task-detail_mixed.html';
+				return `<a class="${buttonClass} need-ppe" href="${href}">${buttonText}</a>`;
+			}
+
+			// 更新统计数据
 			const statEl = document.getElementById('stat');
 			const sNotYet = rows.filter((x) => x.state === 'NOT_YET').length;
 			const sOpen = rows.filter((x) => x.state === 'OPEN' || x.state === 'IN_PROGRESS').length;
 			const sOver = rows.filter((x) => x.state === 'OVERDUE').length;
-			statEl.innerHTML =
-				'<span class="pill gray"><span class="dot"></span> 未到 ' +
-				sNotYet +
-				'</span>' +
-				'<span class="pill blue"><span class="dot"></span> 在办 ' +
-				sOpen +
-				'</span>' +
-				(sOver ? '<span class="pill red"><span class="dot"></span> 逾期 ' + sOver + '</span>' : '');
 
+			let statHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">未到 ${sNotYet}</span>`;
+			statHtml += `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">在办 ${sOpen}</span>`;
+			if (sOver > 0) {
+				statHtml += `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">逾期 ${sOver}</span>`;
+			}
+			statEl.innerHTML = statHtml;
+
+			// 渲染任务行
 			const list = document.getElementById('rows');
 			const sorted = rows.slice().sort((a, b) => a.w.start.localeCompare(b.w.start));
 			let showAll = false;
+
 			function render() {
 				list.innerHTML = '';
 				const toShow = showAll ? sorted : sorted.slice(0, 3);
+
 				toShow.forEach((r) => {
 					const row = document.createElement('div');
-					row.className = 'task-row';
-					const disabled = r.state === 'NOT_YET' || r.state === 'DONE';
-					row.innerHTML =
-						'<div>' +
-						r.p.name +
-						' <span class="small">· ' +
-						r.w.start +
-						'–' +
-						r.w.end +
-						'</span></div>' +
-						'<div style="display:flex;gap:8px;align-items:center;">' +
-						pill(r.state) +
-						'<a class="btn btn-small ' +
-						(disabled ? '' : 'btn-primary') +
-						' need-ppe" data-action="row" href="' +
-						(disabled ? 'task-detail_all-notyet.html' : 'task-detail_mixed.html') +
-						'" ' +
-						(disabled ? '' : 'style="color:#fff"') +
-						'>' +
-						rowCtaLabel(r.state) +
-						'</a></div>';
+					row.className = 'flex items-center justify-between p-3 border border-slate-200 rounded-lg';
+					row.innerHTML = `
+						<div class="flex-1 min-w-0">
+							<div class="text-sm font-medium text-slate-800">${r.p.name}</div>
+							<div class="text-xs text-slate-500">${r.w.start}–${r.w.end}</div>
+						</div>
+						<div class="flex items-center space-x-2 ml-3">
+							${getStatusBadge(r.state)}
+							${getActionButton(r.state)}
+						</div>
+					`;
 					list.appendChild(row);
 				});
+
 				document.getElementById('toggleMore').textContent = showAll ? '收起' : '查看更多';
 			}
+
 			document.getElementById('toggleMore').addEventListener('click', (e) => {
 				e.preventDefault();
 				showAll = !showAll;
 				render();
 			});
+
 			render();
 
 			function claimAll() {
@@ -559,9 +381,8 @@
 				alert('已领取 ' + claimables.length + ' 条（仅可开始/进行中/逾期）');
 			}
 
-			// 拦截：PPE 未完成时跳转采集页
+			// PPE拦截
 			function ppeGuard(e) {
-				const action = e.currentTarget.dataset.action || 'click';
 				if (ppe && ppe.state === 'COMPLETED' && ppe.window === curW.key && !isExpired()) return true;
 				e.preventDefault();
 				const url =
@@ -572,6 +393,7 @@
 				location.href = url;
 				return false;
 			}
+
 			Array.from(document.querySelectorAll('.need-ppe')).forEach((el) => {
 				el.addEventListener('click', ppeGuard);
 			});
@@ -583,13 +405,33 @@
 				}
 			});
 
-			// modal handlers
+			// 更多菜单
+			function toggleMore() {
+				const menu = document.getElementById('moreMenu');
+				menu.classList.toggle('hidden');
+			}
+
+			// 点击外部关闭菜单
+			document.addEventListener('click', function (e) {
+				const moreBtn = document.getElementById('moreBtn');
+				const moreMenu = document.getElementById('moreMenu');
+				if (!moreBtn.contains(e.target) && !moreMenu.contains(e.target)) {
+					moreMenu.classList.add('hidden');
+				}
+			});
+
+			// 弹窗处理
 			function showUnavail() {
-				document.getElementById('unavail-modal').style.display = 'flex';
+				document.getElementById('unavail-modal').classList.remove('hidden');
+				document.getElementById('unavail-modal').classList.add('flex');
+				document.getElementById('moreMenu').classList.add('hidden');
 			}
+
 			function hideUnavail() {
-				document.getElementById('unavail-modal').style.display = 'none';
+				document.getElementById('unavail-modal').classList.add('hidden');
+				document.getElementById('unavail-modal').classList.remove('flex');
 			}
+
 			function saveUnavail() {
 				const t = document.getElementById('unavail-reason').value.trim();
 				if (!t) {
@@ -598,6 +440,7 @@
 				}
 				alert('已记录设备无法巡检原因：' + t);
 				hideUnavail();
+				document.getElementById('unavail-reason').value = '';
 			}
 		</script>
 	</body>

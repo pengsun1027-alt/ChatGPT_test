@@ -2,658 +2,184 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-		<title>我的</title>
-		<link rel="stylesheet" href="styles.css">
-                <style>
-			:root {
-				--primary: #2b6fff;
-				--primary-active: #1c54f0;
-				--primary-subtle: #e8eeff;
-				--success: #22c55e;
-				--warning: #f59e0b;
-				--danger: #ef4444;
-				--text: #0f172a;
-				--muted: #64748b;
-				--border: #e2e8f0;
-				--bg: #f8fafc;
-				--card: #ffffff;
-				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
-			}
-			* {
-				box-sizing: border-box;
-				-webkit-tap-highlight-color: transparent;
-			}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设备巡检系统 - 个人中心</title>
 
+		<!-- Vant 4 CSS -->
+		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<style>
 			body {
-				margin: 0;
-				padding: 0;
-				background: var(--bg);
-				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-				/* 禁用纵向滚动条但保留滚动功能 */
-				overflow-y: scroll;
-			}
-			/* Firefox 隐藏滚动条 */
-			html {
-				scrollbar-width: none;
-			}
-
-			/* 隐藏滚动条 */
-			::-webkit-scrollbar {
-				width: 0;
-				background: transparent;
-			}
-
-			/* IE/Edge 隐藏滚动条 */
-			-ms-overflow-style: none;
-
-			a {
-				color: inherit;
-				text-decoration: none;
-			}
-			.container {
-				padding: var(--spacing) 16px 16px 16px;
-			} /* no tabbar by default */
-			.navbar {
-				position: sticky;
-				top: 0;
-				z-index: 10;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.navbar .title {
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.badge {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				min-width: 16px;
-				height: 16px;
-				padding: 0 4px;
-				border-radius: 999px;
-				background: var(--danger);
-				color: #fff;
-				font-size: 12px;
-				line-height: 1;
-			}
-			.card {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-			}
-			.card + .card {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.grid {
-				display: grid;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.grid.cols-3 {
-				grid-template-columns: repeat(3, 1fr);
-			}
-			.grid-item {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				min-height: 88px;
-				position: relative;
-			}
-			.grid-item .icon {
-				width: 28px;
-				height: 28px;
-				border-radius: 10px;
-				background: var(--primary-subtle);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				margin-bottom: 8px;
-			}
-			.grid-item .icon svg {
-				width: 18px;
-				height: 18px;
-				fill: var(--primary);
-			}
-			.grid-item .label {
-				font-size: 14px;
-				font-weight: 600;
-			}
-			.grid-item .corner {
-				position: absolute;
-				top: 6px;
-				right: 6px;
-			}
-			.kpi-bar {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.kpi {
-				flex: 1;
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.kpi .num {
-				font-weight: 700;
-				font-size: 18px;
-			}
-			.kpi .label {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.btn {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 44px;
-				padding: 0 16px;
-				border-radius: 12px;
-				border: 1px solid var(--border);
-				background: #fff;
-				font-weight: 600;
-			}
-			.btn:active {
-				transform: scale(0.98);
-			}
-			.btn-primary {
-				background: var(--primary);
-				border-color: var(--primary);
-				color: #fff;
-			}
-			.btn-primary:disabled {
-				background: #9db8ff;
-				border-color: #9db8ff;
-			}
-			.btn-ghost {
-				background: #fff;
-				border-color: var(--border);
-				color: var(--text);
-			}
-			.btn-danger {
-				background: var(--danger);
-				border-color: var(--danger);
-				color: #fff;
-			}
-			.btn-small {
-				height: 32px;
-				padding: 0 12px;
-				border-radius: 10px;
-				font-size: 14px;
-			}
-			.btn-block {
-				width: 100%;
-			}
-			.input,
-			.select,
-			.search {
-				height: 44px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: 0 12px;
-				background: #fff;
-			}
-			.search {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.search input {
-				border: none;
-				outline: none;
-				flex: 1;
-				height: 42px;
-				font-size: 14px;
-			}
-			.filter-bar {
-				position: sticky;
-				top: 54px;
-				background: #fff;
-				z-index: 9;
-				border-bottom: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.5) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-				overflow: auto;
-			}
-			.chips {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				overflow: auto;
-			}
-			.chip {
-				padding: calc(var(--spacing) * 0.5) 12px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-				background: #fff;
-				font-size: 14px;
-				white-space: nowrap;
-			}
-			.chip.active {
-				background: var(--primary-subtle);
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.device-card {
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.device-card .head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.device-card .title {
-				font-weight: 700;
-				font-size: var(--font-size);
-			}
-			.device-card .meta {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.pills {
-				display: flex;
-				gap: 6px;
-				flex-wrap: wrap;
-			}
-			.pill {
-				font-size: 12px;
-				border-radius: 999px;
-				padding: 4px 8px;
-				border: 1px solid var(--border);
-				background: #fff;
-			}
-			.pill.gray {
-				color: #475569;
-			}
-			.pill.blue {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.pill.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.device-card .body {
-				margin: 8px 0 12px 0;
-			}
-			.task-row {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: calc(var(--spacing) * 0.5) 0;
-				border-top: 1px dashed var(--border);
-			}
-			.task-row:first-child {
-				border-top: none;
-			}
-			.countdown {
-				font-size: 12px;
-				color: var(--danger);
-			}
-			.card-actions {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.more {
-				position: relative;
-			}
-			.more-menu {
-				display: none;
-				position: absolute;
-				right: 0;
-				top: 46px;
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.5);
-				min-width: 140px;
-			}
-			.more-menu a {
-				display: block;
-				padding: calc(var(--spacing) * 0.5) 10px;
-				border-radius: 8px;
-			}
-			.more-menu a:hover {
-				background: var(--bg);
-			}
-			.more.open .more-menu {
-				display: block;
-			}
-			/* ScanBar */
-			.scanbar {
-				position: sticky;
-				top: 54px;
-				background: #fff;
-				border-bottom: 1px solid var(--border);
-				z-index: 9;
-				padding: 10px 16px;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.scanbar .state {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-				font-weight: 600;
-			}
-			.scanbar .dot {
-				width: 10px;
-				height: 10px;
-				border-radius: 999px;
-				background: var(--muted);
-			}
-			.scanbar.scanned .dot {
-				background: var(--success);
-			}
-			.scanbar .desc {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			/* Sections (Project) */
-			.section {
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-				margin: 12px 0;
-			}
-			.section .sec-head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.section .sec-title {
-				font-weight: 700;
-			}
-			.tag {
-				font-size: 12px;
-				padding: 4px 8px;
-				border-radius: 999px;
-				border: 1px solid var(--border);
-			}
-			.tag.green {
-				border-color: var(--success);
-				color: var(--success);
-			}
-			.tag.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.tag.yellow {
-				border-color: var(--warning);
-				color: var(--warning);
-			}
-			.form-row {
-				margin: 8px 0;
-			}
-			.label {
-				font-size: 13px;
-				color: var(--muted);
-				margin-bottom: 6px;
-			}
-			.radio-group {
-				display: flex;
-				gap: calc(var(--spacing) * 0.75);
-				flex-wrap: wrap;
-			}
-			.radio {
-				display: flex;
-				align-items: center;
-				gap: 6px;
-				padding: calc(var(--spacing) * 0.5) 10px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-			}
-			.radio.active {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.textarea {
-				width: 100%;
-				min-height: 80px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: calc(var(--spacing) * 0.5);
-				resize: vertical;
-			}
-			.photo-uploader {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				flex-wrap: wrap;
-			}
-			.photo {
-				width: 72px;
-				height: 72px;
-				border-radius: 8px;
-				border: 1px dashed var(--border);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				color: var(--muted);
-				font-size: 12px;
-				cursor: pointer;
-			}
-			.input {
-				width: 100%;
-			}
-			.helper {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.helper.red {
-				color: var(--danger);
-			}
-			.unit-row {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.unit-row input {
-				flex: 1;
-			}
-			.required {
-				color: var(--danger);
-				margin-left: 4px;
-			}
-			/* Bottom Affix: no tabbar, stick to bottom */
-			.bottom-affix {
-				position: fixed;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: #fff;
-				border-top: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.75) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				z-index: 20;
-			}
-			.bottom-affix .btn {
-				flex: 1;
-			}
-			.skeleton {
-				background: linear-gradient(90deg, #eee, #f5f5f5, #eee);
-				background-size: 200% 100%;
-				animation: s 1.4s infinite;
-			}
-			@keyframes s {
-				0% {
-					background-position: 200% 0;
-				}
-				100% {
-					background-position: -200% 0;
-				}
-			}
-			/* utility */
-			.row {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-			}
-			.space-between {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
-			.mt-8 {
-				margin-top: calc(var(--spacing) * 0.5);
-			}
-			.mt-12 {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.mt-16 {
-				margin-top: 16px;
-			}
-			.mt-20 {
-				margin-top: 20px;
-			}
-			.mr-8 {
-				margin-right: 8px;
-			}
-			.small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.center {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-			.hide {
-				display: none !important;
-			}
-
-			/* restore container bottom padding since tabbar exists here */
-			.container {
-				padding-bottom: 88px;
-			}
-			/* tabbar styles */
-			.tabbar {
-				position: fixed;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: #fff;
-				border-top: 1px solid var(--border);
-				height: 64px;
-				display: flex;
-				align-items: center;
-				justify-content: space-around;
-				z-index: 30;
-			}
-			.tabbar .item {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				gap: 4px;
-				color: #475569;
-				width: 50%;
-				height: 64px;
-			}
-			.tabbar .item.active {
-				color: var(--primary);
-			}
-			.tabbar .item .ico {
-				width: 22px;
-				height: 22px;
-				border-radius: 8px;
-				background: var(--primary-subtle);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-			.tabbar .item.active .ico {
-				background: rgba(43, 111, 255, 0.15);
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				background: #f7f8fa;
+			}
+			.safe-bottom {
+				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
 		</style>
 	</head>
-	<body>
-		<div class="navbar"><div class="title">我的</div></div>
+	<body class="pb-20">
+		<!-- 顶部导航栏 -->
+		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-center z-50">
+			<h1 class="text-base font-semibold">个人中心</h1>
+		</header>
 
-		<div class="container">
-			<div class="card device-card">
-				<div class="head">
-					<div>
-						<div class="title">张三 <span class="small">运维员</span></div>
-						<div class="meta">一号厂 · 南区</div>
+		<!-- 主要内容区域 -->
+		<main class="mt-12 px-4 space-y-4">
+			<!-- 用户信息卡片 -->
+			<div class="bg-white rounded-2xl shadow-sm p-6">
+				<div class="flex items-center justify-between">
+					<div class="flex items-center space-x-4">
+						<div class="w-16 h-16 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+							<span class="text-white text-lg font-medium">张</span>
+						</div>
+						<div>
+							<div class="font-semibold text-lg">张三</div>
+							<div class="text-sm text-slate-500">运维员</div>
+							<div class="text-sm text-slate-500">一号厂 · 南区</div>
+						</div>
 					</div>
-					<div class="pill blue">在线</div>
+					<div class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+						在线
+					</div>
 				</div>
 			</div>
 
-			<div class="section">
-				<div class="form-row"><div class="label">权限与授权</div></div>
-				<div class="task-row">
-					<div>相机权限</div>
-					<div class="small">已开启</div>
+			<!-- 权限与授权 -->
+			<div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+				<div class="px-6 py-4 border-b border-slate-100">
+					<h3 class="font-semibold text-slate-800">权限与授权</h3>
 				</div>
-				<div class="task-row">
-					<div>位置权限</div>
-					<div class="small">已开启</div>
-				</div>
-				<div class="task-row">
-					<div>NFC 权限</div>
-					<div class="small">未开启</div>
+				<div class="divide-y divide-slate-100">
+					<div class="flex items-center justify-between px-6 py-4">
+						<div class="flex items-center space-x-3">
+							<div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+								<svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+								</svg>
+							</div>
+							<span class="text-sm font-medium">相机权限</span>
+						</div>
+						<span class="text-sm text-green-600">已开启</span>
+					</div>
+					<div class="flex items-center justify-between px-6 py-4">
+						<div class="flex items-center space-x-3">
+							<div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+								<svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+									<path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+								</svg>
+							</div>
+							<span class="text-sm font-medium">位置权限</span>
+						</div>
+						<span class="text-sm text-green-600">已开启</span>
+					</div>
+					<div class="flex items-center justify-between px-6 py-4">
+						<div class="flex items-center space-x-3">
+							<div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center">
+								<svg class="w-4 h-4 text-slate-400" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+								</svg>
+							</div>
+							<span class="text-sm font-medium">NFC 权限</span>
+						</div>
+						<span class="text-sm text-slate-500">未开启</span>
+					</div>
 				</div>
 			</div>
 
-			<div class="section">
-				<div class="task-row">
-					<div>消息中心</div>
-					<div><button class="btn btn-small">进入</button></div>
-				</div>
-				<div class="task-row">
-					<div>草稿箱</div>
-					<div><a href="drafts.html" class="btn btn-small">打开</a></div>
-				</div>
-				<div class="task-row">
-					<div>清理缓存</div>
-					<div><button class="btn btn-small">清理</button></div>
-				</div>
-				<div class="task-row">
-					<div>关于</div>
-					<div><button class="btn btn-small">查看</button></div>
-				</div>
-				<div class="task-row">
-					<div>退出绑定</div>
-					<div><button class="btn btn-small btn-danger">退出</button></div>
+			<!-- 功能菜单 -->
+			<div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+				<div class="divide-y divide-slate-100">
+					<a href="#" class="flex items-center justify-between px-6 py-4 active:bg-slate-50">
+						<div class="flex items-center space-x-3">
+							<div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+								<svg class="w-4 h-4 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2h3a1 1 0 110 2h-1v11a3 3 0 01-3 3H8a3 3 0 01-3-3V6H4a1 1 0 110-2h3zM9 3v1h6V3H9zm0 5v8h2V8H9zm4 0v8h2V8h-2z"/>
+								</svg>
+							</div>
+							<span class="text-sm font-medium">消息中心</span>
+						</div>
+						<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+						</svg>
+					</a>
+					<a href="drafts.html" class="flex items-center justify-between px-6 py-4 active:bg-slate-50">
+						<div class="flex items-center space-x-3">
+							<div class="w-8 h-8 bg-slate-100 rounded-lg flex items-center justify-center">
+								<svg class="w-4 h-4 text-slate-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 00-2 2z"/>
+									<path d="M8 5a2 2 0 012-2h4a2 2 0 012 2v2H8V5z"/>
+								</svg>
+							</div>
+							<span class="text-sm font-medium">草稿箱</span>
+						</div>
+						<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+						</svg>
+					</a>
+					<a href="#" class="flex items-center justify-between px-6 py-4 active:bg-slate-50">
+						<div class="flex items-center space-x-3">
+							<div class="w-8 h-8 bg-purple-100 rounded-lg flex items-center justify-center">
+								<svg class="w-4 h-4 text-purple-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+								</svg>
+							</div>
+							<span class="text-sm font-medium">清理缓存</span>
+						</div>
+						<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+						</svg>
+					</a>
+					<a href="#" class="flex items-center justify-between px-6 py-4 active:bg-slate-50">
+						<div class="flex items-center space-x-3">
+							<div class="w-8 h-8 bg-indigo-100 rounded-lg flex items-center justify-center">
+								<svg class="w-4 h-4 text-indigo-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+								</svg>
+							</div>
+							<span class="text-sm font-medium">关于</span>
+						</div>
+						<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+						</svg>
+					</a>
+					<button class="w-full flex items-center justify-between px-6 py-4 active:bg-slate-50">
+						<div class="flex items-center space-x-3">
+							<div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+								<svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/>
+								</svg>
+							</div>
+							<span class="text-sm font-medium text-red-600">退出绑定</span>
+						</div>
+						<svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+						</svg>
+					</button>
 				</div>
 			</div>
-		</div>
+		</main>
 
-		<div class="tabbar">
-			<a class="item" href="home.html"
-				><div class="ico"></div>
-				<div>首页</div></a
-			>
-			<a class="item active" href="#"
-				><div class="ico"></div>
-				<div>我的</div></a
-			>
-		</div>
+		<!-- 底部导航栏 -->
+		<nav class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
+			<div class="mx-auto max-w-md">
+				<div class="grid grid-cols-2 text-center">
+					<a href="home.html" class="py-2.5 flex flex-col items-center justify-center text-slate-400">
+						<span class="text-lg leading-none">🏠</span>
+						<span class="text-xs mt-1">首页</span>
+					</a>
+					<a href="#" class="py-2.5 flex flex-col items-center justify-center text-blue-600">
+						<span class="text-lg leading-none">👤</span>
+						<span class="text-xs mt-1">我的</span>
+					</a>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Vant 4 JS -->
+		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
 	</body>
 </html>

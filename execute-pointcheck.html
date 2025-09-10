@@ -2,538 +2,328 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-		<title>点检 · 执行（两页版·含实例选择+扫码）</title>
-		<link rel="stylesheet" href="styles.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设备巡检系统 - 点检执行</title>
+
+		<!-- Vant 4 CSS -->
+		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
 		<style>
-			:root {
-				--primary: #2b6fff;
-				--primary-active: #1c54f0;
-				--primary-subtle: #e8eeff;
-				--success: #22c55e;
-				--warning: #f59e0b;
-				--danger: #ef4444;
-				--text: #0f172a;
-				--muted: #64748b;
-				--border: #e2e8f0;
-				--bg: #f8fafc;
-				--card: #ffffff;
-				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
-			}
-			* {
-				box-sizing: border-box;
-				-webkit-tap-highlight-color: transparent;
-			}
 			body {
-				margin: 0;
-				padding: 0;
-				background: var(--bg);
-				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-				/* 禁用纵向滚动条但保留滚动功能 */
-				overflow-y: scroll;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				background: #f7f8fa;
 			}
-			/* Firefox 隐藏滚动条 */
-			html {
-				scrollbar-width: none;
-			}
-
-			/* 隐藏滚动条 */
-			::-webkit-scrollbar {
-				width: 0;
-				background: transparent;
-			}
-
-			/* IE/Edge 隐藏滚动条 */
-			-ms-overflow-style: none;
-			a {
-				color: inherit;
-				text-decoration: none;
-			}
-			.container {
-				padding: var(--spacing) 16px 88px 16px;
-			}
-			.navbar {
-				position: sticky;
-				top: 0;
-				z-index: 10;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.navbar .title {
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.btn {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 44px;
-				padding: 0 16px;
-				border-radius: 12px;
-				border: 1px solid var(--border);
-				background: #fff;
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.btn-small {
-				height: 32px;
-				padding: 0 12px;
-				border-radius: 10px;
-				font-size: 15px;
-			}
-			.btn-primary {
-				background: var(--primary);
-				border-color: var(--primary);
-				color: #fff;
-			}
-			.btn-primary:disabled {
-				background: #9db8ff;
-				border-color: #9db8ff;
-			}
-			.section {
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-				margin: 4px 0;
-			}
-			.sec-head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.sec-title {
-				font-weight: 700;
-				font-size: 18px;
-			}
-			.chip {
-				padding: calc(var(--spacing) * 0.5) 12px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-				background: #fff;
-				font-size: 13px;
-				white-space: nowrap;
-			}
-			.chip.active {
-				background: var(--primary-subtle);
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.chip.gray {
-				color: #475569;
-			}
-			.chip.green {
-				border-color: #22c55e;
-				color: #22c55e;
-			}
-			.chip.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.scanbar {
-				position: sticky;
-				top: 54px;
-				background: #fff;
-				border-bottom: 1px solid var(--border);
-				z-index: 9;
-				padding: 10px 16px;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.scanbar .state {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-				font-weight: 600;
-			}
-			.scanbar .dot {
-				width: 10px;
-				height: 10px;
-				border-radius: 999px;
-				background: var(--muted);
-			}
-			.scanbar.scanned .dot {
-				background: var(--success);
-			}
-			.scanbar .desc {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.tag {
-				font-size: 14px;
-				padding: 4px 8px;
-				border-radius: 999px;
-				border: 1px solid var(--border);
-			}
-			.tag.green {
-				border-color: var(--success);
-				color: var(--success);
-			}
-			.tag.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.tag.yellow {
-				border-color: var(--warning);
-				color: var(--warning);
-			}
-			.photo-uploader {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				flex-wrap: wrap;
-			}
-			.photo {
-				width: 72px;
-				height: 72px;
-				border-radius: 8px;
-				border: 1px dashed var(--border);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				color: var(--muted);
-				font-size: 12px;
-				cursor: pointer;
-			}
-			.radio-group {
-				display: flex;
-				gap: calc(var(--spacing) * 0.75);
-				flex-wrap: wrap;
-			}
-			.radio {
-				display: flex;
-				align-items: center;
-				gap: 6px;
-				padding: calc(var(--spacing) * 0.5) 10px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-			}
-			.radio.active {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.textarea {
-				width: 100%;
-				min-height: 80px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: calc(var(--spacing) * 0.5);
-			}
-			.bottom-affix {
-				position: fixed;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: #fff;
-				border-top: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.75) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				z-index: 20;
-			}
-			.bottom-affix .btn {
-				flex: 1;
-			}
-			.small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			/* 修改: 故障下的照片和备注字体大小 */
-			.section .small .small {
-				font-size: 15px;
-			}
-			.actions {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-top: calc(var(--spacing) * 0.5);
-			}
-			.btn-text {
-				background: transparent;
-				border: none;
-				padding: 0;
-				font-size: 13px;
-				color: var(--muted);
-				text-decoration: underline;
-				cursor: pointer;
-			}
-			/* modal styles */
-			.modal-backdrop {
-				position: fixed;
-				inset: 0;
-				background: rgba(15, 23, 42, 0.45);
-				display: none;
-				align-items: flex-end;
-				z-index: 99;
-			}
-			.modal {
-				width: 100%;
-				background: #fff;
-				border-top-left-radius: 16px;
-				border-top-right-radius: 16px;
-				padding: var(--spacing);
-				border: 1px solid var(--border);
-				box-shadow: var(--shadow);
-			}
-			.modal h3 {
-				margin: 0 0 8px 0;
-				font-size: 18px;
-			}
-			.modal .row {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				margin: 8px 0;
-				flex-wrap: wrap;
-			}
-			.modal .chip {
-				padding: 6px 10px;
-				border-radius: 999px;
-				border: 1px solid var(--border);
-				font-size: 14px;
-			}
-			.modal textarea {
-				width: 100%;
-				min-height: 80px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: calc(var(--spacing) * 0.5);
-				font-size: 14px;
-			}
-			.modal .actions {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.modal .actions .btn {
-				flex: 1;
+			.safe-bottom {
+				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
 		</style>
 	</head>
 	<body>
-		<div class="navbar">
-			<div class="title">点检 · 执行（供水泵#1）</div>
-			<div style="margin-left: auto" class="small">批次 2025W33</div>
-		</div>
+		<!-- 顶部导航栏 -->
+		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+				</svg>
+			</button>
+			<h1 class="text-base font-semibold">点检执行 · 供水泵#1</h1>
+			<span class="text-xs text-slate-500">批次 2025W33</span>
+		</header>
 
-		<!-- 扫码卡片（两页版：置于最上方，位于实例选择之上） -->
-		<div id="scanbar" class="scanbar">
-			<div>
-				<div class="state">
-					<div class="dot"></div>
-					<div id="scan-text">未扫码</div>
+		<!-- 扫码状态栏 -->
+		<div id="scanbar" class="fixed inset-x-0 top-12 bg-white border-b border-slate-200 z-40">
+			<div class="flex items-center justify-between px-4 py-3">
+				<div class="flex items-center space-x-3">
+					<div class="w-2 h-2 bg-slate-400 rounded-full"></div>
+					<div>
+						<div id="scan-text" class="text-sm font-medium text-slate-800">未扫码</div>
+						<div id="scan-desc" class="text-xs text-slate-500">到点后解锁提交</div>
+					</div>
 				</div>
-				<div class="desc" id="scan-desc">到点后解锁提交</div>
+				<button class="px-3 py-1 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600" onclick="toggleScan()">
+					去扫码
+				</button>
 			</div>
-			<button class="btn btn-small" onclick="toggleScan()">去扫码</button>
 		</div>
 
-		<!-- 实例选择（两页版：页首，仅次于扫码卡片） -->
-		<div class="section" id="instance">
-			<div class="sec-head">
-				<div class="sec-title">选择今日实例</div>
-				<div class="small">时窗</div>
+		<!-- 主要内容区域 -->
+		<main class="mt-28 px-4 pb-20 space-y-4">
+			<!-- 实例选择卡片 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<div class="flex items-center justify-between mb-3">
+					<h3 class="font-semibold text-slate-800">选择今日实例</h3>
+					<span class="text-xs text-slate-500">时窗</span>
+				</div>
+				<div id="chips" class="flex flex-wrap gap-2 mb-2">
+					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700 cursor-pointer" data-key="08:00-09:00" data-state="DONE">
+						08:00–09:00 · 已完成
+					</span>
+					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700 cursor-pointer active" data-key="12:00-13:00" data-state="OPEN">
+						12:00–13:00 · 可开始
+					</span>
+					<span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 cursor-pointer" data-key="18:00-19:00" data-state="NOT_YET">
+						18:00–19:00 · 未到时间
+					</span>
+				</div>
+				<div id="instTips" class="text-xs text-slate-500">当前实例：12:00–13:00 · 可开始</div>
 			</div>
-			<div id="chips" style="display: flex; gap: calc(var(--spacing) * 0.5); flex-wrap: wrap">
-				<div class="chip" data-key="08:00-09:00" data-state="DONE">08:00–09:00 · 已完成</div>
-				<div class="chip active" data-key="12:00-13:00" data-state="OPEN">12:00–13:00 · 可开始</div>
-				<div class="chip gray" data-key="18:00-19:00" data-state="NOT_YET">18:00–19:00 · 未到时间</div>
-			</div>
-			<div id="instTips" class="small" style="margin-top: 6px">当前实例：12:00–13:00 · 可开始</div>
-		</div>
-
-		<div class="container">
 			<!-- 项目1：外观检查 -->
-			<div class="section" data-required="true">
-				<div class="sec-head">
-					<div class="sec-title">外观检查</div>
-					<div class="tag" id="tag1">未填</div>
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<div class="flex items-center justify-between mb-4">
+					<h3 class="font-semibold text-slate-800">外观检查</h3>
+					<span id="tag1" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+						未填
+					</span>
 				</div>
-				<div class="radio-group" data-name="p1" onclick="selectRadio(event)">
-					<div class="radio active" data-value="正常">正常</div>
-					<div class="radio" data-value="故障">故障</div>
+
+				<div class="flex space-x-3 mb-3" data-name="p1" onclick="selectRadio(event)">
+					<button class="px-4 py-2 border border-blue-500 bg-blue-50 text-blue-700 rounded-full text-sm font-medium active" data-value="正常">
+						正常
+					</button>
+					<button class="px-4 py-2 border border-slate-300 text-slate-600 rounded-full text-sm font-medium" data-value="故障">
+						故障
+					</button>
 				</div>
-				<div class="small" style="margin-top: 6px">说明：查看外观有无破损、漏液。</div>
-				<div class="small" id="p1-extra" style="display: none; margin-top: calc(var(--spacing) * 0.5)">
-					<div class="small" style="margin-bottom: 6px">
-						照片<span style="color: var(--danger); margin-left: 4px">*</span>
+
+				<div class="text-xs text-slate-500 mb-4">说明：查看外观有无破损、漏液</div>
+
+				<div id="p1-extra" class="space-y-3 hidden">
+					<div>
+						<div class="text-sm font-medium text-slate-600 mb-2">现场照片 <span class="text-red-500">*</span></div>
+						<div class="flex space-x-3" id="p1-photos" data-min="1" data-count="0">
+							<button class="w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-500 hover:border-slate-400" onclick="addPhoto('p1-photos')">
+								<div class="text-center">
+									<svg class="w-6 h-6 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+									</svg>
+									<span class="text-xs">拍照</span>
+								</div>
+							</button>
+						</div>
 					</div>
-					<div class="photo-uploader" data-min="1" data-count="0" id="p1-photos">
-						<div class="photo" onclick="addPhoto('p1-photos')">+ 照片</div>
+					<div>
+						<div class="text-sm font-medium text-slate-600 mb-2">备注 <span class="text-red-500">*</span></div>
+						<textarea id="p1-remark" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-20 resize-none" placeholder="请填写故障现象"></textarea>
 					</div>
-					<div class="small" style="margin: 8px 0 6px 0">
-						备注<span style="color: var(--danger); margin-left: 4px">*</span>
-					</div>
-					<textarea class="textarea" placeholder="请填写故障现象" id="p1-remark"></textarea>
 				</div>
-				<div class="actions">
-					<button class="btn-text" onclick="openCantModal(1,'外观检查')">无法完成</button>
-					<button class="btn btn-small btn-primary" onclick="submitSection('1')" id="btn1">提交本项目</button>
+
+				<div class="flex justify-between mt-4">
+					<button class="text-sm text-slate-500 underline" onclick="openCantModal(1,'外观检查')">
+						无法完成
+					</button>
+					<button id="btn1" class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500" onclick="submitSection('1')">
+						提交本项目
+					</button>
 				</div>
 			</div>
 
 			<!-- 项目2：运转声音 -->
-			<div class="section" data-required="true">
-				<div class="sec-head">
-					<div class="sec-title">运转声音</div>
-					<div class="tag" id="tag2">未填</div>
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<div class="flex items-center justify-between mb-4">
+					<h3 class="font-semibold text-slate-800">运转声音</h3>
+					<span id="tag2" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+						未填
+					</span>
 				</div>
-				<div class="radio-group" data-name="p2" onclick="selectRadio(event)">
-					<div class="radio active" data-value="正常">正常</div>
-					<div class="radio" data-value="故障">故障</div>
+
+				<div class="flex space-x-3 mb-3" data-name="p2" onclick="selectRadio(event)">
+					<button class="px-4 py-2 border border-blue-500 bg-blue-50 text-blue-700 rounded-full text-sm font-medium active" data-value="正常">
+						正常
+					</button>
+					<button class="px-4 py-2 border border-slate-300 text-slate-600 rounded-full text-sm font-medium" data-value="故障">
+						故障
+					</button>
 				</div>
-				<div class="small" style="margin-top: 6px">说明：有无异常摩擦/敲击声。</div>
-				<div class="small" id="p2-extra" style="display: none; margin-top: calc(var(--spacing) * 0.5)">
-					<div class="small" style="margin-bottom: 6px">
-						照片<span style="color: var(--danger); margin-left: 4px">*</span>
+
+				<div class="text-xs text-slate-500 mb-4">说明：有无异常摩擦/敲击声</div>
+
+				<div id="p2-extra" class="space-y-3 hidden">
+					<div>
+						<div class="text-sm font-medium text-slate-600 mb-2">现场照片 <span class="text-red-500">*</span></div>
+						<div class="flex space-x-3" id="p2-photos" data-min="1" data-count="0">
+							<button class="w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-500 hover:border-slate-400" onclick="addPhoto('p2-photos')">
+								<div class="text-center">
+									<svg class="w-6 h-6 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+									</svg>
+									<span class="text-xs">拍照</span>
+								</div>
+							</button>
+						</div>
 					</div>
-					<div class="photo-uploader" data-min="1" data-count="0" id="p2-photos">
-						<div class="photo" onclick="addPhoto('p2-photos')">+ 照片</div>
+					<div>
+						<div class="text-sm font-medium text-slate-600 mb-2">备注 <span class="text-red-500">*</span></div>
+						<textarea id="p2-remark" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-20 resize-none" placeholder="请填写故障现象"></textarea>
 					</div>
-					<div class="small" style="margin: 8px 0 6px 0">
-						备注<span style="color: var(--danger); margin-left: 4px">*</span>
-					</div>
-					<textarea class="textarea" placeholder="请填写故障现象" id="p2-remark"></textarea>
 				</div>
-				<div class="actions">
-					<button class="btn-text" onclick="openCantModal(2,'运转声音')">无法完成</button>
-					<button class="btn btn-small btn-primary" onclick="submitSection('2')" id="btn2">提交本项目</button>
+
+				<div class="flex justify-between mt-4">
+					<button class="text-sm text-slate-500 underline" onclick="openCantModal(2,'运转声音')">
+						无法完成
+					</button>
+					<button id="btn2" class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500" onclick="submitSection('2')">
+						提交本项目
+					</button>
 				</div>
 			</div>
 
 			<!-- 项目3：安全防护 -->
-			<div class="section" data-required="true">
-				<div class="sec-head">
-					<div class="sec-title">安全防护</div>
-					<div class="tag" id="tag3">未填</div>
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<div class="flex items-center justify-between mb-4">
+					<h3 class="font-semibold text-slate-800">安全防护</h3>
+					<span id="tag3" class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+						未填
+					</span>
 				</div>
-				<div class="radio-group" data-name="p3" onclick="selectRadio(event)">
-					<div class="radio active" data-value="正常">正常</div>
-					<div class="radio" data-value="故障">故障</div>
+
+				<div class="flex space-x-3 mb-3" data-name="p3" onclick="selectRadio(event)">
+					<button class="px-4 py-2 border border-blue-500 bg-blue-50 text-blue-700 rounded-full text-sm font-medium active" data-value="正常">
+						正常
+					</button>
+					<button class="px-4 py-2 border border-slate-300 text-slate-600 rounded-full text-sm font-medium" data-value="故障">
+						故障
+					</button>
 				</div>
-				<div class="small" style="margin-top: 6px">说明：防护罩/护栏是否完整可靠。</div>
-				<div class="small" id="p3-extra" style="display: none; margin-top: calc(var(--spacing) * 0.5)">
-					<div class="small" style="margin-bottom: 6px">
-						照片<span style="color: var(--danger); margin-left: 4px">*</span>
+
+				<div class="text-xs text-slate-500 mb-4">说明：防护罩/护栏是否完整可靠</div>
+
+				<div id="p3-extra" class="space-y-3 hidden">
+					<div>
+						<div class="text-sm font-medium text-slate-600 mb-2">现场照片 <span class="text-red-500">*</span></div>
+						<div class="flex space-x-3" id="p3-photos" data-min="1" data-count="0">
+							<button class="w-20 h-20 border-2 border-dashed border-slate-300 rounded-lg flex items-center justify-center text-slate-500 hover:border-slate-400" onclick="addPhoto('p3-photos')">
+								<div class="text-center">
+									<svg class="w-6 h-6 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+									</svg>
+									<span class="text-xs">拍照</span>
+								</div>
+							</button>
+						</div>
 					</div>
-					<div class="photo-uploader" data-min="1" data-count="0" id="p3-photos">
-						<div class="photo" onclick="addPhoto('p3-photos')">+ 照片</div>
+					<div>
+						<div class="text-sm font-medium text-slate-600 mb-2">备注 <span class="text-red-500">*</span></div>
+						<textarea id="p3-remark" class="w-full px-3 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 min-h-20 resize-none" placeholder="请填写故障现象"></textarea>
 					</div>
-					<div class="small" style="margin: 8px 0 6px 0">
-						备注<span style="color: var(--danger); margin-left: 4px">*</span>
-					</div>
-					<textarea class="textarea" placeholder="请填写故障现象" id="p3-remark"></textarea>
 				</div>
-				<div class="actions">
-					<button class="btn-text" onclick="openCantModal(3,'安全防护')">无法完成</button>
-					<button class="btn btn-small btn-primary" onclick="submitSection('3')" id="btn3">提交本项目</button>
+
+				<div class="flex justify-between mt-4">
+					<button class="text-sm text-slate-500 underline" onclick="openCantModal(3,'安全防护')">
+						无法完成
+					</button>
+					<button id="btn3" class="px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 disabled:bg-slate-300 disabled:text-slate-500" onclick="submitSection('3')">
+						提交本项目
+					</button>
+				</div>
+			</div>
+		</main>
+
+		<!-- 底部操作栏 -->
+		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
+			<div class="px-4 py-3 flex space-x-3">
+				<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 active:bg-slate-300">
+					保存草稿
+				</button>
+				<button id="submitAll" class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 active:bg-blue-700 disabled:bg-slate-300 disabled:text-slate-500" onclick="submitAll()" disabled>
+					批量提交
+				</button>
+			</div>
+		</div>
+
+		<!-- 底部弹窗 - 无法完成 -->
+		<div id="cant-modal" class="fixed inset-0 bg-black/50 hidden items-end z-50">
+			<div class="bg-white rounded-t-2xl w-full p-6">
+				<h3 id="cant-title" class="text-lg font-semibold mb-4">项目无法完成</h3>
+				<div class="flex flex-wrap gap-2 mb-4">
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">无法接近测点</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">仪表损坏</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">工况不允许</button>
+					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">其他</button>
+				</div>
+				<textarea id="cant-reason" class="w-full min-h-20 border border-slate-300 rounded-lg p-3 text-sm resize-none" placeholder="请补充具体原因（必填）"></textarea>
+				<div class="flex space-x-3 mt-4">
+					<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200" onclick="closeCantModal()">
+						取消
+					</button>
+					<button class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600" onclick="submitCant()">
+						提交原因
+					</button>
 				</div>
 			</div>
 		</div>
 
-		<div class="bottom-affix">
-			<button class="btn">保存草稿</button>
-			<button id="submitAll" class="btn btn-primary" disabled onclick="submitAll()">批量提交</button>
-		</div>
-
-		<!-- 无法完成：弹窗（两页版） -->
-		<div
-			id="cant-modal"
-			class="modal-backdrop"
-			style="
-				position: fixed;
-				inset: 0;
-				background: rgba(15, 23, 42, 0.45);
-				display: none;
-				align-items: flex-end;
-				z-index: 99;
-			"
-		>
-			<div class="modal" style="width: 100%">
-				<h3 id="cant-title">项目无法完成</h3>
-				<div class="row" style="display: flex; gap: calc(var(--spacing) * 0.5); margin: 8px 0; flex-wrap: wrap">
-					<div class="chip">无法接近测点</div>
-					<div class="chip">仪表损坏</div>
-					<div class="chip">工况不允许</div>
-					<div class="chip">其他</div>
-				</div>
-				<textarea
-					id="cant-reason"
-					placeholder="请补充具体原因（必填）"
-					style="
-						width: 100%;
-						min-height: 80px;
-						border: 1px solid var(--border);
-						border-radius: 10px;
-						padding: calc(var(--spacing) * 0.5);
-					"
-				></textarea>
-				<div class="actions">
-					<button class="btn" onclick="closeCantModal()">取消</button
-					><button class="btn btn-primary" onclick="submitCant()">提交原因</button>
-				</div>
-			</div>
-		</div>
+		<!-- Vant 4 JS -->
+		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
 
 		<script>
-			let scanned = false; // 扫码状态
-			let currentState = 'OPEN'; // 实例状态：OPEN | NOT_YET | DONE
+			let scanned = false;
+			let currentState = 'OPEN';
 
 			function setInstanceState(state, key) {
 				currentState = state;
 				const tips = document.getElementById('instTips');
-				tips.textContent =
-					'当前实例：' +
-					key.replace('-', '–') +
-					' · ' +
+				tips.textContent = '当前实例：' + key.replace('-', '–') + ' · ' + 
 					{ OPEN: '可开始', NOT_YET: '未到时间', DONE: '已完成' }[state];
 				updateLocks();
 			}
 
 			// 实例芯片点击
-			Array.from(document.querySelectorAll('#chips .chip')).forEach((ch) => {
-				ch.addEventListener('click', () => {
-					Array.from(document.querySelectorAll('#chips .chip')).forEach((x) => x.classList.remove('active'));
-					ch.classList.add('active');
-					setInstanceState(ch.dataset.state, ch.dataset.key);
+			Array.from(document.querySelectorAll('#chips span')).forEach((chip) => {
+				chip.addEventListener('click', () => {
+					Array.from(document.querySelectorAll('#chips span')).forEach((x) => {
+						x.classList.remove('bg-blue-100', 'text-blue-700');
+						x.classList.add('bg-slate-100', 'text-slate-600');
+					});
+					chip.classList.remove('bg-slate-100', 'text-slate-600');
+					chip.classList.add('bg-blue-100', 'text-blue-700');
+					setInstanceState(chip.dataset.state, chip.dataset.key);
 				});
 			});
 
 			function toggleScan() {
 				scanned = !scanned;
-				const sb = document.getElementById('scanbar');
+				const scanbar = document.getElementById('scanbar');
+				const dot = scanbar.querySelector('.w-2');
+				const scanText = document.getElementById('scan-text');
+				const scanDesc = document.getElementById('scan-desc');
+				
 				if (scanned) {
-					sb.classList.add('scanned');
-					document.getElementById('scan-text').textContent = '已扫码';
-					document.getElementById('scan-desc').textContent = '现场到点 · 09:40 · 距离 3m';
+					dot.className = 'w-2 h-2 bg-green-500 rounded-full';
+					scanText.textContent = '已扫码';
+					scanDesc.textContent = '现场到点 · 09:40 · 距离 3m';
 				} else {
-					sb.classList.remove('scanned');
-					document.getElementById('scan-text').textContent = '未扫码';
-					document.getElementById('scan-desc').textContent = '到点后解锁提交';
+					dot.className = 'w-2 h-2 bg-slate-400 rounded-full';
+					scanText.textContent = '未扫码';
+					scanDesc.textContent = '到点后解锁提交';
 				}
 				updateLocks();
 			}
 
 			function selectRadio(e) {
-				const btn = e.target.closest('.radio');
+				const btn = e.target.closest('button[data-value]');
 				if (!btn) return;
+				
 				const group = btn.parentNode;
-				[...group.children].forEach((r) => r.classList.remove('active'));
-				btn.classList.add('active');
+				[...group.children].forEach((b) => {
+					b.classList.remove('border-blue-500', 'bg-blue-50', 'text-blue-700');
+					b.classList.add('border-slate-300', 'text-slate-600');
+				});
+				
+				btn.classList.remove('border-slate-300', 'text-slate-600');
+				btn.classList.add('border-blue-500', 'bg-blue-50', 'text-blue-700');
+				
 				const name = group.getAttribute('data-name');
 				const val = btn.getAttribute('data-value');
 				const extra = document.getElementById(name + '-extra');
+				
 				if (extra) {
-					extra.style.display = val === '故障' ? 'block' : 'none';
+					if (val === '故障') {
+						extra.classList.remove('hidden');
+					} else {
+						extra.classList.add('hidden');
+					}
 				}
 				updateLocks();
 			}
@@ -541,7 +331,7 @@
 			function addPhoto(id) {
 				const wrap = document.getElementById(id);
 				const ph = document.createElement('div');
-				ph.className = 'photo';
+				ph.className = 'w-20 h-20 bg-slate-100 rounded-lg flex items-center justify-center text-xs text-slate-600';
 				ph.textContent = 'IMG';
 				wrap.insertBefore(ph, wrap.lastElementChild);
 				const count = parseInt(wrap.getAttribute('data-count') || '0') + 1;
@@ -551,36 +341,35 @@
 
 			function tagState(idx) {
 				const el = document.getElementById('tag' + idx);
-				if (!el) return 'NONE';
-				if (el.classList.contains('green')) return 'GREEN';
-				if (el.classList.contains('red')) return 'RED';
+				if (el.classList.contains('bg-green-100')) return 'GREEN';
+				if (el.classList.contains('bg-red-100')) return 'RED';
 				return 'NONE';
 			}
 
 			function sectionValid(idx) {
-				// 若已“已提交”或“无法完成”，视为已完成（允许批量提交）
 				const ts = tagState(idx);
 				if (ts === 'GREEN' || ts === 'RED') return true;
-				if (currentState !== 'OPEN') return false; // 非可开始实例，禁用
-				if (!scanned) return false; // 未扫码，禁用
+				if (currentState !== 'OPEN') return false;
+				if (!scanned) return false;
+				
 				const group = document.querySelector(`[data-name="p${idx}"]`);
-				const active = group.querySelector('.active').getAttribute('data-value');
+				const active = group.querySelector('.bg-blue-50').getAttribute('data-value');
 				if (active === '正常') return true;
+				
 				const photos = parseInt(document.getElementById(`p${idx}-photos`).getAttribute('data-count') || '0');
 				const remark = document.getElementById(`p${idx}-remark`).value.trim();
 				return photos >= 1 && remark.length > 0;
 			}
 
 			function updateLocks() {
-				// 单项按钮
 				[1, 2, 3].forEach((i) => {
 					const btn = document.getElementById('btn' + i);
 					btn.disabled = !sectionValid(i);
 				});
-				// 批量按钮：全部有效
+				
 				const all = [1, 2, 3].every(sectionValid);
 				document.getElementById('submitAll').disabled = !all;
-				const sb = document.getElementById('scanbar');
+				
 				if (currentState === 'NOT_YET') {
 					document.getElementById('scan-desc').textContent = '未到时间，待时窗生效后可扫码';
 				} else if (!scanned) {
@@ -590,44 +379,55 @@
 
 			function submitSection(idx) {
 				if (!sectionValid(idx)) return alert('未满足提交条件');
-				document.getElementById('tag' + idx).className = 'tag green';
-				document.getElementById('tag' + idx).textContent = '已提交';
+				
+				const tag = document.getElementById('tag' + idx);
+				tag.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700';
+				tag.textContent = '已提交';
+				
 				alert('项目 ' + idx + ' 提交成功');
 				updateLocks();
 			}
+
 			function submitAll() {
 				alert('批量提交成功：3/3');
 				['tag1', 'tag2', 'tag3'].forEach((id) => {
 					const el = document.getElementById(id);
-					el.className = 'tag green';
+					el.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700';
 					el.textContent = '已提交';
 				});
 				updateLocks();
 			}
 
-			// 无法完成弹窗逻辑
 			let cantIdx = null;
 			let cantName = '';
+
 			function openCantModal(idx, name) {
 				cantIdx = idx;
 				cantName = name;
 				document.getElementById('cant-title').textContent = '项目无法完成 · ' + name;
-				document.getElementById('cant-modal').style.display = 'flex';
+				document.getElementById('cant-modal').classList.remove('hidden');
+				document.getElementById('cant-modal').classList.add('flex');
 			}
+
 			function closeCantModal() {
-				document.getElementById('cant-modal').style.display = 'none';
+				document.getElementById('cant-modal').classList.add('hidden');
+				document.getElementById('cant-modal').classList.remove('flex');
 			}
+
 			function submitCant() {
 				const reason = document.getElementById('cant-reason').value.trim();
 				if (!reason) {
 					alert('请填写原因');
 					return;
 				}
+				
 				const tag = document.getElementById('tag' + cantIdx);
-				tag.className = 'tag red';
+				tag.className = 'inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700';
 				tag.textContent = '无法完成';
+				
 				const btn = document.getElementById('btn' + cantIdx);
 				if (btn) btn.disabled = true;
+				
 				closeCantModal();
 				updateLocks();
 				alert('已记录无法完成：' + cantName + '；原因：' + reason);

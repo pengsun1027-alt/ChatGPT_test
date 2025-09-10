@@ -2,604 +2,208 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-		<title>草稿箱</title>
-		<link rel="stylesheet" href="styles.css">
-                <style>
-			:root {
-				--primary: #2b6fff;
-				--primary-active: #1c54f0;
-				--primary-subtle: #e8eeff;
-				--success: #22c55e;
-				--warning: #f59e0b;
-				--danger: #ef4444;
-				--text: #0f172a;
-				--muted: #64748b;
-				--border: #e2e8f0;
-				--bg: #f8fafc;
-				--card: #ffffff;
-				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
-			}
-			* {
-				box-sizing: border-box;
-				-webkit-tap-highlight-color: transparent;
-			}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设备巡检系统 - 草稿箱</title>
+
+		<!-- Vant 4 CSS -->
+		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<style>
 			body {
-				margin: 0;
-				padding: 0;
-				background: var(--bg);
-				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-				/* 禁用纵向滚动条但保留滚动功能 */
-				overflow-y: scroll;
-			}
-			/* Firefox 隐藏滚动条 */
-			html {
-				scrollbar-width: none;
-			}
-
-			/* 隐藏滚动条 */
-			::-webkit-scrollbar {
-				width: 0;
-				background: transparent;
-			}
-
-			/* IE/Edge 隐藏滚动条 */
-			-ms-overflow-style: none;
-			a {
-				color: inherit;
-				text-decoration: none;
-			}
-			.container {
-				padding: var(--spacing) 16px 16px 16px;
-			} /* no tabbar by default */
-			.navbar {
-				position: sticky;
-				top: 0;
-				z-index: 10;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.navbar .title {
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.badge {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				min-width: 16px;
-				height: 16px;
-				padding: 0 4px;
-				border-radius: 999px;
-				background: var(--danger);
-				color: #fff;
-				font-size: 12px;
-				line-height: 1;
-			}
-			.card {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-			}
-			.card + .card {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.grid {
-				display: grid;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.grid.cols-3 {
-				grid-template-columns: repeat(3, 1fr);
-			}
-			.grid-item {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				min-height: 88px;
-				position: relative;
-			}
-			.grid-item .icon {
-				width: 28px;
-				height: 28px;
-				border-radius: 10px;
-				background: var(--primary-subtle);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				margin-bottom: 8px;
-			}
-			.grid-item .icon svg {
-				width: 18px;
-				height: 18px;
-				fill: var(--primary);
-			}
-			.grid-item .label {
-				font-size: 14px;
-				font-weight: 600;
-			}
-			.grid-item .corner {
-				position: absolute;
-				top: 6px;
-				right: 6px;
-			}
-			.kpi-bar {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.kpi {
-				flex: 1;
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.kpi .num {
-				font-weight: 700;
-				font-size: 18px;
-			}
-			.kpi .label {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.btn {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 44px;
-				padding: 0 16px;
-				border-radius: 12px;
-				border: 1px solid var(--border);
-				background: #fff;
-				font-weight: 600;
-			}
-			.btn:active {
-				transform: scale(0.98);
-			}
-			.btn-primary {
-				background: var(--primary);
-				border-color: var(--primary);
-				color: #fff;
-			}
-			.btn-primary:disabled {
-				background: #9db8ff;
-				border-color: #9db8ff;
-			}
-			.btn-ghost {
-				background: #fff;
-				border-color: var(--border);
-				color: var(--text);
-			}
-			.btn-danger {
-				background: var(--danger);
-				border-color: var(--danger);
-				color: #fff;
-			}
-			.btn-small {
-				height: 32px;
-				padding: 0 12px;
-				border-radius: 10px;
-				font-size: 14px;
-			}
-			.btn-block {
-				width: 100%;
-			}
-			.input,
-			.select,
-			.search {
-				height: 44px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: 0 12px;
-				background: #fff;
-			}
-			.search {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.search input {
-				border: none;
-				outline: none;
-				flex: 1;
-				height: 42px;
-				font-size: 14px;
-			}
-			.filter-bar {
-				position: sticky;
-				top: 54px;
-				background: #fff;
-				z-index: 9;
-				border-bottom: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.5) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-				overflow: auto;
-			}
-			.chips {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				overflow: auto;
-			}
-			.chip {
-				padding: calc(var(--spacing) * 0.5) 12px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-				background: #fff;
-				font-size: 14px;
-				white-space: nowrap;
-			}
-			.chip.active {
-				background: var(--primary-subtle);
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.device-card {
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.device-card .head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.device-card .title {
-				font-weight: 700;
-				font-size: var(--font-size);
-			}
-			.device-card .meta {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.pills {
-				display: flex;
-				gap: 6px;
-				flex-wrap: wrap;
-			}
-			.pill {
-				font-size: 12px;
-				border-radius: 999px;
-				padding: 4px 8px;
-				border: 1px solid var(--border);
-				background: #fff;
-			}
-			.pill.gray {
-				color: #475569;
-			}
-			.pill.blue {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.pill.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.device-card .body {
-				margin: 8px 0 12px 0;
-			}
-			.task-row {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: calc(var(--spacing) * 0.5) 0;
-				border-top: 1px dashed var(--border);
-			}
-			.task-row:first-child {
-				border-top: none;
-			}
-			.countdown {
-				font-size: 12px;
-				color: var(--danger);
-			}
-			.card-actions {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.more {
-				position: relative;
-			}
-			.more-menu {
-				display: none;
-				position: absolute;
-				right: 0;
-				top: 46px;
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.5);
-				min-width: 140px;
-			}
-			.more-menu a {
-				display: block;
-				padding: calc(var(--spacing) * 0.5) 10px;
-				border-radius: 8px;
-			}
-			.more-menu a:hover {
-				background: var(--bg);
-			}
-			.more.open .more-menu {
-				display: block;
-			}
-			/* ScanBar */
-			.scanbar {
-				position: sticky;
-				top: 54px;
-				background: #fff;
-				border-bottom: 1px solid var(--border);
-				z-index: 9;
-				padding: 10px 16px;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.scanbar .state {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-				font-weight: 600;
-			}
-			.scanbar .dot {
-				width: 10px;
-				height: 10px;
-				border-radius: 999px;
-				background: var(--muted);
-			}
-			.scanbar.scanned .dot {
-				background: var(--success);
-			}
-			.scanbar .desc {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			/* Sections (Project) */
-			.section {
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-				margin: 12px 0;
-			}
-			.section .sec-head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.section .sec-title {
-				font-weight: 700;
-			}
-			.tag {
-				font-size: 12px;
-				padding: 4px 8px;
-				border-radius: 999px;
-				border: 1px solid var(--border);
-			}
-			.tag.green {
-				border-color: var(--success);
-				color: var(--success);
-			}
-			.tag.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.tag.yellow {
-				border-color: var(--warning);
-				color: var(--warning);
-			}
-			.form-row {
-				margin: 8px 0;
-			}
-			.label {
-				font-size: 13px;
-				color: var(--muted);
-				margin-bottom: 6px;
-			}
-			.radio-group {
-				display: flex;
-				gap: calc(var(--spacing) * 0.75);
-				flex-wrap: wrap;
-			}
-			.radio {
-				display: flex;
-				align-items: center;
-				gap: 6px;
-				padding: calc(var(--spacing) * 0.5) 10px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-			}
-			.radio.active {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.textarea {
-				width: 100%;
-				min-height: 80px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: calc(var(--spacing) * 0.5);
-				resize: vertical;
-			}
-			.photo-uploader {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				flex-wrap: wrap;
-			}
-			.photo {
-				width: 72px;
-				height: 72px;
-				border-radius: 8px;
-				border: 1px dashed var(--border);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				color: var(--muted);
-				font-size: 12px;
-				cursor: pointer;
-			}
-			.input {
-				width: 100%;
-			}
-			.helper {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.helper.red {
-				color: var(--danger);
-			}
-			.unit-row {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.unit-row input {
-				flex: 1;
-			}
-			.required {
-				color: var(--danger);
-				margin-left: 4px;
-			}
-			/* Bottom Affix: no tabbar, stick to bottom */
-			.bottom-affix {
-				position: fixed;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: #fff;
-				border-top: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.75) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				z-index: 20;
-			}
-			.bottom-affix .btn {
-				flex: 1;
-			}
-			.skeleton {
-				background: linear-gradient(90deg, #eee, #f5f5f5, #eee);
-				background-size: 200% 100%;
-				animation: s 1.4s infinite;
-			}
-			@keyframes s {
-				0% {
-					background-position: 200% 0;
-				}
-				100% {
-					background-position: -200% 0;
-				}
-			}
-			/* utility */
-			.row {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-			}
-			.space-between {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
-			.mt-8 {
-				margin-top: calc(var(--spacing) * 0.5);
-			}
-			.mt-12 {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.mt-16 {
-				margin-top: 16px;
-			}
-			.mt-20 {
-				margin-top: 20px;
-			}
-			.mr-8 {
-				margin-right: 8px;
-			}
-			.small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.center {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-			.hide {
-				display: none !important;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				background: #f7f8fa;
+			}
+			.safe-bottom {
+				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
 		</style>
 	</head>
 	<body>
-		<div class="navbar"><div class="title">草稿箱</div></div>
+		<!-- 顶部导航栏 -->
+		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+				</svg>
+			</button>
+			<h1 class="text-base font-semibold">草稿箱</h1>
+			<button class="w-8 h-8 flex items-center justify-center">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zM12 13a1 1 0 110-2 1 1 0 010 2zM12 20a1 1 0 110-2 1 1 0 010 2z"/>
+				</svg>
+			</button>
+		</header>
 
-		<div class="container">
-			<div class="card" style="padding: calc(var(--spacing) * 0.75); border-left: 4px solid #f59e0b">
-				<div class="row"><div class="small">离线中：暂不可提交，仅可删除或编辑</div></div>
-			</div>
-
-			<div class="section">
-				<div class="sec-head">
-					<div class="sec-title">任务草稿（3）</div>
-					<div class="small">
-						<label><input type="checkbox" id="selAll" onclick="toggleAll()" /> 全选</label>
+		<!-- 主要内容区域 -->
+		<main class="mt-12 px-4 pb-20 space-y-4">
+			<!-- 离线状态提醒 -->
+			<div class="bg-orange-50 border-l-4 border-orange-400 p-4 rounded-r-2xl">
+				<div class="flex items-center">
+					<div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0 mr-3">
+						<svg class="w-4 h-4 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+							<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+						</svg>
 					</div>
-				</div>
-
-				<div class="task-row">
-					<div><input type="checkbox" class="chk" /> 巡检 · 电机温度 · 供水泵#1</div>
-					<div class="row">
-						<button class="btn btn-small">编辑</button
-						><button class="btn btn-small btn-danger">删除</button>
-					</div>
-				</div>
-				<div class="task-row">
-					<div><input type="checkbox" class="chk" /> 点检 · 外观检查 · 风机#2</div>
-					<div class="row">
-						<button class="btn btn-small">编辑</button
-						><button class="btn btn-small btn-danger">删除</button>
-					</div>
-				</div>
-				<div class="task-row">
-					<div><input type="checkbox" class="chk" /> 保养 · 润滑记录 · 供水泵#3</div>
-					<div class="row">
-						<button class="btn btn-small">编辑</button
-						><button class="btn btn-small btn-danger">删除</button>
+					<div class="text-sm text-orange-800">
+						离线中：暂不可提交，仅可删除或编辑
 					</div>
 				</div>
 			</div>
 
-			<div class="section">
-				<div class="sec-head"><div class="sec-title">报修草稿（1）</div></div>
-				<div class="task-row">
-					<div><input type="checkbox" class="chk" /> 工单：风机#2 皮带松弛</div>
-					<div class="row">
-						<button class="btn btn-small">编辑</button
-						><button class="btn btn-small btn-danger">删除</button>
+			<!-- 任务草稿卡片 -->
+			<div class="bg-white rounded-2xl shadow-sm">
+				<div class="px-4 py-4 border-b border-slate-100">
+					<div class="flex items-center justify-between">
+						<h3 class="font-semibold text-slate-800">任务草稿（3）</h3>
+						<label class="flex items-center text-sm text-slate-600">
+							<input type="checkbox" id="selAll" onclick="toggleAll()" class="mr-2 text-blue-600" />
+							全选
+						</label>
 					</div>
 				</div>
+
+				<div class="divide-y divide-slate-100">
+					<div class="flex items-center justify-between px-4 py-4">
+						<div class="flex items-center space-x-3">
+							<input type="checkbox" class="chk text-blue-600" />
+							<div class="flex items-center space-x-2">
+								<div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+									<svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+										<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+									</svg>
+								</div>
+								<div>
+									<div class="text-sm font-medium text-slate-800">巡检 · 电机温度</div>
+									<div class="text-xs text-slate-500">供水泵#1</div>
+								</div>
+							</div>
+						</div>
+						<div class="flex items-center space-x-2">
+							<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+								编辑
+							</button>
+							<button class="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-lg hover:bg-red-200">
+								删除
+							</button>
+						</div>
+					</div>
+
+					<div class="flex items-center justify-between px-4 py-4">
+						<div class="flex items-center space-x-3">
+							<input type="checkbox" class="chk text-blue-600" />
+							<div class="flex items-center space-x-2">
+								<div class="w-8 h-8 bg-green-100 rounded-lg flex items-center justify-center">
+									<svg class="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+										<path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+									</svg>
+								</div>
+								<div>
+									<div class="text-sm font-medium text-slate-800">点检 · 外观检查</div>
+									<div class="text-xs text-slate-500">风机#2</div>
+								</div>
+							</div>
+						</div>
+						<div class="flex items-center space-x-2">
+							<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+								编辑
+							</button>
+							<button class="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-lg hover:bg-red-200">
+								删除
+							</button>
+						</div>
+					</div>
+
+					<div class="flex items-center justify-between px-4 py-4">
+						<div class="flex items-center space-x-3">
+							<input type="checkbox" class="chk text-blue-600" />
+							<div class="flex items-center space-x-2">
+								<div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
+									<svg class="w-4 h-4 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+										<path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+									</svg>
+								</div>
+								<div>
+									<div class="text-sm font-medium text-slate-800">保养 · 润滑记录</div>
+									<div class="text-xs text-slate-500">供水泵#3</div>
+								</div>
+							</div>
+						</div>
+						<div class="flex items-center space-x-2">
+							<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+								编辑
+							</button>
+							<button class="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-lg hover:bg-red-200">
+								删除
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 报修草稿卡片 -->
+			<div class="bg-white rounded-2xl shadow-sm">
+				<div class="px-4 py-4 border-b border-slate-100">
+					<h3 class="font-semibold text-slate-800">报修草稿（1）</h3>
+				</div>
+
+				<div class="px-4 py-4">
+					<div class="flex items-center justify-between">
+						<div class="flex items-center space-x-3">
+							<input type="checkbox" class="chk text-blue-600" />
+							<div class="flex items-center space-x-2">
+								<div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+									<svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+										<path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+									</svg>
+								</div>
+								<div>
+									<div class="text-sm font-medium text-slate-800">工单：风机#2 皮带松弛</div>
+									<div class="text-xs text-slate-500">维修工单草稿</div>
+								</div>
+							</div>
+						</div>
+						<div class="flex items-center space-x-2">
+							<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+								编辑
+							</button>
+							<button class="px-3 py-1 bg-red-100 text-red-700 text-xs font-medium rounded-lg hover:bg-red-200">
+								删除
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 空状态（当没有草稿时显示） -->
+			<div class="hidden" id="empty-state">
+				<div class="text-center py-16">
+					<div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+						<svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+						</svg>
+					</div>
+					<h3 class="text-slate-800 font-semibold mb-2">暂无草稿</h3>
+					<p class="text-slate-500 text-sm">完成任务后会自动保存草稿</p>
+				</div>
+			</div>
+		</main>
+
+		<!-- 底部操作栏 -->
+		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
+			<div class="px-4 py-3 flex space-x-3">
+				<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 active:bg-slate-300">
+					删除所选
+				</button>
+				<button id="submit" class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 active:bg-blue-700 disabled:bg-slate-300 disabled:text-slate-500" onclick="submit()" disabled>
+					提交所选
+				</button>
 			</div>
 		</div>
 
-		<div class="bottom-affix">
-			<button class="btn">删除所选</button>
-			<button id="submit" class="btn btn-primary" onclick="submit()" disabled>提交所选</button>
-		</div>
+		<!-- Vant 4 JS -->
+		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
 
 		<script>
 			function toggleAll() {

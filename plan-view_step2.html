@@ -2,268 +2,160 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<title>计划视图 · 设备清单 / 完成率 / 路线顺序</title>
-		<link rel="stylesheet" href="styles.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设备巡检系统 - 计划视图</title>
+
+		<!-- Vant 4 CSS -->
+		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
 		<style>
-			:root {
-				--primary: #2b6fff;
-				--primary-active: #1c54f0;
-				--primary-subtle: #e8eeff;
-				--success: #22c55e;
-				--warning: #f59e0b;
-				--danger: #ef4444;
-				--text: #0f172a;
-				--muted: #64748b;
-				--border: #e2e8f0;
-				--bg: #f8fafc;
-				--card: #ffffff;
-				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
-			}
-			* {
-				box-sizing: border-box;
-				-webkit-tap-highlight-color: transparent;
-			}
 			body {
-				margin: 0;
-				padding: 0;
-				background: var(--bg);
-				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-				/* 禁用纵向滚动条但保留滚动功能 */
-				overflow-y: scroll;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				background: #f7f8fa;
 			}
-			/* Firefox 隐藏滚动条 */
-			html {
-				scrollbar-width: none;
-			}
-
-			/* 隐藏滚动条 */
-			::-webkit-scrollbar {
-				width: 0;
-				background: transparent;
-			}
-
-			/* IE/Edge 隐藏滚动条 */
-			-ms-overflow-style: none;
-			.container {
-				padding: var(--spacing) 16px 96px 16px;
-			}
-			.navbar {
-				position: sticky;
-				top: 0;
-				z-index: 10;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.navbar .title {
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.badge {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 20px;
-				padding: 0 8px;
-				border-radius: 999px;
-				background: #eef2ff;
-				color: #3730a3;
-				font-size: 12px;
-			}
-			.card {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.row {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-			}
-			.btn {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 36px;
-				padding: 0 12px;
-				border-radius: 10px;
-				border: 1px solid var(--border);
-				background: #fff;
-				font-weight: 600;
-			}
-			.btn-primary {
-				background: var(--primary);
-				border-color: var(--primary);
-				color: #fff;
-			}
-			.btn-ghost {
-				background: #fff;
-				border-color: var(--border);
-				color: var(--text);
-			}
-			.grid {
-				display: grid;
-				grid-template-columns: 1fr 1fr;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.progress {
-				height: 8px;
-				background: #f1f5f9;
-				border-radius: 999px;
-				overflow: hidden;
-			}
-			.bar {
-				height: 8px;
-				background: var(--primary);
-				width: 45%;
-			}
-			.order {
-				width: 26px;
-				height: 26px;
-				border-radius: 999px;
-				background: var(--primary-subtle);
-				color: var(--primary);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				font-size: 12px;
-				font-weight: 700;
-			}
-			.dev-row {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 10px 0;
-				border-top: 1px dashed var(--border);
-			}
-			.dev-row:first-child {
-				border-top: none;
-			}
-			.pill {
-				font-size: 12px;
-				border-radius: 999px;
-				padding: 4px 8px;
-				border: 1px solid var(--border);
-				background: #fff;
-				display: inline-flex;
-				align-items: center;
-				gap: 6px;
-			}
-			.pill .dot {
-				width: 6px;
-				height: 6px;
-				border-radius: 50%;
-				background: #94a3b8;
-			}
-			.pill.blue {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.pill.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.pill.green {
-				border-color: #22c55e;
-				color: #22c55e;
-			}
-			.bottom-affix {
-				position: fixed;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: #fff;
-				border-top: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.75) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				z-index: 20;
-			}
-			.bottom-affix .btn {
-				flex: 1;
+			.safe-bottom {
+				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
 		</style>
 	</head>
 	<body>
-		<div class="navbar">
-			<div class="title">计划视图</div>
-			<span class="badge">演示：设备清单/完成率/顺序</span>
-		</div>
-		<div class="container">
+		<!-- 顶部导航栏 -->
+		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+				</svg>
+			</button>
+			<h1 class="text-base font-semibold">计划视图</h1>
+			<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+				演示版本
+			</span>
+		</header>
+
+		<!-- 主要内容区域 -->
+		<main class="mt-12 px-4 pb-20 space-y-4">
 			<!-- 计划概要 -->
-			<div class="card">
-				<div style="display: flex; justify-content: space-between; align-items: center">
-					<div>
-						<div style="font-weight: 700">机组A日巡 · W33-1</div>
-						<div class="small">日期：2025-08-22 · 当前时窗：12:00–13:00</div>
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<div class="flex items-start justify-between mb-4">
+					<div class="flex-1">
+						<h2 class="text-lg font-bold text-slate-800 mb-1">机组A日巡 · W33-1</h2>
+						<p class="text-sm text-slate-600">日期：2025-08-22 · 当前时窗：12:00–13:00</p>
 					</div>
-					<a class="btn btn-ghost" href="task-list-aggregate_with-sessionbar_step2.html">返回列表</a>
+					<a href="task-list-aggregate_with-sessionbar_step2.html" class="px-3 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded-lg hover:bg-slate-200">
+						返回列表
+					</a>
 				</div>
-				<div class="grid" style="margin-top: 10px">
-					<div class="card" style="padding: 10px">
-						<div class="small">总体完成率</div>
-						<div class="progress" style="margin-top: 6px"><div class="bar" style="width: 45%"></div></div>
-						<div class="small" style="margin-top: 6px">5/11 已完成 · 1 逾期</div>
+
+				<div class="grid grid-cols-2 gap-3">
+					<div class="bg-slate-50 rounded-xl p-3">
+						<div class="text-xs text-slate-500 mb-2">总体完成率</div>
+						<div class="w-full bg-slate-200 rounded-full h-2 mb-2">
+							<div class="bg-blue-500 h-2 rounded-full" style="width: 45%"></div>
+						</div>
+						<div class="text-xs text-slate-600">5/11 已完成 · 1 逾期</div>
 					</div>
-					<div class="card" style="padding: 10px">
-						<div class="small">PPE/SSP/SOP</div>
-						<div class="row" style="margin-top: 6px; gap: calc(var(--spacing) * 0.75)">
-							<span class="pill green"><span class="dot"></span> PPE 已完成</span>
-							<span class="pill green"><span class="dot"></span> SSP 已确认</span>
-							<span class="pill green"><span class="dot"></span> SOP 已知悉</span>
+					<div class="bg-slate-50 rounded-xl p-3">
+						<div class="text-xs text-slate-500 mb-2">PPE/SSP/SOP</div>
+						<div class="flex flex-wrap gap-1">
+							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+								PPE ✓
+							</span>
+							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+								SSP ✓
+							</span>
+							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+								SOP ✓
+							</span>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<!-- 设备清单（按顺序） -->
-			<div class="card">
-				<div style="font-weight: 700">设备清单（按路线顺序）</div>
-				<div class="dev-row">
-					<div class="order">1</div>
-					<div>供水泵#1</div>
-					<div class="pill blue"><span class="dot"></span> 可开始</div>
-				</div>
-				<div class="dev-row">
-					<div class="order">2</div>
-					<div>供水泵#2</div>
-					<div class="pill"><span class="dot"></span> 未到</div>
-				</div>
-				<div class="dev-row">
-					<div class="order">3</div>
-					<div>冷却塔#1</div>
-					<div class="pill red"><span class="dot"></span> 逾期</div>
-				</div>
-				<div class="dev-row">
-					<div class="order">4</div>
-					<div>配电柜A</div>
-					<div class="pill"><span class="dot"></span> 进行中</div>
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<h3 class="font-semibold text-slate-800 mb-3">设备清单（按路线顺序）</h3>
+				<div class="space-y-3">
+					<div class="flex items-center justify-between py-2 border-b border-dashed border-slate-200">
+						<div class="flex items-center space-x-3">
+							<div class="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">
+								1
+							</div>
+							<span class="text-sm font-medium text-slate-800">供水泵#1</span>
+						</div>
+						<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+							可开始
+						</span>
+					</div>
+
+					<div class="flex items-center justify-between py-2 border-b border-dashed border-slate-200">
+						<div class="flex items-center space-x-3">
+							<div class="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">
+								2
+							</div>
+							<span class="text-sm font-medium text-slate-800">供水泵#2</span>
+						</div>
+						<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+							未到
+						</span>
+					</div>
+
+					<div class="flex items-center justify-between py-2 border-b border-dashed border-slate-200">
+						<div class="flex items-center space-x-3">
+							<div class="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">
+								3
+							</div>
+							<span class="text-sm font-medium text-slate-800">冷却塔#1</span>
+						</div>
+						<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+							逾期
+						</span>
+					</div>
+
+					<div class="flex items-center justify-between py-2">
+						<div class="flex items-center space-x-3">
+							<div class="w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">
+								4
+							</div>
+							<span class="text-sm font-medium text-slate-800">配电柜A</span>
+						</div>
+						<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
+							进行中
+						</span>
+					</div>
 				</div>
 			</div>
 
-			<!-- 提示：顺序要求 -->
-			<div class="card">
-				<div style="font-weight: 700">顺序提示</div>
-				<div class="small">本计划要求按路线顺序执行；若越站将触发拦截与审批（演示文案）。</div>
+			<!-- 顺序提示 -->
+			<div class="bg-blue-50 border border-blue-200 rounded-2xl p-4">
+				<div class="flex items-start space-x-3">
+					<div class="w-5 h-5 text-blue-600 mt-0.5">
+						<svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+					</div>
+					<div>
+						<h4 class="font-semibold text-blue-800 mb-1">顺序提示</h4>
+						<p class="text-sm text-blue-700">本计划要求按路线顺序执行；若越站将触发拦截与审批（演示文案）。</p>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<!-- 底部操作栏 -->
+		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
+			<div class="px-4 py-3 flex space-x-3">
+				<a href="task-list-aggregate_with-sessionbar_step2.html" class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 text-center">
+					返回任务列表
+				</a>
+				<a href="task-list-aggregate_with-sessionbar_step2.html" class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 text-center">
+					开始巡检
+				</a>
 			</div>
 		</div>
 
-		<div class="bottom-affix">
-			<a class="btn" href="task-list-aggregate_with-sessionbar_step2.html">返回任务列表</a>
-			<a class="btn btn-primary" href="task-list-aggregate_with-sessionbar_step2.html">开始巡检</a>
-		</div>
+		<!-- Vant 4 JS -->
+		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
 	</body>
 </html>

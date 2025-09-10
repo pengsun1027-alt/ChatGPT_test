@@ -2,424 +2,195 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-		<title>工单详情</title>
-		<link rel="stylesheet" href="styles.css">
-                <style>
-			:root {
-				--primary: #2b6fff;
-				--primary-active: #1c54f0;
-				--primary-subtle: #e8eeff;
-				--success: #22c55e;
-				--warning: #f59e0b;
-				--danger: #ef4444;
-				--text: #0f172a;
-				--muted: #64748b;
-				--border: #e2e8f0;
-				--bg: #f8fafc;
-				--card: #ffffff;
-				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
-			}
-			* {
-				box-sizing: border-box;
-				-webkit-tap-highlight-color: transparent;
-			}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设备巡检系统 - 工单详情</title>
+
+		<!-- Vant 4 CSS -->
+		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<style>
 			body {
-				margin: 0;
-				padding: 0;
-				background: var(--bg);
-				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-				/* 禁用纵向滚动条但保留滚动功能 */
-				overflow-y: scroll;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				background: #f7f8fa;
 			}
-			/* Firefox 隐藏滚动条 */
-			html {
-				scrollbar-width: none;
-			}
-
-			/* 隐藏滚动条 */
-			::-webkit-scrollbar {
-				width: 0;
-				background: transparent;
-			}
-
-			/* IE/Edge 隐藏滚动条 */
-			-ms-overflow-style: none;
-			a {
-				color: inherit;
-				text-decoration: none;
-			}
-			.container {
-				padding: var(--spacing);
-			}
-			.navbar {
-				position: sticky;
-				top: 0;
-				z-index: 10;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.navbar .title {
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.card {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-			}
-			.card + .card {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.btn {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 44px;
-				padding: 0 16px;
-				border-radius: 12px;
-				border: 1px solid var(--border);
-				background: #fff;
-				font-weight: 600;
-			}
-			.btn:active {
-				transform: scale(0.98);
-			}
-			.btn-primary {
-				background: var(--primary);
-				border-color: var(--primary);
-				color: #fff;
-			}
-			.btn-primary:disabled {
-				background: #9db8ff;
-				border-color: #9db8ff;
-			}
-			.btn-ghost {
-				background: #fff;
-				border-color: var(--border);
-				color: var(--text);
-			}
-			.btn-small {
-				height: 32px;
-				padding: 0 12px;
-				border-radius: 10px;
-				font-size: 14px;
-			}
-			.input {
-				width: 100%;
-				height: 44px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: 0 12px;
-				background: #fff;
-			}
-			.input:focus {
-				outline: none;
-				border-color: var(--primary);
-			}
-			.row {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-			}
-			.col {
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-			}
-			.small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.helper {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.helper.error {
-				color: var(--danger);
-			}
-			.badge {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				min-width: 16px;
-				height: 16px;
-				padding: 0 4px;
-				border-radius: 999px;
-				background: var(--danger);
-				color: #fff;
-				font-size: 12px;
-				line-height: 1;
-			}
-			/* message list */
-			.msg {
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.msg + .msg {
-				border-top: 1px dashed var(--border);
-			}
-			.msg .head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
-			.msg .title {
-				font-weight: 700;
-			}
-			.msg .unread {
-				width: 8px;
-				height: 8px;
-				border-radius: 999px;
-				background: var(--danger);
-				margin-left: 6px;
-			}
-			.msg .meta {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.chips {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				overflow: auto;
-				padding: calc(var(--spacing) * 0.5) 16px;
-				border-bottom: 1px solid var(--border);
-				background: #fff;
-				position: sticky;
-				top: 54px;
-				z-index: 9;
-			}
-			.chip {
-				padding: calc(var(--spacing) * 0.5) 12px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-				background: #fff;
-				font-size: 14px;
-				white-space: nowrap;
-			}
-			.chip.active {
-				background: var(--primary-subtle);
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			/* timeline */
-			.timeline {
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.node {
-				display: flex;
-				gap: calc(var(--spacing) * 0.75);
-				align-items: flex-start;
-			}
-			.node + .node {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.dot {
-				width: 12px;
-				height: 12px;
-				border-radius: 999px;
-				background: var(--primary);
-				margin-top: 6px;
-			}
-			.dot.gray {
-				background: #cbd5e1;
-			}
-			.node .body {
-				flex: 1;
-			}
-			.node .title {
-				font-weight: 700;
-				font-size: 14px;
-			}
-			.node .time {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.pill {
-				font-size: 12px;
-				border-radius: 999px;
-				padding: 4px 8px;
-				border: 1px solid var(--border);
-				background: #fff;
-			}
-			.pill.gray {
-				color: #475569;
-			}
-			.pill.blue {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.pill.green {
-				border-color: var(--success);
-				color: var(--success);
-			}
-			.pill.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.section {
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-				margin: 12px 0;
-			}
-			.section .sec-head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.section .sec-title {
-				font-weight: 700;
-			}
-			.photo-uploader {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				flex-wrap: wrap;
-			}
-			.photo {
-				width: 72px;
-				height: 72px;
-				border-radius: 8px;
-				border: 1px dashed var(--border);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				color: #64748b;
-				font-size: 12px;
-				cursor: pointer;
-			}
-			.bottom-affix {
-				position: fixed;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: #fff;
-				border-top: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.75) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				z-index: 20;
-			}
-			.bottom-affix .btn {
-				flex: 1;
+			.safe-bottom {
+				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
 		</style>
 	</head>
 	<body>
-		<div class="navbar"><div class="title">工单详情</div></div>
+		<!-- 顶部导航栏 -->
+		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+				</svg>
+			</button>
+			<h1 class="text-base font-semibold">工单详情</h1>
+			<button class="w-8 h-8 flex items-center justify-center">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zM12 13a1 1 0 110-2 1 1 0 010 2zM12 20a1 1 0 110-2 1 1 0 010 2z"/>
+				</svg>
+			</button>
+		</header>
 
-		<div class="container">
-			<div class="card" style="padding: calc(var(--spacing) * 0.75)">
-				<div class="row" style="justify-content: space-between">
-					<div>
-						<div style="font-weight: 700">#WX-20250819-001 · 供水泵#1</div>
-						<div class="small">轴承异响 · 发起人：张三 · 2025-08-19 09:10</div>
+		<!-- 主要内容区域 -->
+		<main class="mt-14 px-4 pb-20 space-y-4">
+			<!-- 工单基本信息 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<div class="flex items-start justify-between mb-4">
+					<div class="flex-1">
+						<div class="flex items-center space-x-2 mb-2">
+							<h2 class="text-lg font-bold text-slate-800">WO-2025-001</h2>
+							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+								紧急
+							</span>
+						</div>
+						<h3 class="text-base font-semibold text-slate-700 mb-2">供水泵#1 - 电机温度异常</h3>
+						<div class="text-sm text-slate-600">
+							报告时间：2025-08-18 14:30 · 报告人：张三
+						</div>
 					</div>
-					<div id="statusPill" class="pill gray">待接单</div>
+					<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700">
+						待处理
+					</span>
+				</div>
+				
+				<div class="grid grid-cols-2 gap-4 pt-3 border-t border-slate-100">
+					<div>
+						<div class="text-xs text-slate-500">设备位置</div>
+						<div class="text-sm font-medium text-slate-800">一号厂 · 南区</div>
+					</div>
+					<div>
+						<div class="text-xs text-slate-500">预计工时</div>
+						<div class="text-sm font-medium text-slate-800">2小时</div>
+					</div>
 				</div>
 			</div>
 
-			<div class="section">
-				<div class="sec-head"><div class="sec-title">处理进度</div></div>
-				<div class="timeline" id="timeline">
-					<div class="node">
-						<div class="dot"></div>
-						<div class="body">
-							<div class="title">工单创建</div>
-							<div class="time">2025-08-19 09:10</div>
+			<!-- 故障描述 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<h3 class="font-semibold text-slate-800 mb-3">故障描述</h3>
+				<div class="text-sm text-slate-700 leading-relaxed">
+					设备在巡检过程中发现电机温度持续超过85°C，已超出正常运行范围（60-80°C）。现场检查发现电机外壳温度异常，可能存在轴承磨损或润滑不良问题，建议立即停机检修。
+				</div>
+			</div>
+
+			<!-- 现场图片 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<h3 class="font-semibold text-slate-800 mb-3">现场图片</h3>
+				<div class="grid grid-cols-3 gap-3">
+					<div class="aspect-square bg-slate-100 rounded-lg flex items-center justify-center text-xs text-slate-600 border border-slate-200">
+						IMG
+					</div>
+					<div class="aspect-square bg-slate-100 rounded-lg flex items-center justify-center text-xs text-slate-600 border border-slate-200">
+						IMG
+					</div>
+					<div class="aspect-square bg-slate-100 rounded-lg flex items-center justify-center text-xs text-slate-600 border border-slate-200">
+						IMG
+					</div>
+				</div>
+			</div>
+
+			<!-- 维修进度 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<h3 class="font-semibold text-slate-800 mb-3">维修进度</h3>
+				<div class="space-y-4">
+					<div class="flex items-start space-x-3">
+						<div class="w-3 h-3 bg-blue-500 rounded-full mt-1 flex-shrink-0"></div>
+						<div class="flex-1">
+							<div class="text-sm font-medium text-slate-800">工单创建</div>
+							<div class="text-xs text-slate-500 mt-1">2025-08-18 14:30 · 张三报告设备故障</div>
+						</div>
+					</div>
+					<div class="flex items-start space-x-3">
+						<div class="w-3 h-3 bg-slate-300 rounded-full mt-1 flex-shrink-0"></div>
+						<div class="flex-1">
+							<div class="text-sm font-medium text-slate-600">待分配维修人员</div>
+							<div class="text-xs text-slate-500 mt-1">等待调度分配合适的维修工程师</div>
+						</div>
+					</div>
+					<div class="flex items-start space-x-3">
+						<div class="w-3 h-3 bg-slate-300 rounded-full mt-1 flex-shrink-0"></div>
+						<div class="flex-1">
+							<div class="text-sm font-medium text-slate-400">现场维修</div>
+							<div class="text-xs text-slate-400 mt-1">待维修人员到场处理</div>
+						</div>
+					</div>
+					<div class="flex items-start space-x-3">
+						<div class="w-3 h-3 bg-slate-300 rounded-full mt-1 flex-shrink-0"></div>
+						<div class="flex-1">
+							<div class="text-sm font-medium text-slate-400">验收完成</div>
+							<div class="text-xs text-slate-400 mt-1">维修完成后验收确认</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="section">
-				<div class="sec-head"><div class="sec-title">处理记录</div></div>
-				<div class="photo-uploader" id="photos">
-					<div class="photo" onclick="addPhoto()">+ 照片</div>
+			<!-- 技术要求 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<h3 class="font-semibold text-slate-800 mb-3">技术要求</h3>
+				<div class="space-y-2 text-sm text-slate-700">
+					<div class="flex items-center space-x-2">
+						<span class="w-1.5 h-1.5 bg-slate-400 rounded-full flex-shrink-0"></span>
+						<span>检查电机轴承状态，必要时更换</span>
+					</div>
+					<div class="flex items-center space-x-2">
+						<span class="w-1.5 h-1.5 bg-slate-400 rounded-full flex-shrink-0"></span>
+						<span>补充或更换润滑油脂</span>
+					</div>
+					<div class="flex items-center space-x-2">
+						<span class="w-1.5 h-1.5 bg-slate-400 rounded-full flex-shrink-0"></span>
+						<span>清理电机外壳及散热装置</span>
+					</div>
+					<div class="flex items-center space-x-2">
+						<span class="w-1.5 h-1.5 bg-slate-400 rounded-full flex-shrink-0"></span>
+						<span>维修完成后进行温度监测确认</span>
+					</div>
 				</div>
-				<div class="col" style="margin-top: calc(var(--spacing) * 0.75)">
-					<textarea
-						id="note"
-						class="input"
-						style="height: 90px"
-						placeholder="填写处理说明（必填）"
-					></textarea>
+			</div>
+
+			<!-- 相关记录 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<h3 class="font-semibold text-slate-800 mb-3">相关记录</h3>
+				<div class="space-y-3">
+					<div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+						<div class="flex-1">
+							<div class="text-sm font-medium text-slate-800">巡检记录 #12348</div>
+							<div class="text-xs text-slate-500">2025-08-18 10:15 · 电机温度：85°C</div>
+						</div>
+						<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+							查看
+						</button>
+					</div>
+					<div class="flex items-center justify-between p-3 bg-slate-50 rounded-lg">
+						<div class="flex-1">
+							<div class="text-sm font-medium text-slate-800">上次维修记录</div>
+							<div class="text-xs text-slate-500">2025-07-15 · 常规保养</div>
+						</div>
+						<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+							查看
+						</button>
+					</div>
 				</div>
+			</div>
+		</main>
+
+		<!-- 底部操作栏 -->
+		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
+			<div class="px-4 py-3 flex space-x-3">
+				<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200">
+					转派
+				</button>
+				<button class="flex-1 py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600">
+					接单
+				</button>
 			</div>
 		</div>
 
-		<div class="bottom-affix" id="actions">
-			<button id="btnAccept" class="btn btn-primary" onclick="accept()">接单</button>
-			<button id="btnUpload" class="btn" onclick="upload()" disabled>上传进度</button>
-			<button id="btnDone" class="btn btn-primary" onclick="finish()" disabled>完成验收</button>
-		</div>
-
-		<script>
-			let status = '待接单';
-			let photoCount = 0;
-			function addTimeline(title) {
-				const tl = document.getElementById('timeline');
-				const node = document.createElement('div');
-				node.className = 'node';
-				node.innerHTML = `<div class="dot"></div>
-    <div class="body"><div class="title>${title}</div><div class="time">${new Date().toLocaleString('zh-CN', {
-					hour12: false,
-				})}</div></div>`;
-				tl.appendChild(node);
-			}
-			function setStatus(s) {
-				status = s;
-				const pill = document.getElementById('statusPill');
-				if (s === '待接单') pill.className = 'pill gray';
-				if (s === '进行中') pill.className = 'pill blue';
-				if (s === '已完成') pill.className = 'pill green';
-				pill.textContent = s;
-			}
-			function accept() {
-				setStatus('进行中');
-				addTimeline('已接单');
-				document.getElementById('btnAccept').disabled = true;
-				document.getElementById('btnUpload').disabled = false;
-			}
-			function addPhoto() {
-				const p = document.createElement('div');
-				p.className = 'photo';
-				p.textContent = 'IMG';
-				const wrap = document.getElementById('photos');
-				wrap.insertBefore(p, wrap.firstElementChild);
-				photoCount++;
-				lock();
-			}
-			function upload() {
-				const note = document.getElementById('note').value.trim();
-				if (note.length === 0) return alert('请填写处理说明');
-				addTimeline('上传进度：' + note + (photoCount > 0 ? `（含${photoCount}张照片）` : ''));
-				document.getElementById('note').value = '';
-				photoCount = 0;
-				lock();
-			}
-			function finish() {
-				const anyTimeline = document.querySelectorAll('#timeline .node').length > 1;
-				if (!anyTimeline) return alert('请先上传至少一次进度');
-				setStatus('已完成');
-				addTimeline('完成验收');
-				document.getElementById('btnUpload').disabled = true;
-				document.getElementById('btnDone').disabled = true;
-			}
-			function lock() {
-				const canDone = document.querySelectorAll('#timeline .node').length > 1;
-				document.getElementById('btnDone').disabled = !canDone || status !== '进行中';
-			}
-		</script>
+		<!-- Vant 4 JS -->
+		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
 	</body>
 </html>

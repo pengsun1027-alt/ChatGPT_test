@@ -2,248 +2,97 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<title>巡检任务 · 扁平列表（含 PPE 状态）</title>
-		<link rel="stylesheet" href="styles.css" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设备巡检系统 - 巡检任务</title>
+
+		<!-- Vant 4 CSS -->
+		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
 		<style>
-			:root {
-				--primary: #2b6fff;
-				--primary-active: #1c54f0;
-				--primary-subtle: #e8eeff;
-				--success: #22c55e;
-				--warning: #f59e0b;
-				--danger: #ef4444;
-				--text: #0f172a;
-				--muted: #64748b;
-				--border: #e2e8f0;
-				--bg: #f8fafc;
-				--card: #ffffff;
-				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
-			}
-			* {
-				box-sizing: border-box;
-				-webkit-tap-highlight-color: transparent;
-			}
 			body {
-				margin: 0;
-				padding: 0;
-				background: var(--bg);
-				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-				/* 禁用纵向滚动条但保留滚动功能 */
-				overflow-y: scroll;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+					sans-serif;
+				background: #f7f8fa;
 			}
-			/* Firefox 隐藏滚动条 */
-			html {
-				scrollbar-width: none;
-			}
-
-			/* 隐藏滚动条 */
-			::-webkit-scrollbar {
-				width: 0;
-				background: transparent;
-			}
-
-			/* IE/Edge 隐藏滚动条 */
-			-ms-overflow-style: none;
-			a {
-				color: inherit;
-				text-decoration: none;
-			}
-			.container {
-				padding: var(--spacing);
-			}
-			.navbar {
-				position: sticky;
-				top: 0;
-				z-index: 10;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.navbar .title {
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.search {
-				margin-left: auto;
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: 0 12px;
-				background: #fff;
-				height: 44px;
-			}
-			.search input {
-				border: none;
-				outline: none;
-				flex: 1;
-				height: 42px;
-				font-size: 14px;
-			}
-			.ppe-bar {
-				position: sticky;
-				top: 54px;
-				z-index: 9;
-				background: #fff;
-				border-bottom: 1px solid var(--border);
-				padding: 10px 16px;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.ppe-bar .state {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-				font-weight: 600;
-			}
-			.ppe-bar .dot {
-				width: 10px;
-				height: 10px;
-				border-radius: 50%;
-				background: #ef4444;
-			}
-			.ppe-bar.done .dot {
-				background: #22c55e;
-			}
-			.ppe-bar.expired .dot {
-				background: #f59e0b;
-			}
-			.ppe-bar .small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.filter-bar {
-				position: sticky;
-				top: 104px;
-				background: #fff;
-				z-index: 8;
-				border-bottom: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.5) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-				overflow: auto;
-			}
-			.chip {
-				padding: calc(var(--spacing) * 0.5) 12px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-				background: #fff;
-				font-size: 14px;
-				white-space: nowrap;
-			}
-			.chip.active {
-				background: var(--primary-subtle);
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.card {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				margin-bottom: calc(var(--spacing) * 0.5);
-			}
-			.task-item {
-				padding: calc(var(--spacing) * 0.75);
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
-			.task-left {
-				min-width: 0;
-			}
-			.title {
-				font-weight: 700;
-				font-size: var(--font-size);
-			}
-			.meta {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.pill {
-				font-size: 12px;
-				border-radius: 999px;
-				padding: 4px 8px;
-				border: 1px solid var(--border);
-				background: #fff;
-				display: inline-flex;
-				align-items: center;
-				gap: 6px;
-			}
-			.pill .dot {
-				width: 6px;
-				height: 6px;
-				border-radius: 50%;
-				background: #94a3b8;
-			}
-			.pill.blue .dot {
-				background: #2b6fff;
-			}
-			.pill.red .dot {
-				background: #ef4444;
-			}
-			.pill.green .dot {
-				background: #22c55e;
-			}
-			.pill.gray .dot {
-				background: #94a3b8;
-			}
-			.btn {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 32px;
-				padding: 0 12px;
-				border-radius: 10px;
-				border: 1px solid var(--border);
-				background: #fff;
-				font-weight: 600;
-				font-size: 14px;
-			}
-			.btn-primary {
-				background: var(--primary);
-				border-color: var(--primary);
-				color: #fff;
+			.safe-bottom {
+				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
 		</style>
 	</head>
 	<body>
-		<div class="navbar">
-			<div class="title">巡检任务 · 扁平</div>
-			<div class="search"><input placeholder="搜索设备/项目" /></div>
-		</div>
+		<!-- 顶部导航栏 -->
+		<header
+			class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50"
+		>
+			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+				</svg>
+			</button>
+			<h1 class="text-base font-semibold">巡检任务</h1>
+			<button class="w-8 h-8 flex items-center justify-center">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						stroke-width="2"
+						d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+					/>
+				</svg>
+			</button>
+		</header>
 
-		<!-- PPE 会话状态条（显式入口） -->
-		<div id="ppeBar" class="ppe-bar">
-			<div class="state">
-				<div class="dot"></div>
-				<div id="ppeText">本时窗 PPE：未完成</div>
+		<!-- PPE 状态栏 -->
+		<div id="ppeBar" class="fixed inset-x-0 top-12 bg-white border-b border-slate-200 z-40">
+			<div class="flex items-center justify-between px-4 py-3">
+				<div class="flex items-center space-x-3">
+					<div id="ppeDot" class="w-2 h-2 bg-red-500 rounded-full"></div>
+					<div>
+						<div id="ppeText" class="text-sm font-medium text-slate-800">本时窗 PPE：未完成</div>
+						<div id="ppeMeta" class="text-xs text-slate-500"></div>
+					</div>
+				</div>
+				<a
+					id="ppeBtn"
+					class="px-3 py-1 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600"
+					href="ppe-session.html?from=task-list-flat.html"
+				>
+					去采集
+				</a>
 			</div>
-			<div style="display: flex; gap: calc(var(--spacing) * 0.5); align-items: center">
-				<span id="ppeMeta" class="small"></span>
-				<a id="ppeBtn" class="btn btn-primary" href="ppe-session.html?from=task-list-flat.html">去采集</a>
+		</div>
+
+		<!-- 筛选栏 -->
+		<div class="fixed inset-x-0 top-28 bg-white border-b border-slate-200 z-30">
+			<div class="flex space-x-1 px-4 py-3 overflow-x-auto">
+				<button class="px-4 py-2 text-sm font-medium rounded-full bg-blue-500 text-white whitespace-nowrap">
+					全部
+				</button>
+				<button
+					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+				>
+					可开始
+				</button>
+				<button
+					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+				>
+					进行中
+				</button>
+				<button
+					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+				>
+					逾期
+				</button>
 			</div>
 		</div>
 
-		<div class="filter-bar">
-			<div class="chip active">全部</div>
-			<div class="chip">可开始</div>
-			<div class="chip">进行中</div>
-			<div class="chip">逾期</div>
-		</div>
+		<!-- 主要内容区域 -->
+		<main class="mt-44 px-4 pb-6 space-y-3" id="list"></main>
 
-		<div class="container" id="list"></div>
+		<!-- Vant 4 JS -->
+		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
 
 		<script>
 			// ===== PPE 状态读取与显隐 =====
@@ -274,7 +123,7 @@
 			}
 			const curW = pickWindow();
 			const ppe = readPPE();
-			const ppeBar = document.getElementById('ppeBar');
+			const ppeDot = document.getElementById('ppeDot');
 			const ppeText = document.getElementById('ppeText');
 			const ppeMeta = document.getElementById('ppeMeta');
 			const ppeBtn = document.getElementById('ppeBtn');
@@ -285,7 +134,7 @@
 				return cmp(NOW, w.end) > 0 && curW.key !== ppe.window;
 			}
 			if (ppe && ppe.state === 'COMPLETED' && ppe.window === curW.key && !isExpired()) {
-				ppeBar.classList.add('done');
+				ppeDot.className = 'w-2 h-2 bg-green-500 rounded-full';
 				ppeText.textContent = '本时窗 PPE：已完成';
 				ppeMeta.textContent = ppe.time + ' · ' + (ppe.operators || '');
 				ppeBtn.textContent = '查看留痕';
@@ -295,7 +144,7 @@
 					alert('PPE 留痕：' + ppe.time + ' ' + (ppe.operators || ''));
 				};
 			} else if (ppe && isExpired()) {
-				ppeBar.classList.add('expired');
+				ppeDot.className = 'w-2 h-2 bg-orange-500 rounded-full';
 				ppeText.textContent = '本时窗 PPE：已过期';
 				ppeMeta.textContent = '目标时窗：' + curW.key.replace('-', '–');
 				ppeBtn.textContent = '重新采集';
@@ -322,64 +171,51 @@
 				else r.state = Math.random() < 0.3 ? 'IN_PROGRESS' : 'OPEN';
 			});
 
-			function pill(s) {
-				const map = {
-					NOT_YET: '未到时间',
-					UNSTARTED: '待领',
-					OPEN: '可开始',
-					IN_PROGRESS: '进行中',
-					OVERDUE: '逾期',
-					DONE: '已完成',
+			function getStatusBadge(state) {
+				const statusMap = {
+					NOT_YET: { text: '未到时间', color: 'bg-slate-100 text-slate-600' },
+					UNSTARTED: { text: '待领', color: 'bg-slate-100 text-slate-600' },
+					OPEN: { text: '可开始', color: 'bg-blue-100 text-blue-700' },
+					IN_PROGRESS: { text: '进行中', color: 'bg-green-100 text-green-700' },
+					OVERDUE: { text: '逾期', color: 'bg-red-100 text-red-700' },
+					DONE: { text: '已完成', color: 'bg-green-100 text-green-700' },
 				};
-				const cls =
-					{
-						NOT_YET: 'gray',
-						UNSTARTED: 'gray',
-						OPEN: 'blue',
-						IN_PROGRESS: 'blue',
-						OVERDUE: 'red',
-						DONE: 'green',
-					}[s] || 'gray';
-				return '<span class="pill ' + cls + '"><span class="dot"></span> ' + map[s] + '</span>';
+				const status = statusMap[state] || statusMap.UNSTARTED;
+				return `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${status.color}">${status.text}</span>`;
 			}
-			function rowCtaLabel(s) {
-				return s === 'NOT_YET' || s === 'DONE' ? '查看' : '进入';
+
+			function getActionButton(state) {
+				const disabled = state === 'NOT_YET' || state === 'DONE';
+				const buttonText = disabled ? '查看' : '进入';
+				const buttonClass = disabled
+					? 'px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200'
+					: 'px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-lg hover:bg-blue-600';
+				const href = disabled ? 'task-detail_all-notyet.html' : 'task-detail_mixed.html';
+				return `<a class="${buttonClass} need-ppe" href="${href}">${buttonText}</a>`;
 			}
 
 			const list = document.getElementById('list');
 			rows.sort((a, b) => a.w.start.localeCompare(b.w.start));
 			rows.forEach((r) => {
-				const disabled = r.state === 'NOT_YET' || r.state === 'DONE';
 				const card = document.createElement('div');
-				card.className = 'card task-item';
-				card.innerHTML =
-					'<div class="task-left">' +
-					'<div class="title">' +
-					r.p.name +
-					' <span class="meta">· ' +
-					r.dev.name +
-					'（' +
-					r.dev.id +
-					'）</span></div>' +
-					'<div class="meta">' +
-					r.dev.site +
-					' · ' +
-					r.w.start +
-					'–' +
-					r.w.end +
-					'</div>' +
-					'</div>' +
-					'<div style="display:flex;gap:8px;align-items:center;">' +
-					pill(r.state) +
-					'<a class="btn ' +
-					(disabled ? '' : 'btn-primary') +
-					' need-ppe" data-action="row" href="' +
-					(disabled ? 'task-detail_all-notyet.html' : 'task-detail_mixed.html') +
-					'" ' +
-					(disabled ? '' : 'style="color:#fff"') +
-					'>' +
-					rowCtaLabel(r.state) +
-					'</a></div>';
+				card.className = 'bg-white rounded-2xl shadow-sm p-4';
+				card.innerHTML = `
+					<div class="flex items-center justify-between">
+						<div class="flex-1 min-w-0">
+							<div class="flex items-center space-x-2 mb-1">
+								<h3 class="text-sm font-semibold text-slate-800">${r.p.name}</h3>
+								<span class="text-xs text-slate-500">${r.dev.name}(${r.dev.id})</span>
+							</div>
+							<div class="text-xs text-slate-500">
+								${r.dev.site} · ${r.w.start}–${r.w.end}
+							</div>
+						</div>
+						<div class="flex items-center space-x-2 ml-3">
+							${getStatusBadge(r.state)}
+							${getActionButton(r.state)}
+						</div>
+					</div>
+				`;
 				list.appendChild(card);
 			});
 

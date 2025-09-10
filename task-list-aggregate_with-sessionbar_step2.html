@@ -2,559 +2,309 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1" />
-		<title>巡检 · 任务列表（聚合）· 含会话条/计划入口</title>
-		<link rel="stylesheet" href="styles.css">
-                <style>
-			:root {
-				--primary: #2b6fff;
-				--primary-active: #1c54f0;
-				--primary-subtle: #e8eeff;
-				--success: #22c55e;
-				--warning: #f59e0b;
-				--danger: #ef4444;
-				--text: #0f172a;
-				--muted: #64748b;
-				--border: #e2e8f0;
-				--bg: #f8fafc;
-				--card: #ffffff;
-				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
-			}
-			* {
-				box-sizing: border-box;
-				-webkit-tap-highlight-color: transparent;
-			}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设备巡检系统 - 任务列表（聚合）</title>
+
+		<!-- Vant 4 CSS -->
+		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<style>
 			body {
-				margin: 0;
-				padding: 0;
-				background: var(--bg);
-				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-				/* 禁用纵向滚动条但保留滚动功能 */
-				overflow-y: scroll;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				background: #f7f8fa;
 			}
-			/* Firefox 隐藏滚动条 */
-			html {
-				scrollbar-width: none;
-			}
-
-			/* 隐藏滚动条 */
-			::-webkit-scrollbar {
-				width: 0;
-				background: transparent;
-			}
-
-			/* IE/Edge 隐藏滚动条 */
-			-ms-overflow-style: none;
-			.container {
-				padding: calc(var(--spacing) * 0.75) 16px 96px 16px;
-			}
-			.navbar {
-				position: sticky;
-				top: 0;
-				z-index: 20;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.navbar .title {
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.badge {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 20px;
-				padding: 0 8px;
-				border-radius: 999px;
-				background: #eef2ff;
-				color: #3730a3;
-				font-size: 12px;
-			}
-			/* 会话条 */
-			.sessionbar {
-				position: sticky;
-				top: 52px;
-				z-index: 19;
-				background: #fff;
-				border-bottom: 1px solid var(--border);
-				box-shadow: 0 2px 8px rgba(16, 24, 40, 0.04);
-			}
-			.sessionbar .wrap {
-				padding: 10px 16px;
-				display: grid;
-				grid-template-columns: 1fr auto;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-			}
-			.session-info {
-				display: flex;
-				flex-direction: column;
-				gap: 6px;
-			}
-			.session-line {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				flex-wrap: wrap;
-				align-items: center;
-			}
-			.session-line .plan {
-				font-weight: 700;
-			}
-			.session-line .date {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.window-chips {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				flex-wrap: wrap;
-			}
-			.chip {
-				padding: 6px 10px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-				background: #fff;
-				font-size: 12px;
-				display: inline-flex;
-				align-items: center;
-				gap: 6px;
-			}
-			.chip .dot {
-				width: 6px;
-				height: 6px;
-				border-radius: 50%;
-				background: #94a3b8;
-			}
-			.chip.blue {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.chip.blue .dot {
-				background: var(--primary);
-			}
-			.chip.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.chip.red .dot {
-				background: var(--danger);
-			}
-			.chip.gray {
-				color: #475569;
-			}
-			.session-actions {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.btn {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 36px;
-				padding: 0 12px;
-				border-radius: 10px;
-				border: 1px solid var(--border);
-				background: #fff;
-				font-weight: 600;
-			}
-			.btn-primary {
-				background: var(--primary);
-				border-color: var(--primary);
-				color: #fff;
-			}
-			.btn-ghost {
-				background: #fff;
-				border-color: var(--border);
-				color: var(--text);
-			}
-			.btn-small {
-				height: 28px;
-				padding: 0 10px;
-				border-radius: 999px;
-				font-size: 12px;
-			}
-			.ppe-status {
-				display: flex;
-				align-items: center;
-				gap: 6px;
-				font-size: 12px;
-			}
-			.ppe-status .dot {
-				width: 8px;
-				height: 8px;
-				border-radius: 999px;
-				background: #cbd5e1;
-			}
-			.ppe-status.done .dot {
-				background: var(--success);
-			}
-			.ppe-status.warn .dot {
-				background: var(--warning);
-			}
-			.ppe-status.err .dot {
-				background: var(--danger);
-			}
-			/* 列表 */
-			.card {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.card + .card {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.card .head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 6px;
-			}
-			.card .title {
-				font-weight: 700;
-			}
-			.small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.pill {
-				font-size: 12px;
-				border-radius: 999px;
-				padding: 4px 8px;
-				border: 1px solid var(--border);
-				background: #fff;
-				display: inline-flex;
-				align-items: center;
-				gap: 6px;
-			}
-			.pill .dot {
-				width: 6px;
-				height: 6px;
-				border-radius: 50%;
-				background: #94a3b8;
-			}
-			.pill.blue {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.pill.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.pill.green {
-				border-color: #22c55e;
-				color: #22c55e;
-			}
-			.task-mini {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: calc(var(--spacing) * 0.5) 0;
-				border-top: 1px dashed var(--border);
-			}
-			.task-mini:first-child {
-				border-top: none;
-			}
-			.actions {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				margin-top: calc(var(--spacing) * 0.5);
-			}
-			.more-row {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-top: calc(var(--spacing) * 0.5);
-			}
-			/* 更多（左下角菜单） */
-			.more {
-				position: relative;
-			}
-			.more-menu {
-				position: absolute;
-				left: 0;
-				bottom: 38px;
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				box-shadow: var(--shadow);
-				display: none;
-				min-width: 140px;
-				overflow: hidden;
-			}
-			.more-menu a {
-				display: block;
-				padding: 10px 12px;
-				font-size: 14px;
-				border-top: 1px solid var(--border);
-			}
-			.more-menu a:first-child {
-				border-top: none;
-			}
-			.more.open .more-menu {
-				display: block;
-			}
-			/* 计划抽屉 */
-			.drawer {
-				position: fixed;
-				inset: 0;
-				background: rgba(15, 23, 42, 0.45);
-				display: none;
-				align-items: flex-end;
-				z-index: 99;
-			}
-			.drawer .panel {
-				background: #fff;
-				border-top-left-radius: 16px;
-				border-top-right-radius: 16px;
-				width: 100%;
-				max-height: 85vh;
-				overflow: auto;
-				border: 1px solid var(--border);
-			}
-			.drawer .head {
-				position: sticky;
-				top: 0;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
-			.drawer .content {
-				padding: calc(var(--spacing) * 0.75) 16px;
-			}
-			.progress {
-				height: 8px;
-				background: #f1f5f9;
-				border-radius: 999px;
-				overflow: hidden;
-			}
-			.progress .bar {
-				height: 100%;
-				background: var(--primary);
-				width: 40%;
-			}
-			.order {
-				width: 22px;
-				height: 22px;
-				border-radius: 999px;
-				background: var(--primary-subtle);
-				color: var(--primary);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				font-size: 12px;
-				font-weight: 700;
-			}
-			.dev-row {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: 10px 0;
-				border-top: 1px dashed var(--border);
-			}
-			.dev-row:first-child {
-				border-top: none;
-			}
-			/* 计划切换器 */
-			.modal {
-				position: fixed;
-				inset: 0;
-				background: rgba(15, 23, 42, 0.45);
-				display: none;
-				align-items: flex-end;
-				z-index: 100;
-			}
-			.modal .sheet {
-				background: #fff;
-				border-top-left-radius: 16px;
-				border-top-right-radius: 16px;
-				width: 100%;
-				border: 1px solid var(--border);
-			}
-			.modal .sheet .head {
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				font-weight: 700;
-			}
-			.modal .sheet .item {
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-top: 1px solid var(--border);
-			}
-			.show {
-				display: flex;
+			.safe-bottom {
+				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
 		</style>
 	</head>
 	<body>
-		<div class="navbar">
-			<div class="title">巡检 · 任务列表（聚合）</div>
-			<span class="badge">演示：会话条/计划入口</span>
-		</div>
+		<!-- 顶部导航栏 -->
+		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+				</svg>
+			</button>
+			<h1 class="text-base font-semibold">巡检 · 任务列表（聚合）</h1>
+			<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+				演示版本
+			</span>
+		</header>
 
-		<!-- 顶部会话条（计划 + 时窗 + PPE + 查看/切换计划入口） -->
-		<div class="sessionbar">
-			<div class="wrap">
-				<div class="session-info">
-					<div class="session-line">
-						<span class="plan">计划：机组A日巡 · W33-1</span><span class="date">2025-08-22（今日）</span
-						><span class="ppe-status err" id="ppeState"><span class="dot"></span> 本时窗 PPE：未完成</span
-						><a class="btn btn-small btn-primary" href="ppe-session_step2.html" id="ppeCTA">去采集</a>
-					</div>
-					<div class="window-chips">
-						<span class="chip red"><span class="dot"></span> 08:00–09:00 · 逾期</span>
-						<span class="chip blue"><span class="dot"></span> 12:00–13:00 · 可开始</span>
-						<span class="chip gray"><span class="dot"></span> 18:00–19:00 · 未到</span>
-					</div>
-				</div>
-				<div class="session-actions">
-					<a class="btn btn-ghost btn-small" href="plan-view_step2.html">查看计划</a>
-					<button class="btn btn-ghost btn-small" onclick="openSwitcher()">切换计划</button>
-				</div>
-			</div>
-		</div>
-
-		<div class="container">
-			<!-- 设备聚合卡 示例 -->
-			<div class="card">
-				<div class="head">
-					<div>
-						<div class="title">供水泵#1 <span class="small">（DEV-001）</span></div>
-						<div class="small">一号厂 · 南区</div>
-					</div>
-					<div class="pill"><span class="dot"></span> 待办2｜进行中1｜逾期1</div>
-				</div>
-				<div class="small" style="margin-bottom: 6px">
-					项目摘要：电机温度（未到）· 运行电流（可开始）· 振动（逾期）
-				</div>
-
-				<div class="task-mini">
-					<div>电机温度</div>
-					<div style="display: flex; gap: calc(var(--spacing) * 0.5); align-items: center">
-						<span class="pill gray"><span class="dot"></span> 未到</span>
-						<a class="btn btn-small" href="#" onclick="return false;">查看</a>
-					</div>
-				</div>
-				<div class="task-mini">
-					<div>运行电流</div>
-					<div style="display: flex; gap: calc(var(--spacing) * 0.5); align-items: center">
-						<span class="pill blue"><span class="dot"></span> 可开始</span>
-						<a class="btn btn-small btn-primary" href="task-detail_mixed.html">进入</a>
-					</div>
-				</div>
-				<div class="task-mini">
-					<div>振动</div>
-					<div style="display: flex; gap: calc(var(--spacing) * 0.5); align-items: center">
-						<span class="pill red"><span class="dot"></span> 逾期</span>
-						<a class="btn btn-small btn-primary" href="task-detail_mixed.html">进入</a>
-					</div>
-				</div>
-
-				<div class="more-row">
-					<div class="more" id="more1">
-						<button class="btn btn-small" onclick="toggleMore('more1')">更多</button>
-						<div class="more-menu">
-							<a href="#" onclick="toScan();return false;">扫码到点</a>
-							<a href="#" onclick="alert('异常报修：带入设备上下文');return false;">异常报修</a>
-							<a href="#" onclick="alert('设备无法巡检：弹出原因收集');return false;">设备无法巡检</a>
+		<!-- 会话条（计划 + 时窗 + PPE + 操作） -->
+		<div class="fixed inset-x-0 top-12 bg-white/95 backdrop-blur border-b border-slate-200 z-40">
+			<div class="px-4 py-3">
+				<div class="flex items-start justify-between mb-3">
+					<div class="flex-1">
+						<div class="flex items-center flex-wrap gap-2 mb-2">
+							<span class="text-sm font-semibold text-slate-800">计划：机组A日巡 · W33-1</span>
+							<span class="text-xs text-slate-500">2025-08-22（今日）</span>
+							<div id="ppeState" class="flex items-center space-x-1">
+								<div class="w-2 h-2 bg-red-500 rounded-full"></div>
+								<span class="text-xs text-red-600">本时窗 PPE：未完成</span>
+							</div>
+							<a href="ppe-session_step2.html" id="ppeCTA" class="px-2 py-1 bg-blue-500 text-white text-xs font-medium rounded">
+								去采集
+							</a>
+						</div>
+						<div class="flex flex-wrap gap-2">
+							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700 border border-red-200">
+								<div class="w-1.5 h-1.5 bg-red-500 rounded-full mr-1.5"></div>
+								08:00–09:00 · 逾期
+							</span>
+							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700 border border-blue-200">
+								<div class="w-1.5 h-1.5 bg-blue-500 rounded-full mr-1.5"></div>
+								12:00–13:00 · 可开始
+							</span>
+							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200">
+								<div class="w-1.5 h-1.5 bg-slate-400 rounded-full mr-1.5"></div>
+								18:00–19:00 · 未到
+							</span>
 						</div>
 					</div>
-					<div class="actions">
-						<a class="btn btn-small" href="task-detail_mixed.html">任务详情</a>
-						<button class="btn btn-small btn-primary">本设备全部领取</button>
+					<div class="flex space-x-2">
+						<a href="plan-view_step2.html" class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+							查看计划
+						</a>
+						<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200" onclick="openSwitcher()">
+							切换计划
+						</button>
 					</div>
 				</div>
 			</div>
-
-			<!-- 更多设备卡可按需复制 -->
 		</div>
 
-		<!-- 计划抽屉（查看计划） -->
-		<div class="drawer" id="drawer">
-			<div class="panel">
-				<div class="head">
-					<div>
-						<div style="font-weight: 700">机组A日巡 · W33-1</div>
-						<div class="small">时窗：12:00–13:00（当前）｜执行顺序：按路线</div>
+		<!-- 主要内容区域 -->
+		<main class="mt-32 px-4 pb-6 space-y-4">
+			<!-- 设备聚合卡 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<div class="flex items-start justify-between mb-3">
+					<div class="flex-1">
+						<h3 class="text-lg font-semibold text-slate-800 mb-1">供水泵#1 <span class="text-sm text-slate-500">（DEV-001）</span></h3>
+						<p class="text-sm text-slate-600">一号厂 · 南区</p>
 					</div>
-					<button class="btn btn-small" onclick="closeDrawer()">关闭</button>
+					<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+						待办2｜进行中1｜逾期1
+					</span>
 				</div>
-				<div class="content">
-					<div style="margin-bottom: 8px">总体进度</div>
-					<div class="progress" aria-label="progress"><div class="bar" style="width: 45%"></div></div>
-					<div class="small" style="margin: 8px 0 12px 0">完成 5 / 11 · 逾期 1</div>
+				<p class="text-sm text-slate-600 mb-4">项目摘要：电机温度（未到）· 运行电流（可开始）· 振动（逾期）</p>
 
-					<div class="small" style="opacity: 0.8">设备清单（按顺序）</div>
-					<div class="dev-row">
-						<div class="order">1</div>
-						<div>供水泵#1</div>
-						<div class="small">可开始</div>
-					</div>
-					<div class="dev-row">
-						<div class="order">2</div>
-						<div>供水泵#2</div>
-						<div class="small">未到</div>
-					</div>
-					<div class="dev-row">
-						<div class="order">3</div>
-						<div>冷却塔#1</div>
-						<div class="small" style="color: #ef4444">逾期</div>
-					</div>
-					<div class="dev-row">
-						<div class="order">4</div>
-						<div>配电柜A</div>
-						<div class="small">进行中</div>
+				<div class="space-y-3">
+					<div class="flex items-center justify-between py-2 border-b border-dashed border-slate-200">
+						<span class="text-sm font-medium text-slate-800">电机温度</span>
+						<div class="flex items-center space-x-2">
+							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">
+								未到
+							</span>
+							<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200" onclick="return false;">
+								查看
+							</button>
+						</div>
 					</div>
 
-					<div style="margin-top: calc(var(--spacing) * 0.75)" class="small">
-						计划级 SOP/SSP 概要：1) 作业区需两人同行；2) 需穿戴绝缘手套/护目镜；3) 严禁越站操作。
+					<div class="flex items-center justify-between py-2 border-b border-dashed border-slate-200">
+						<span class="text-sm font-medium text-slate-800">运行电流</span>
+						<div class="flex items-center space-x-2">
+							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-700">
+								可开始
+							</span>
+							<a href="task-detail_mixed.html" class="px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-lg hover:bg-blue-600">
+								进入
+							</a>
+						</div>
+					</div>
+
+					<div class="flex items-center justify-between py-2">
+						<span class="text-sm font-medium text-slate-800">振动</span>
+						<div class="flex items-center space-x-2">
+							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">
+								逾期
+							</span>
+							<a href="task-detail_mixed.html" class="px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-lg hover:bg-blue-600">
+								进入
+							</a>
+						</div>
+					</div>
+				</div>
+
+				<div class="flex items-center justify-between mt-4">
+					<div class="relative">
+						<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200" onclick="toggleMore('more1')">
+							更多
+						</button>
+						<div id="more1-menu" class="absolute left-0 bottom-8 bg-white border border-slate-200 rounded-lg shadow-lg min-w-32 hidden z-10">
+							<a href="#" class="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 border-b border-slate-100" onclick="toScan();return false;">扫码到点</a>
+							<a href="#" class="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50 border-b border-slate-100" onclick="alert('异常报修：带入设备上下文');return false;">异常报修</a>
+							<a href="#" class="block px-3 py-2 text-sm text-slate-700 hover:bg-slate-50" onclick="alert('设备无法巡检：弹出原因收集');return false;">设备无法巡检</a>
+						</div>
+					</div>
+					<div class="flex space-x-2">
+						<a href="task-detail_mixed.html" class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+							任务详情
+						</a>
+						<button class="px-3 py-1 bg-blue-500 text-white text-xs font-medium rounded-lg hover:bg-blue-600">
+							本设备全部领取
+						</button>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<!-- 计划抽屉（查看计划） -->
+		<div id="drawer" class="fixed inset-0 bg-black/50 hidden items-end z-50">
+			<div class="bg-white rounded-t-2xl w-full max-h-85vh overflow-auto">
+				<div class="sticky top-0 bg-white px-4 py-3 border-b border-slate-200 flex items-center justify-between">
+					<div>
+						<h3 class="font-semibold text-slate-800">机组A日巡 · W33-1</h3>
+						<p class="text-xs text-slate-500">时窗：12:00–13:00（当前）｜执行顺序：按路线</p>
+					</div>
+					<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200" onclick="closeDrawer()">
+						关闭
+					</button>
+				</div>
+				<div class="p-4">
+					<div class="mb-3">
+						<p class="text-sm text-slate-600 mb-2">总体进度</p>
+						<div class="w-full bg-slate-200 rounded-full h-2 mb-2">
+							<div class="bg-blue-500 h-2 rounded-full" style="width: 45%"></div>
+						</div>
+						<p class="text-xs text-slate-500">完成 5 / 11 · 逾期 1</p>
+					</div>
+
+					<div class="space-y-2">
+						<p class="text-sm text-slate-500">设备清单（按顺序）</p>
+						<div class="space-y-2">
+							<div class="flex items-center justify-between py-2">
+								<div class="flex items-center space-x-3">
+									<div class="w-5 h-5 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">1</div>
+									<span class="text-sm">供水泵#1</span>
+								</div>
+								<span class="text-xs text-slate-600">可开始</span>
+							</div>
+							<div class="flex items-center justify-between py-2">
+								<div class="flex items-center space-x-3">
+									<div class="w-5 h-5 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">2</div>
+									<span class="text-sm">供水泵#2</span>
+								</div>
+								<span class="text-xs text-slate-600">未到</span>
+							</div>
+							<div class="flex items-center justify-between py-2">
+								<div class="flex items-center space-x-3">
+									<div class="w-5 h-5 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">3</div>
+									<span class="text-sm">冷却塔#1</span>
+								</div>
+								<span class="text-xs text-red-600">逾期</span>
+							</div>
+							<div class="flex items-center justify-between py-2">
+								<div class="flex items-center space-x-3">
+									<div class="w-5 h-5 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-xs font-bold">4</div>
+									<span class="text-sm">配电柜A</span>
+								</div>
+								<span class="text-xs text-slate-600">进行中</span>
+							</div>
+						</div>
+					</div>
+
+					<div class="mt-4 p-3 bg-slate-50 rounded-lg">
+						<p class="text-xs text-slate-600">
+							计划级 SOP/SSP 概要：1) 作业区需两人同行；2) 需穿戴绝缘手套/护目镜；3) 严禁越站操作。
+						</p>
 					</div>
 				</div>
 			</div>
 		</div>
 
 		<!-- 计划切换器（底部弹层） -->
-		<div class="modal" id="switcher">
-			<div class="sheet">
-				<div class="head">切换计划</div>
-				<div class="item" onclick="choosePlan('机组A日巡 · W33-1')">机组A日巡 · W33-1（当前）</div>
-				<div class="item" onclick="choosePlan('机组B夜巡 · W33-1')">机组B夜巡 · W33-1（未开始）</div>
-				<div class="item" onclick="choosePlan('原水泵站日巡')">原水泵站日巡（明日）</div>
+		<div id="switcher" class="fixed inset-0 bg-black/50 hidden items-end z-50">
+			<div class="bg-white rounded-t-2xl w-full">
+				<div class="p-4 border-b border-slate-200">
+					<h3 class="font-semibold text-slate-800">切换计划</h3>
+				</div>
+				<div class="divide-y divide-slate-200">
+					<button class="w-full text-left px-4 py-3 hover:bg-slate-50" onclick="choosePlan('机组A日巡 · W33-1')">
+						机组A日巡 · W33-1（当前）
+					</button>
+					<button class="w-full text-left px-4 py-3 hover:bg-slate-50" onclick="choosePlan('机组B夜巡 · W33-1')">
+						机组B夜巡 · W33-1（未开始）
+					</button>
+					<button class="w-full text-left px-4 py-3 hover:bg-slate-50" onclick="choosePlan('原水泵站日巡')">
+						原水泵站日巡（明日）
+					</button>
+				</div>
 			</div>
 		</div>
 
+		<!-- Vant 4 JS -->
+		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
+
 		<script>
 			function toggleMore(id) {
-				const el = document.getElementById(id);
-				el.classList.toggle('open');
+				const menu = document.getElementById(id + '-menu');
+				const isHidden = menu.classList.contains('hidden');
+				
+				// 关闭所有其他菜单
+				document.querySelectorAll('[id$="-menu"]').forEach(m => m.classList.add('hidden'));
+				
+				if (isHidden) {
+					menu.classList.remove('hidden');
+					menu.classList.add('flex');
+				}
 			}
+
 			function toScan() {
-				alert('PPE 未完成 → 先去 PPE 采集');
-				window.location.href = 'ppe-session.html';
+				if (typeof vant !== 'undefined') {
+					vant.showToast('PPE 未完成 → 先去 PPE 采集');
+				} else {
+					alert('PPE 未完成 → 先去 PPE 采集');
+				}
+				setTimeout(() => {
+					window.location.href = 'ppe-session_step2.html';
+				}, 1500);
 			}
+
 			function openDrawer() {
-				document.getElementById('drawer').classList.add('show');
+				document.getElementById('drawer').classList.remove('hidden');
+				document.getElementById('drawer').classList.add('flex');
 			}
+
 			function closeDrawer() {
-				document.getElementById('drawer').classList.remove('show');
+				document.getElementById('drawer').classList.add('hidden');
+				document.getElementById('drawer').classList.remove('flex');
 			}
+
 			function openSwitcher() {
-				document.getElementById('switcher').classList.add('show');
+				document.getElementById('switcher').classList.remove('hidden');
+				document.getElementById('switcher').classList.add('flex');
 			}
+
 			function choosePlan(name) {
-				alert('已切换到：' + name + '（演示）');
-				document.getElementById('switcher').classList.remove('show');
+				if (typeof vant !== 'undefined') {
+					vant.showToast('已切换到：' + name + '（演示）');
+				} else {
+					alert('已切换到：' + name + '（演示）');
+				}
+				document.getElementById('switcher').classList.add('hidden');
+				document.getElementById('switcher').classList.remove('flex');
 			}
+
+			// 点击外部关闭菜单
+			document.addEventListener('click', function(e) {
+				if (!e.target.closest('[onclick*="toggleMore"]') && !e.target.closest('[id$="-menu"]')) {
+					document.querySelectorAll('[id$="-menu"]').forEach(m => m.classList.add('hidden'));
+				}
+				
+				if (!e.target.closest('#drawer') && !e.target.closest('[href="plan-view_step2.html"]')) {
+					closeDrawer();
+				}
+				
+				if (!e.target.closest('#switcher') && !e.target.closest('[onclick*="openSwitcher"]')) {
+					document.getElementById('switcher').classList.add('hidden');
+					document.getElementById('switcher').classList.remove('flex');
+				}
+			});
 		</script>
 	</body>
 </html>

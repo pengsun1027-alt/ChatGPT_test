@@ -2,570 +2,162 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-		<title>扫码</title>
-		<link rel="stylesheet" href="styles.css">
-                <style>
-			:root {
-				--primary: #2b6fff;
-				--primary-active: #1c54f0;
-				--primary-subtle: #e8eeff;
-				--success: #22c55e;
-				--warning: #f59e0b;
-				--danger: #ef4444;
-				--text: #0f172a;
-				--muted: #64748b;
-				--border: #e2e8f0;
-				--bg: #f8fafc;
-				--card: #ffffff;
-				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
-			}
-			* {
-				box-sizing: border-box;
-				-webkit-tap-highlight-color: transparent;
-			}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设备巡检系统 - 扫码</title>
+
+		<!-- Vant 4 CSS -->
+		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<style>
 			body {
-				margin: 0;
-				padding: 0;
-				background: var(--bg);
-				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-				/* 禁用纵向滚动条但保留滚动功能 */
-				overflow-y: scroll;
-			}
-			/* Firefox 隐藏滚动条 */
-			html {
-				scrollbar-width: none;
-			}
-
-			/* 隐藏滚动条 */
-			::-webkit-scrollbar {
-				width: 0;
-				background: transparent;
-			}
-
-			/* IE/Edge 隐藏滚动条 */
-			-ms-overflow-style: none;
-			a {
-				color: inherit;
-				text-decoration: none;
-			}
-			.container {
-				padding: var(--spacing) 16px 16px 16px;
-			} /* no tabbar by default */
-			.navbar {
-				position: sticky;
-				top: 0;
-				z-index: 10;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.navbar .title {
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.badge {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				min-width: 16px;
-				height: 16px;
-				padding: 0 4px;
-				border-radius: 999px;
-				background: var(--danger);
-				color: #fff;
-				font-size: 12px;
-				line-height: 1;
-			}
-			.card {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-			}
-			.card + .card {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.grid {
-				display: grid;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.grid.cols-3 {
-				grid-template-columns: repeat(3, 1fr);
-			}
-			.grid-item {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				min-height: 88px;
-				position: relative;
-			}
-			.grid-item .icon {
-				width: 28px;
-				height: 28px;
-				border-radius: 10px;
-				background: var(--primary-subtle);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				margin-bottom: 8px;
-			}
-			.grid-item .icon svg {
-				width: 18px;
-				height: 18px;
-				fill: var(--primary);
-			}
-			.grid-item .label {
-				font-size: 14px;
-				font-weight: 600;
-			}
-			.grid-item .corner {
-				position: absolute;
-				top: 6px;
-				right: 6px;
-			}
-			.kpi-bar {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.kpi {
-				flex: 1;
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.kpi .num {
-				font-weight: 700;
-				font-size: 18px;
-			}
-			.kpi .label {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.btn {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 44px;
-				padding: 0 16px;
-				border-radius: 12px;
-				border: 1px solid var(--border);
-				background: #fff;
-				font-weight: 600;
-			}
-			.btn:active {
-				transform: scale(0.98);
-			}
-			.btn-primary {
-				background: var(--primary);
-				border-color: var(--primary);
-				color: #fff;
-			}
-			.btn-primary:disabled {
-				background: #9db8ff;
-				border-color: #9db8ff;
-			}
-			.btn-ghost {
-				background: #fff;
-				border-color: var(--border);
-				color: var(--text);
-			}
-			.btn-danger {
-				background: var(--danger);
-				border-color: var(--danger);
-				color: #fff;
-			}
-			.btn-small {
-				height: 32px;
-				padding: 0 12px;
-				border-radius: 10px;
-				font-size: 14px;
-			}
-			.btn-block {
-				width: 100%;
-			}
-			.input,
-			.select,
-			.search {
-				height: 44px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: 0 12px;
-				background: #fff;
-			}
-			.search {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.search input {
-				border: none;
-				outline: none;
-				flex: 1;
-				height: 42px;
-				font-size: 14px;
-			}
-			.filter-bar {
-				position: sticky;
-				top: 54px;
-				background: #fff;
-				z-index: 9;
-				border-bottom: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.5) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-				overflow: auto;
-			}
-			.chips {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				overflow: auto;
-			}
-			.chip {
-				padding: calc(var(--spacing) * 0.5) 12px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-				background: #fff;
-				font-size: 14px;
-				white-space: nowrap;
-			}
-			.chip.active {
-				background: var(--primary-subtle);
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.device-card {
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.device-card .head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.device-card .title {
-				font-weight: 700;
-				font-size: var(--font-size);
-			}
-			.device-card .meta {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.pills {
-				display: flex;
-				gap: 6px;
-				flex-wrap: wrap;
-			}
-			.pill {
-				font-size: 12px;
-				border-radius: 999px;
-				padding: 4px 8px;
-				border: 1px solid var(--border);
-				background: #fff;
-			}
-			.pill.gray {
-				color: #475569;
-			}
-			.pill.blue {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.pill.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.device-card .body {
-				margin: 8px 0 12px 0;
-			}
-			.task-row {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: calc(var(--spacing) * 0.5) 0;
-				border-top: 1px dashed var(--border);
-			}
-			.task-row:first-child {
-				border-top: none;
-			}
-			.countdown {
-				font-size: 12px;
-				color: var(--danger);
-			}
-			.card-actions {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.more {
-				position: relative;
-			}
-			.more-menu {
-				display: none;
-				position: absolute;
-				right: 0;
-				top: 46px;
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.5);
-				min-width: 140px;
-			}
-			.more-menu a {
-				display: block;
-				padding: calc(var(--spacing) * 0.5) 10px;
-				border-radius: 8px;
-			}
-			.more-menu a:hover {
-				background: var(--bg);
-			}
-			.more.open .more-menu {
-				display: block;
-			}
-			/* ScanBar */
-			.scanbar {
-				position: sticky;
-				top: 54px;
-				background: #fff;
-				border-bottom: 1px solid var(--border);
-				z-index: 9;
-				padding: 10px 16px;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.scanbar .state {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-				font-weight: 600;
-			}
-			.scanbar .dot {
-				width: 10px;
-				height: 10px;
-				border-radius: 999px;
-				background: var(--muted);
-			}
-			.scanbar.scanned .dot {
-				background: var(--success);
-			}
-			.scanbar .desc {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			/* Sections (Project) */
-			.section {
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-				margin: 12px 0;
-			}
-			.section .sec-head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.section .sec-title {
-				font-weight: 700;
-			}
-			.tag {
-				font-size: 12px;
-				padding: 4px 8px;
-				border-radius: 999px;
-				border: 1px solid var(--border);
-			}
-			.tag.green {
-				border-color: var(--success);
-				color: var(--success);
-			}
-			.tag.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.tag.yellow {
-				border-color: var(--warning);
-				color: var(--warning);
-			}
-			.form-row {
-				margin: 8px 0;
-			}
-			.label {
-				font-size: 13px;
-				color: var(--muted);
-				margin-bottom: 6px;
-			}
-			.radio-group {
-				display: flex;
-				gap: calc(var(--spacing) * 0.75);
-				flex-wrap: wrap;
-			}
-			.radio {
-				display: flex;
-				align-items: center;
-				gap: 6px;
-				padding: calc(var(--spacing) * 0.5) 10px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-			}
-			.radio.active {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.textarea {
-				width: 100%;
-				min-height: 80px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: calc(var(--spacing) * 0.5);
-				resize: vertical;
-			}
-			.photo-uploader {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				flex-wrap: wrap;
-			}
-			.photo {
-				width: 72px;
-				height: 72px;
-				border-radius: 8px;
-				border: 1px dashed var(--border);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				color: var(--muted);
-				font-size: 12px;
-				cursor: pointer;
-			}
-			.input {
-				width: 100%;
-			}
-			.helper {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.helper.red {
-				color: var(--danger);
-			}
-			.unit-row {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.unit-row input {
-				flex: 1;
-			}
-			.required {
-				color: var(--danger);
-				margin-left: 4px;
-			}
-			/* Bottom Affix: no tabbar, stick to bottom */
-			.bottom-affix {
-				position: fixed;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: #fff;
-				border-top: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.75) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				z-index: 20;
-			}
-			.bottom-affix .btn {
-				flex: 1;
-			}
-			.skeleton {
-				background: linear-gradient(90deg, #eee, #f5f5f5, #eee);
-				background-size: 200% 100%;
-				animation: s 1.4s infinite;
-			}
-			@keyframes s {
-				0% {
-					background-position: 200% 0;
-				}
-				100% {
-					background-position: -200% 0;
-				}
-			}
-			/* utility */
-			.row {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-			}
-			.space-between {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
-			.mt-8 {
-				margin-top: calc(var(--spacing) * 0.5);
-			}
-			.mt-12 {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.mt-16 {
-				margin-top: 16px;
-			}
-			.mt-20 {
-				margin-top: 20px;
-			}
-			.mr-8 {
-				margin-right: 8px;
-			}
-			.small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.center {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-			.hide {
-				display: none !important;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				background: #f7f8fa;
+			}
+			.safe-bottom {
+				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
+			}
+			.scan-frame {
+				background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+			}
+			.scan-corner {
+				width: 20px;
+				height: 20px;
+				border: 2px solid #fff;
+			}
+			.scan-corner.top-left { border-right: none; border-bottom: none; }
+			.scan-corner.top-right { border-left: none; border-bottom: none; }
+			.scan-corner.bottom-left { border-right: none; border-top: none; }
+			.scan-corner.bottom-right { border-left: none; border-top: none; }
+			.scan-line {
+				height: 2px;
+				background: linear-gradient(90deg, transparent, #fff, transparent);
+				animation: scan 2s infinite;
+			}
+			@keyframes scan {
+				0% { transform: translateY(-100px); opacity: 0; }
+				50% { opacity: 1; }
+				100% { transform: translateY(100px); opacity: 0; }
 			}
 		</style>
 	</head>
 	<body>
-		<div class="navbar"><div class="title">扫码</div></div>
+		<!-- 顶部导航栏 -->
+		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+				</svg>
+			</button>
+			<h1 class="text-base font-semibold">扫码识别</h1>
+			<button class="w-8 h-8 flex items-center justify-center">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zM12 13a1 1 0 110-2 1 1 0 010 2zM12 20a1 1 0 110-2 1 1 0 010 2z"/>
+				</svg>
+			</button>
+		</header>
 
-		<div class="container">
-			<div class="card" style="height: 220px; display: flex; align-items: center; justify-content: center">
-				<div class="small">[ 取景框占位 ]</div>
+		<!-- 主要内容区域 -->
+		<main class="mt-14 px-4 space-y-6">
+			<!-- 扫码取景框 -->
+			<div class="scan-frame rounded-2xl overflow-hidden relative" style="height: 280px;">
+				<div class="absolute inset-0 flex items-center justify-center">
+					<div class="relative w-48 h-48">
+						<!-- 扫码框四个角 -->
+						<div class="scan-corner top-left absolute top-0 left-0"></div>
+						<div class="scan-corner top-right absolute top-0 right-0"></div>
+						<div class="scan-corner bottom-left absolute bottom-0 left-0"></div>
+						<div class="scan-corner bottom-right absolute bottom-0 right-0"></div>
+						
+						<!-- 扫描线 -->
+						<div class="absolute inset-x-4 scan-line"></div>
+						
+						<!-- 中心点 -->
+						<div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-2 h-2 bg-white/60 rounded-full"></div>
+					</div>
+				</div>
+				
+				<!-- 底部提示文字 -->
+				<div class="absolute bottom-8 inset-x-0 text-center">
+					<div class="text-white text-sm">请将设备二维码放入框内</div>
+					<div class="text-white/80 text-xs mt-1">系统会自动识别设备信息</div>
+				</div>
 			</div>
-			<div class="mt-16">
-				<div class="row">
-					<button class="btn btn-primary btn-block" onclick="route('point')">模拟识别：点检当期待办</button>
+
+			<!-- 操作说明 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<div class="flex items-center space-x-3 mb-3">
+					<div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+						<svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+							<path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+					</div>
+					<h3 class="font-semibold text-slate-800">使用说明</h3>
 				</div>
-				<div class="mt-8 row">
-					<button class="btn btn-ghost btn-block" onclick="route('patrol')">模拟识别：巡检当期待办</button>
+				<div class="space-y-2">
+					<div class="flex items-center space-x-2 text-sm text-slate-600">
+						<div class="w-1 h-1 bg-slate-400 rounded-full"></div>
+						<span>对准设备上的二维码标签</span>
+					</div>
+					<div class="flex items-center space-x-2 text-sm text-slate-600">
+						<div class="w-1 h-1 bg-slate-400 rounded-full"></div>
+						<span>保持手机稳定，等待自动识别</span>
+					</div>
+					<div class="flex items-center space-x-2 text-sm text-slate-600">
+						<div class="w-1 h-1 bg-slate-400 rounded-full"></div>
+						<span>识别成功后自动跳转相应页面</span>
+					</div>
 				</div>
-				<div class="mt-8 row">
-					<button class="btn btn-ghost btn-block" onclick="route('none')">
+			</div>
+
+			<!-- 模拟测试按钮 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<h3 class="font-semibold text-slate-800 mb-4">模拟测试（仅开发环境）</h3>
+				<div class="space-y-3">
+					<button 
+						class="w-full py-3 bg-blue-500 text-white font-medium rounded-lg hover:bg-blue-600 active:bg-blue-700"
+						onclick="route('point')"
+					>
+						模拟识别：点检当期待办
+					</button>
+					<button 
+						class="w-full py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 active:bg-slate-300"
+						onclick="route('patrol')"
+					>
+						模拟识别：巡检当期待办
+					</button>
+					<button 
+						class="w-full py-3 bg-slate-100 text-slate-700 font-medium rounded-lg hover:bg-slate-200 active:bg-slate-300"
+						onclick="route('none')"
+					>
 						模拟识别：无当期待办（进档案）
 					</button>
 				</div>
 			</div>
-		</div>
+
+			<!-- 快捷功能 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<h3 class="font-semibold text-slate-800 mb-4">快捷功能</h3>
+				<div class="grid grid-cols-2 gap-3">
+					<button class="flex items-center justify-center p-3 bg-slate-50 rounded-lg active:bg-slate-100">
+						<svg class="w-5 h-5 text-slate-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+						</svg>
+						<span class="text-sm font-medium text-slate-700">手动输入</span>
+					</button>
+					<button class="flex items-center justify-center p-3 bg-slate-50 rounded-lg active:bg-slate-100">
+						<svg class="w-5 h-5 text-slate-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+						</svg>
+						<span class="text-sm font-medium text-slate-700">历史记录</span>
+					</button>
+				</div>
+			</div>
+		</main>
+
+		<!-- Vant 4 JS -->
+		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
 
 		<script>
 			function route(type) {

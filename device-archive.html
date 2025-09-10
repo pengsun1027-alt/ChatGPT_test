@@ -2,606 +2,236 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
-		<title>设备档案</title>
-		<link rel="stylesheet" href="styles.css">
-                <style>
-			:root {
-				--primary: #2b6fff;
-				--primary-active: #1c54f0;
-				--primary-subtle: #e8eeff;
-				--success: #22c55e;
-				--warning: #f59e0b;
-				--danger: #ef4444;
-				--text: #0f172a;
-				--muted: #64748b;
-				--border: #e2e8f0;
-				--bg: #f8fafc;
-				--card: #ffffff;
-				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
-			}
-			* {
-				box-sizing: border-box;
-				-webkit-tap-highlight-color: transparent;
-			}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设备巡检系统 - 设备档案</title>
+
+		<!-- Vant 4 CSS -->
+		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<style>
 			body {
-				margin: 0;
-				padding: 0;
-				background: var(--bg);
-				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-				/* 禁用纵向滚动条但保留滚动功能 */
-				overflow-y: scroll;
-			}
-			/* Firefox 隐藏滚动条 */
-			html {
-				scrollbar-width: none;
-			}
-
-			/* 隐藏滚动条 */
-			::-webkit-scrollbar {
-				width: 0;
-				background: transparent;
-			}
-
-			/* IE/Edge 隐藏滚动条 */
-			-ms-overflow-style: none;
-			a {
-				color: inherit;
-				text-decoration: none;
-			}
-			.container {
-				padding: var(--spacing) 16px 16px 16px;
-			} /* no tabbar by default */
-			.navbar {
-				position: sticky;
-				top: 0;
-				z-index: 10;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.navbar .title {
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.badge {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				min-width: 16px;
-				height: 16px;
-				padding: 0 4px;
-				border-radius: 999px;
-				background: var(--danger);
-				color: #fff;
-				font-size: 12px;
-				line-height: 1;
-			}
-			.card {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-			}
-			.card + .card {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.grid {
-				display: grid;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.grid.cols-3 {
-				grid-template-columns: repeat(3, 1fr);
-			}
-			.grid-item {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				justify-content: center;
-				min-height: 88px;
-				position: relative;
-			}
-			.grid-item .icon {
-				width: 28px;
-				height: 28px;
-				border-radius: 10px;
-				background: var(--primary-subtle);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				margin-bottom: 8px;
-			}
-			.grid-item .icon svg {
-				width: 18px;
-				height: 18px;
-				fill: var(--primary);
-			}
-			.grid-item .label {
-				font-size: 14px;
-				font-weight: 600;
-			}
-			.grid-item .corner {
-				position: absolute;
-				top: 6px;
-				right: 6px;
-			}
-			.kpi-bar {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.kpi {
-				flex: 1;
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.kpi .num {
-				font-weight: 700;
-				font-size: 18px;
-			}
-			.kpi .label {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.btn {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 44px;
-				padding: 0 16px;
-				border-radius: 12px;
-				border: 1px solid var(--border);
-				background: #fff;
-				font-weight: 600;
-			}
-			.btn:active {
-				transform: scale(0.98);
-			}
-			.btn-primary {
-				background: var(--primary);
-				border-color: var(--primary);
-				color: #fff;
-			}
-			.btn-primary:disabled {
-				background: #9db8ff;
-				border-color: #9db8ff;
-			}
-			.btn-ghost {
-				background: #fff;
-				border-color: var(--border);
-				color: var(--text);
-			}
-			.btn-danger {
-				background: var(--danger);
-				border-color: var(--danger);
-				color: #fff;
-			}
-			.btn-small {
-				height: 32px;
-				padding: 0 12px;
-				border-radius: 10px;
-				font-size: 14px;
-			}
-			.btn-block {
-				width: 100%;
-			}
-			.input,
-			.select,
-			.search {
-				height: 44px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: 0 12px;
-				background: #fff;
-			}
-			.search {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.search input {
-				border: none;
-				outline: none;
-				flex: 1;
-				height: 42px;
-				font-size: 14px;
-			}
-			.filter-bar {
-				position: sticky;
-				top: 54px;
-				background: #fff;
-				z-index: 9;
-				border-bottom: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.5) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-				overflow: auto;
-			}
-			.chips {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				overflow: auto;
-			}
-			.chip {
-				padding: calc(var(--spacing) * 0.5) 12px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-				background: #fff;
-				font-size: 14px;
-				white-space: nowrap;
-			}
-			.chip.active {
-				background: var(--primary-subtle);
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.device-card {
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.device-card .head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.device-card .title {
-				font-weight: 700;
-				font-size: var(--font-size);
-			}
-			.device-card .meta {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.pills {
-				display: flex;
-				gap: 6px;
-				flex-wrap: wrap;
-			}
-			.pill {
-				font-size: 12px;
-				border-radius: 999px;
-				padding: 4px 8px;
-				border: 1px solid var(--border);
-				background: #fff;
-			}
-			.pill.gray {
-				color: #475569;
-			}
-			.pill.blue {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.pill.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.device-card .body {
-				margin: 8px 0 12px 0;
-			}
-			.task-row {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				padding: calc(var(--spacing) * 0.5) 0;
-				border-top: 1px dashed var(--border);
-			}
-			.task-row:first-child {
-				border-top: none;
-			}
-			.countdown {
-				font-size: 12px;
-				color: var(--danger);
-			}
-			.card-actions {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.more {
-				position: relative;
-			}
-			.more-menu {
-				display: none;
-				position: absolute;
-				right: 0;
-				top: 46px;
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.5);
-				min-width: 140px;
-			}
-			.more-menu a {
-				display: block;
-				padding: calc(var(--spacing) * 0.5) 10px;
-				border-radius: 8px;
-			}
-			.more-menu a:hover {
-				background: var(--bg);
-			}
-			.more.open .more-menu {
-				display: block;
-			}
-			/* ScanBar */
-			.scanbar {
-				position: sticky;
-				top: 54px;
-				background: #fff;
-				border-bottom: 1px solid var(--border);
-				z-index: 9;
-				padding: 10px 16px;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.scanbar .state {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-				font-weight: 600;
-			}
-			.scanbar .dot {
-				width: 10px;
-				height: 10px;
-				border-radius: 999px;
-				background: var(--muted);
-			}
-			.scanbar.scanned .dot {
-				background: var(--success);
-			}
-			.scanbar .desc {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			/* Sections (Project) */
-			.section {
-				background: #fff;
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-				padding: calc(var(--spacing) * 0.75);
-				margin: 12px 0;
-			}
-			.section .sec-head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 8px;
-			}
-			.section .sec-title {
-				font-weight: 700;
-			}
-			.tag {
-				font-size: 12px;
-				padding: 4px 8px;
-				border-radius: 999px;
-				border: 1px solid var(--border);
-			}
-			.tag.green {
-				border-color: var(--success);
-				color: var(--success);
-			}
-			.tag.red {
-				border-color: var(--danger);
-				color: var(--danger);
-			}
-			.tag.yellow {
-				border-color: var(--warning);
-				color: var(--warning);
-			}
-			.form-row {
-				margin: 8px 0;
-			}
-			.label {
-				font-size: 13px;
-				color: var(--muted);
-				margin-bottom: 6px;
-			}
-			.radio-group {
-				display: flex;
-				gap: calc(var(--spacing) * 0.75);
-				flex-wrap: wrap;
-			}
-			.radio {
-				display: flex;
-				align-items: center;
-				gap: 6px;
-				padding: calc(var(--spacing) * 0.5) 10px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-			}
-			.radio.active {
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.textarea {
-				width: 100%;
-				min-height: 80px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: calc(var(--spacing) * 0.5);
-				resize: vertical;
-			}
-			.photo-uploader {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				flex-wrap: wrap;
-			}
-			.photo {
-				width: 72px;
-				height: 72px;
-				border-radius: 8px;
-				border: 1px dashed var(--border);
-				display: flex;
-				align-items: center;
-				justify-content: center;
-				color: var(--muted);
-				font-size: 12px;
-				cursor: pointer;
-			}
-			.input {
-				width: 100%;
-			}
-			.helper {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.helper.red {
-				color: var(--danger);
-			}
-			.unit-row {
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.5);
-			}
-			.unit-row input {
-				flex: 1;
-			}
-			.required {
-				color: var(--danger);
-				margin-left: 4px;
-			}
-			/* Bottom Affix: no tabbar, stick to bottom */
-			.bottom-affix {
-				position: fixed;
-				left: 0;
-				right: 0;
-				bottom: 0;
-				background: #fff;
-				border-top: 1px solid var(--border);
-				padding: calc(var(--spacing) * 0.75) 16px;
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				z-index: 20;
-			}
-			.bottom-affix .btn {
-				flex: 1;
-			}
-			.skeleton {
-				background: linear-gradient(90deg, #eee, #f5f5f5, #eee);
-				background-size: 200% 100%;
-				animation: s 1.4s infinite;
-			}
-			@keyframes s {
-				0% {
-					background-position: 200% 0;
-				}
-				100% {
-					background-position: -200% 0;
-				}
-			}
-			/* utility */
-			.row {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-			}
-			.space-between {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
-			.mt-8 {
-				margin-top: calc(var(--spacing) * 0.5);
-			}
-			.mt-12 {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.mt-16 {
-				margin-top: 16px;
-			}
-			.mt-20 {
-				margin-top: 20px;
-			}
-			.mr-8 {
-				margin-right: 8px;
-			}
-			.small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.center {
-				display: flex;
-				align-items: center;
-				justify-content: center;
-			}
-			.hide {
-				display: none !important;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				background: #f7f8fa;
+			}
+			.safe-bottom {
+				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
 		</style>
 	</head>
 	<body>
-		<div class="navbar">
-			<div class="title">设备档案</div>
-			<div class="row" style="margin-left: auto">
-				<div class="search">
-					<svg width="16" height="16"><rect width="16" height="16" fill="#94A3B8" /></svg
-					><input placeholder="搜索编号/名称" />
-				</div>
+		<!-- 顶部导航栏 -->
+		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+			<div class="flex items-center space-x-3">
+				<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+					</svg>
+				</button>
+				<h1 class="text-base font-semibold">设备档案</h1>
 			</div>
-		</div>
+			<div class="flex items-center space-x-2">
+				<button class="w-8 h-8 flex items-center justify-center">
+					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+					</svg>
+				</button>
+				<button class="w-8 h-8 flex items-center justify-center">
+					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zM12 13a1 1 0 110-2 1 1 0 010 2zM12 20a1 1 0 110-2 1 1 0 010 2z"/>
+					</svg>
+				</button>
+			</div>
+		</header>
 
-		<div class="container">
-			<div class="card device-card">
-				<div class="head">
-					<div>
-						<div class="title">供水泵#1 <span class="small">DEV-001</span></div>
-						<div class="meta">一号厂 · 南区 · 状态：运行</div>
+		<!-- 主要内容区域 -->
+		<main class="mt-14 px-4 space-y-4">
+			<!-- 设备基本信息卡片 -->
+			<div class="bg-white rounded-2xl shadow-sm p-6">
+				<div class="flex items-start justify-between mb-4">
+					<div class="flex-1">
+						<div class="flex items-center space-x-2 mb-2">
+							<h2 class="text-lg font-bold text-slate-800">供水泵#1</h2>
+							<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+								在线
+							</span>
+						</div>
+						<div class="text-sm text-slate-500 space-y-1">
+							<div class="flex items-center space-x-4">
+								<span class="font-medium text-slate-600">设备编号：</span>
+								<span>DEV-001</span>
+							</div>
+							<div class="flex items-center space-x-4">
+								<span class="font-medium text-slate-600">位置：</span>
+								<span>一号厂 · 南区</span>
+							</div>
+							<div class="flex items-center space-x-4">
+								<span class="font-medium text-slate-600">状态：</span>
+								<span class="text-green-600 font-medium">运行</span>
+							</div>
+						</div>
 					</div>
-					<div class="pill blue">在线</div>
+				</div>
+
+				<!-- 健康度指标 -->
+				<div class="border-t border-slate-100 pt-4">
+					<div class="text-sm font-semibold text-slate-700 mb-2">设备健康度</div>
+					<div class="flex items-center space-x-4">
+						<div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
+							<div class="h-full bg-green-500 rounded-full" style="width: 85%"></div>
+						</div>
+						<span class="text-sm font-medium text-green-600">85%</span>
+					</div>
+					<div class="text-xs text-slate-500 mt-1">近 7 次记录：正常 6 · 异常 1（2025-08-12）</div>
 				</div>
 			</div>
 
-			<div class="section">
-				<div class="sec-head"><div class="sec-title">概览</div></div>
-				<div class="small">近 7 次记录：正常6 · 异常1（2025-08-12）</div>
+			<!-- Tab 切换 -->
+			<div class="bg-white rounded-2xl shadow-sm overflow-hidden">
+				<div class="flex border-b border-slate-100">
+					<button class="flex-1 py-3 text-sm font-medium text-blue-600 border-b-2 border-blue-600">
+						检查记录
+					</button>
+					<button class="flex-1 py-3 text-sm font-medium text-slate-500">
+						维修记录
+					</button>
+					<button class="flex-1 py-3 text-sm font-medium text-slate-500">
+						设备资料
+					</button>
+				</div>
+
+				<!-- 检查记录内容 -->
+				<div class="p-4">
+					<div class="flex items-center justify-between mb-4">
+						<h3 class="font-semibold text-slate-800">检查记录</h3>
+						<div class="flex items-center space-x-2 text-xs text-slate-500">
+							<span>筛选：点检 | 巡检 | 保养</span>
+							<span>·</span>
+							<span>时间：近30天</span>
+						</div>
+					</div>
+
+					<div class="space-y-3">
+						<!-- 记录项 -->
+						<div class="flex items-center justify-between py-3 border-b border-slate-100 last:border-b-0">
+							<div>
+								<div class="text-sm font-medium text-slate-800">2025-08-18 10:15 巡检</div>
+								<div class="text-xs text-green-600 mt-1">✓ 正常</div>
+							</div>
+							<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+								查看
+							</button>
+						</div>
+
+						<div class="flex items-center justify-between py-3 border-b border-slate-100 last:border-b-0">
+							<div>
+								<div class="text-sm font-medium text-slate-800">2025-08-12 09:20 巡检</div>
+								<div class="text-xs text-red-600 mt-1">⚠ 异常</div>
+							</div>
+							<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+								查看
+							</button>
+						</div>
+
+						<div class="flex items-center justify-between py-3 border-b border-slate-100 last:border-b-0">
+							<div>
+								<div class="text-sm font-medium text-slate-800">2025-08-10 14:30 点检</div>
+								<div class="text-xs text-green-600 mt-1">✓ 正常</div>
+							</div>
+							<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+								查看
+							</button>
+						</div>
+					</div>
+
+					<!-- 加载更多 -->
+					<div class="text-center pt-4">
+						<button class="text-sm text-blue-600 font-medium">查看更多记录</button>
+					</div>
+				</div>
 			</div>
 
-			<div class="section">
-				<div class="sec-head">
-					<div class="sec-title">记录</div>
-					<div class="small">筛选：点检｜巡检｜保养 · 时间：近30天</div>
-				</div>
-				<div class="task-row">
-					<div>2025-08-18 10:15 巡检 · 正常</div>
-					<div><button class="btn btn-small">查看</button></div>
-				</div>
-				<div class="task-row">
-					<div>2025-08-12 09:20 巡检 · 异常</div>
-					<div><button class="btn btn-small">查看</button></div>
-				</div>
-			</div>
-
-			<div class="section">
-				<div class="sec-head"><div class="sec-title">维修</div></div>
-				<div class="task-row">
-					<div>#WX-20250812-003 轴承更换</div>
-					<div><button class="btn btn-small">详情</button></div>
+			<!-- 维修记录卡片 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<h3 class="font-semibold text-slate-800 mb-4">最近维修</h3>
+				<div class="flex items-center justify-between">
+					<div>
+						<div class="text-sm font-medium text-slate-800">#WX-20250812-003</div>
+						<div class="text-xs text-slate-500 mt-1">轴承更换 · 2025-08-12</div>
+					</div>
+					<div class="flex items-center space-x-2">
+						<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+							已完成
+						</span>
+						<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+							详情
+						</button>
+					</div>
 				</div>
 			</div>
 
-			<div class="section">
-				<div class="sec-head"><div class="sec-title">资料</div></div>
-				<div class="task-row">
-					<div>设备手册.pdf</div>
-					<div><button class="btn btn-small">预览</button></div>
+			<!-- 设备资料卡片 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<h3 class="font-semibold text-slate-800 mb-4">设备资料</h3>
+				<div class="space-y-3">
+					<div class="flex items-center justify-between">
+						<div class="flex items-center space-x-3">
+							<div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+								<svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"/>
+								</svg>
+							</div>
+							<div>
+								<div class="text-sm font-medium text-slate-800">设备手册.pdf</div>
+								<div class="text-xs text-slate-500">2.3 MB</div>
+							</div>
+						</div>
+						<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+							预览
+						</button>
+					</div>
+
+					<div class="flex items-center justify-between">
+						<div class="flex items-center space-x-3">
+							<div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+								<svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M5,3H7V5H5V10A2,2 0 0,0 7,12H10V10A2,2 0 0,0 8,8V3A2,2 0 0,0 6,1H4A2,2 0 0,0 2,3V8A4,4 0 0,0 6,12H8V21H10V12H12A4,4 0 0,0 16,8V3A2,2 0 0,0 14,1H12A2,2 0 0,0 10,3V8A2,2 0 0,0 8,10V12H10A2,2 0 0,0 12,10V5H14V10A2,2 0 0,0 16,12H19A2,2 0 0,0 21,10V5H19V3H21V10A4,4 0 0,0 17,14H15V21H13V14H11V21H9V14H7A4,4 0 0,0 3,10V3H5M9,3H11V5H9V3M15,3H17V5H15V3Z"/>
+								</svg>
+							</div>
+							<div>
+								<div class="text-sm font-medium text-slate-800">技术参数表.xlsx</div>
+								<div class="text-xs text-slate-500">156 KB</div>
+							</div>
+						</div>
+						<button class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded-lg hover:bg-slate-200">
+							下载
+						</button>
+					</div>
 				</div>
 			</div>
-		</div>
+
+			<!-- 快捷操作 -->
+			<div class="bg-white rounded-2xl shadow-sm p-4">
+				<h3 class="font-semibold text-slate-800 mb-4">快捷操作</h3>
+				<div class="grid grid-cols-2 gap-3">
+					<button class="flex items-center justify-center p-3 bg-blue-50 text-blue-700 rounded-lg active:bg-blue-100">
+						<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+						</svg>
+						<span class="text-sm font-medium">新建记录</span>
+					</button>
+					<button class="flex items-center justify-center p-3 bg-orange-50 text-orange-700 rounded-lg active:bg-orange-100">
+						<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"/>
+						</svg>
+						<span class="text-sm font-medium">报修</span>
+					</button>
+				</div>
+			</div>
+		</main>
+
+		<!-- Vant 4 JS -->
+		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
 	</body>
 </html>

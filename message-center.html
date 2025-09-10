@@ -2,283 +2,248 @@
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-		<title>消息中心</title>
-		<link rel="stylesheet" href="styles.css">
-                <style>
-			:root {
-				--primary: #2b6fff;
-				--primary-active: #1c54f0;
-				--primary-subtle: #e8eeff;
-				--success: #22c55e;
-				--warning: #f59e0b;
-				--danger: #ef4444;
-				--text: #0f172a;
-				--muted: #64748b;
-				--border: #e2e8f0;
-				--bg: #f8fafc;
-				--card: #ffffff;
-				--shadow: 0 6px 16px rgba(16, 24, 40, 0.06);
-			}
-			* {
-				box-sizing: border-box;
-				-webkit-tap-highlight-color: transparent;
-			}
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<title>设备巡检系统 - 消息中心</title>
+
+		<!-- Vant 4 CSS -->
+		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<style>
 			body {
-				margin: 0;
-				padding: 0;
-				background: var(--bg);
-				color: var(--text);
-				font-family: var(--font-family);
-				font-size: var(--font-size);
-				line-height: var(--line-height);
-				/* 禁用纵向滚动条但保留滚动功能 */
-				overflow-y: scroll;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				background: #f7f8fa;
 			}
-			/* Firefox 隐藏滚动条 */
-			html {
-				scrollbar-width: none;
-			}
-
-			/* 隐藏滚动条 */
-			::-webkit-scrollbar {
-				width: 0;
-				background: transparent;
-			}
-
-			/* IE/Edge 隐藏滚动条 */
-			-ms-overflow-style: none;
-			a {
-				color: inherit;
-				text-decoration: none;
-			}
-			.container {
-				padding: var(--spacing);
-			}
-			.navbar {
-				position: sticky;
-				top: 0;
-				z-index: 10;
-				background: #fff;
-				padding: calc(var(--spacing) * 0.75) 16px;
-				border-bottom: 1px solid var(--border);
-				display: flex;
-				align-items: center;
-				gap: calc(var(--spacing) * 0.75);
-			}
-			.navbar .title {
-				font-weight: 600;
-				font-size: 18px;
-			}
-			.card {
-				background: var(--card);
-				border: 1px solid var(--border);
-				border-radius: 12px;
-				box-shadow: var(--shadow);
-			}
-			.card + .card {
-				margin-top: calc(var(--spacing) * 0.75);
-			}
-			.btn {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				height: 44px;
-				padding: 0 16px;
-				border-radius: 12px;
-				border: 1px solid var(--border);
-				background: #fff;
-				font-weight: 600;
-			}
-			.btn:active {
-				transform: scale(0.98);
-			}
-			.btn-primary {
-				background: var(--primary);
-				border-color: var(--primary);
-				color: #fff;
-			}
-			.btn-primary:disabled {
-				background: #9db8ff;
-				border-color: #9db8ff;
-			}
-			.btn-ghost {
-				background: #fff;
-				border-color: var(--border);
-				color: #000;
-			}
-			.btn-small {
-				height: 32px;
-				padding: 0 12px;
-				border-radius: 10px;
-				font-size: 14px;
-			}
-			.input {
-				width: 100%;
-				height: 44px;
-				border: 1px solid var(--border);
-				border-radius: 10px;
-				padding: 0 12px;
-				background: #fff;
-			}
-			.input:focus {
-				outline: none;
-				border-color: var(--primary);
-			}
-			.row {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				align-items: center;
-			}
-			.col {
-				display: flex;
-				flex-direction: column;
-				gap: 10px;
-			}
-			.small {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.helper {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.helper.error {
-				color: var(--danger);
-			}
-			.badge {
-				display: inline-flex;
-				align-items: center;
-				justify-content: center;
-				min-width: 16px;
-				height: 16px;
-				padding: 0 4px;
-				border-radius: 999px;
-				background: var(--danger);
-				color: #fff;
-				font-size: 12px;
-				line-height: 1;
-			}
-			.chips {
-				display: flex;
-				gap: calc(var(--spacing) * 0.5);
-				overflow: auto;
-				padding: calc(var(--spacing) * 0.5) 16px;
-				border-bottom: 1px solid var(--border);
-				background: #fff;
-				position: sticky;
-				top: 54px;
-				z-index: 9;
-			}
-			.chip {
-				padding: calc(var(--spacing) * 0.5) 12px;
-				border: 1px solid var(--border);
-				border-radius: 999px;
-				background: #fff;
-				font-size: 14px;
-				white-space: nowrap;
-			}
-			.chip.active {
-				background: var(--primary-subtle);
-				border-color: var(--primary);
-				color: var(--primary);
-			}
-			.msg {
-				padding: calc(var(--spacing) * 0.75);
-			}
-			.msg + .msg {
-				border-top: 1px dashed var(--border);
-			}
-			.msg .head {
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-			}
-			.msg .title {
-				font-weight: 700;
-			}
-			.msg .unread {
-				width: 8px;
-				height: 8px;
-				border-radius: 999px;
-				background: var(--danger);
-				margin-left: 6px;
-			}
-			.msg .meta {
-				font-size: 12px;
-				color: var(--muted);
-			}
-			.link {
-				color: var(--primary);
-				text-decoration: underline;
+			.safe-bottom {
+				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
 		</style>
 	</head>
 	<body>
-		<div class="navbar">
-			<div class="title">消息中心</div>
-			<div class="row" style="margin-left: auto">
-				<button class="btn btn-small" onclick="markAll()">清空未读</button>
+		<!-- 顶部导航栏 -->
+		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
+			<div class="flex items-center space-x-3">
+				<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+					</svg>
+				</button>
+				<h1 class="text-base font-semibold">消息中心</h1>
+			</div>
+			<button 
+				class="px-3 py-1 bg-blue-500 text-white text-sm font-medium rounded-lg hover:bg-blue-600 active:bg-blue-700"
+				onclick="markAll()"
+			>
+				清空未读
+			</button>
+		</header>
+
+		<!-- 筛选标签栏 -->
+		<div class="fixed inset-x-0 top-12 bg-white border-b border-slate-200 z-40">
+			<div class="flex space-x-1 px-4 py-3 overflow-x-auto">
+				<button 
+					class="px-4 py-2 text-sm font-medium rounded-full bg-blue-500 text-white whitespace-nowrap"
+					onclick="filter('all', this)"
+				>
+					全部
+				</button>
+				<button 
+					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+					onclick="filter('task', this)"
+				>
+					任务
+				</button>
+				<button 
+					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+					onclick="filter('repair', this)"
+				>
+					维修
+				</button>
+				<button 
+					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+					onclick="filter('system', this)"
+				>
+					系统
+				</button>
 			</div>
 		</div>
 
-		<div class="chips">
-			<div class="chip active" onclick="filter('all', this)">全部</div>
-			<div class="chip" onclick="filter('task', this)">任务</div>
-			<div class="chip" onclick="filter('repair', this)">维修</div>
-			<div class="chip" onclick="filter('system', this)">系统</div>
-		</div>
-
-		<div class="container">
-			<div class="card">
-				<div id="list">
-					<div class="msg" data-type="task" data-unread="1">
-						<div class="head">
-							<div class="row">
-								<div class="title">【任务】供水泵#1 电机温度逾期 10m</div>
-								<div class="unread"></div>
+		<!-- 主要内容区域 -->
+		<main class="pt-28 px-4 space-y-1" id="list">
+			<!-- 任务消息 -->
+			<div class="bg-white shadow-sm border-b border-slate-100 relative" data-type="task" data-unread="1">
+				<div class="p-4">
+					<div class="flex items-start justify-between mb-2">
+						<div class="flex items-start space-x-3 flex-1">
+							<div class="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center flex-shrink-0">
+								<svg class="w-5 h-5 text-orange-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+								</svg>
 							</div>
-							<div class="meta">09:40</div>
+							<div class="flex-1 min-w-0">
+								<div class="flex items-center space-x-2">
+									<h3 class="font-semibold text-slate-800 text-sm">任务逾期提醒</h3>
+									<div class="unread w-2 h-2 bg-red-500 rounded-full"></div>
+								</div>
+								<p class="text-sm text-slate-600 mt-1">供水泵#1 电机温度逾期 10分钟</p>
+								<p class="text-xs text-slate-500 mt-1">批次 2025W33，建议优先处理。</p>
+							</div>
 						</div>
-						<div class="small">批次 2025W33，建议优先处理。<a class="link" href="#">去处理</a></div>
+						<div class="text-xs text-slate-500 ml-2">09:40</div>
 					</div>
-
-					<div class="msg" data-type="repair" data-unread="1">
-						<div class="head">
-							<div class="row">
-								<div class="title">【维修】工单 #WX-20250819-001 已指派给你</div>
-								<div class="unread"></div>
-							</div>
-							<div class="meta">09:20</div>
-						</div>
-						<div class="small">轴承异响，请尽快接单处理。<a class="link" href="#">查看工单</a></div>
-					</div>
-
-					<div class="msg" data-type="system" data-unread="0">
-						<div class="head">
-							<div class="row">
-								<div class="title">【系统】版本更新说明 V1.4.0</div>
-							</div>
-							<div class="meta">昨天 18:30</div>
-						</div>
-						<div class="small">优化上传稳定性，新增离线草稿批量提交。</div>
+					<div class="flex justify-end">
+						<button class="text-sm text-blue-600 font-medium hover:text-blue-700">去处理</button>
 					</div>
 				</div>
 			</div>
+
+			<!-- 维修消息 -->
+			<div class="bg-white shadow-sm border-b border-slate-100 relative" data-type="repair" data-unread="1">
+				<div class="p-4">
+					<div class="flex items-start justify-between mb-2">
+						<div class="flex items-start space-x-3 flex-1">
+							<div class="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center flex-shrink-0">
+								<svg class="w-5 h-5 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M22.7 19l-9.1-9.1c.9-2.3.4-5-1.5-6.9-2-2-5-2.4-7.4-1.3L9 6 6 9 1.6 4.7C.4 7.1.9 10.1 2.9 12.1c1.9 1.9 4.6 2.4 6.9 1.5l9.1 9.1c.4.4 1 .4 1.4 0l2.3-2.3c.5-.4.5-1.1.1-1.4z"/>
+								</svg>
+							</div>
+							<div class="flex-1 min-w-0">
+								<div class="flex items-center space-x-2">
+									<h3 class="font-semibold text-slate-800 text-sm">维修工单指派</h3>
+									<div class="unread w-2 h-2 bg-red-500 rounded-full"></div>
+								</div>
+								<p class="text-sm text-slate-600 mt-1">工单 #WX-20250819-001 已指派给你</p>
+								<p class="text-xs text-slate-500 mt-1">轴承异响，请尽快接单处理。</p>
+							</div>
+						</div>
+						<div class="text-xs text-slate-500 ml-2">09:20</div>
+					</div>
+					<div class="flex justify-end">
+						<button class="text-sm text-blue-600 font-medium hover:text-blue-700">查看工单</button>
+					</div>
+				</div>
+			</div>
+
+			<!-- 系统消息 -->
+			<div class="bg-white shadow-sm border-b border-slate-100 relative" data-type="system" data-unread="0">
+				<div class="p-4">
+					<div class="flex items-start justify-between mb-2">
+						<div class="flex items-start space-x-3 flex-1">
+							<div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center flex-shrink-0">
+								<svg class="w-5 h-5 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+								</svg>
+							</div>
+							<div class="flex-1 min-w-0">
+								<h3 class="font-semibold text-slate-800 text-sm">系统通知</h3>
+								<p class="text-sm text-slate-600 mt-1">版本更新说明 V1.4.0</p>
+								<p class="text-xs text-slate-500 mt-1">优化上传稳定性，新增离线草稿批量提交。</p>
+							</div>
+						</div>
+						<div class="text-xs text-slate-500 ml-2">昨天 18:30</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 更多系统消息 -->
+			<div class="bg-white shadow-sm border-b border-slate-100 relative" data-type="system" data-unread="0">
+				<div class="p-4">
+					<div class="flex items-start justify-between mb-2">
+						<div class="flex items-start space-x-3 flex-1">
+							<div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+								<svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+								</svg>
+							</div>
+							<div class="flex-1 min-w-0">
+								<h3 class="font-semibold text-slate-800 text-sm">系统通知</h3>
+								<p class="text-sm text-slate-600 mt-1">数据同步完成</p>
+								<p class="text-xs text-slate-500 mt-1">设备档案、任务记录已同步至云端。</p>
+							</div>
+						</div>
+						<div class="text-xs text-slate-500 ml-2">08-18 16:20</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- 任务完成消息 -->
+			<div class="bg-white shadow-sm border-b border-slate-100 relative" data-type="task" data-unread="0">
+				<div class="p-4">
+					<div class="flex items-start justify-between mb-2">
+						<div class="flex items-start space-x-3 flex-1">
+							<div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+								<svg class="w-5 h-5 text-green-600" fill="currentColor" viewBox="0 0 24 24">
+									<path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+								</svg>
+							</div>
+							<div class="flex-1 min-w-0">
+								<h3 class="font-semibold text-slate-800 text-sm">任务完成</h3>
+								<p class="text-sm text-slate-600 mt-1">冷却塔#2 巡检任务已完成</p>
+								<p class="text-xs text-slate-500 mt-1">执行人：李工，结果：正常</p>
+							</div>
+						</div>
+						<div class="text-xs text-slate-500 ml-2">08-18 14:15</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<!-- 空状态 -->
+		<div class="hidden pt-24 px-4" id="empty-state">
+			<div class="text-center py-16">
+				<div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
+					<svg class="w-8 h-8 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2 2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"/>
+					</svg>
+				</div>
+				<h3 class="text-slate-800 font-semibold mb-2">暂无消息</h3>
+				<p class="text-slate-500 text-sm">当前分类下没有消息</p>
+			</div>
 		</div>
 
+		<!-- Vant 4 JS -->
+		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
 		<script>
 			function markAll() {
 				document.querySelectorAll('.msg[data-unread="1"] .unread').forEach((e) => e.remove());
 				document.querySelectorAll('.msg[data-unread="1"]').forEach((e) => e.setAttribute('data-unread', '0'));
 			}
+			
 			function filter(type, el) {
-				document.querySelectorAll('.chip').forEach((c) => c.classList.remove('active'));
-				el.classList.add('active');
-				document.querySelectorAll('.msg').forEach((m) => {
-					if (type === 'all') m.style.display = 'block';
-					else m.style.display = m.getAttribute('data-type') === type ? 'block' : 'none';
+				// 更新按钮状态
+				document.querySelectorAll('.fixed .px-4').forEach((btn) => {
+					btn.className = btn.className.replace('bg-blue-500 text-white', 'bg-slate-100 text-slate-600');
 				});
+				el.className = el.className.replace('bg-slate-100 text-slate-600', 'bg-blue-500 text-white');
+				
+				// 筛选消息
+				const messages = document.querySelectorAll('[data-type]');
+				let visibleCount = 0;
+				
+				messages.forEach((m) => {
+					if (type === 'all') {
+						m.style.display = 'block';
+						visibleCount++;
+					} else {
+						if (m.getAttribute('data-type') === type) {
+							m.style.display = 'block';
+							visibleCount++;
+						} else {
+							m.style.display = 'none';
+						}
+					}
+				});
+				
+				// 显示/隐藏空状态
+				const emptyState = document.getElementById('empty-state');
+				if (visibleCount === 0) {
+					emptyState.classList.remove('hidden');
+					document.getElementById('list').classList.add('hidden');
+				} else {
+					emptyState.classList.add('hidden');
+					document.getElementById('list').classList.remove('hidden');
+				}
 			}
 		</script>
 	</body>
