@@ -65,27 +65,27 @@
 			</div>
 		</div>
 
-		<!-- 筛选栏 -->
-		<div class="fixed inset-x-0 top-28 bg-white border-b border-slate-200 z-30">
+		<!-- 筛选栏（轻盈风格） -->
+		<div class="fixed inset-x-0 top-28 bg-white/90 backdrop-blur shadow-sm z-30">
 			<div class="flex space-x-1 px-4 py-3 overflow-x-auto">
 				<button
-					class="px-4 py-2 text-sm font-medium rounded-full text-white whitespace-nowrap"
+					class="px-4 py-2 text-sm font-semibold rounded-full text-white whitespace-nowrap"
 					style="background-color: #2563eb"
 				>
 					全部
 				</button>
 				<button
-					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+					class="px-4 py-2 text-sm font-semibold rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
 				>
 					可开始
 				</button>
 				<button
-					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+					class="px-4 py-2 text-sm font-semibold rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
 				>
 					进行中
 				</button>
 				<button
-					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+					class="px-4 py-2 text-sm font-semibold rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
 				>
 					逾期
 				</button>
@@ -96,21 +96,31 @@
 		<main class="mt-44 px-4 pb-6 space-y-4">
 			<!-- 设备聚合卡片 -->
 			<div class="bg-white rounded-lg shadow-sm p-4">
-				<div class="flex items-start justify-between mb-4">
-					<div class="flex-1">
-						<div class="flex items-center space-x-2 mb-1">
-							<h3 id="devName" class="text-lg font-bold text-slate-800">供水泵#1</h3>
-							<span id="devId" class="text-sm text-slate-500">(DEV-001)</span>
-						</div>
-						<div id="devSite" class="text-sm text-slate-600">一号厂 · 南区</div>
+				<div class="mb-4">
+					<!-- 设备名称与编号一行 -->
+					<div class="flex items-center space-x-2 mb-2">
+						<h3 id="devName" class="text-lg font-bold text-slate-800">供水泵#1</h3>
+						<span id="devId" class="text-sm text-slate-500">(DEV-001)</span>
 					</div>
-					<div id="stat" class="flex flex-wrap gap-1"></div>
+					<!-- 地点与状态标签一行 -->
+					<div class="flex items-center justify-between">
+						<div id="devSite" class="text-sm text-slate-600">一号厂 · 南区</div>
+						<div id="stat" class="flex flex-wrap gap-1"></div>
+					</div>
 				</div>
 
-				<div id="rows" class="space-y-3"></div>
+				<!-- 卡片头与内容分隔线 -->
+				<hr class="border-slate-300 my-4">
+
+				<div id="rows" class="space-y-0"></div>
 
 				<div class="mt-3">
-					<button id="toggleMore" class="text-sm text-blue-500 underline">查看更多</button>
+					<button
+						id="toggleMore"
+						class="w-full py-2.5 text-sm text-slate-600 bg-slate-100 hover:bg-slate-200 rounded font-medium"
+					>
+						查看更多
+					</button>
 				</div>
 
 				<div class="flex items-center justify-between mt-4 pt-4 border-t border-slate-100">
@@ -135,7 +145,7 @@
 							<a
 								href="#"
 								class="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50"
-								onclick="alert('新建报修单');"
+								onclick="alert('异常报修：带入设备上下文');"
 								>异常报修</a
 							>
 							<a
@@ -165,9 +175,15 @@
 					</div>
 				</div>
 
-				<div class="text-xs text-slate-500 mt-3 p-3 bg-slate-50 rounded-lg">
-					说明：默认仅展示 3
-					条；未到时间标为「未到时间」，可查看不可开始；"更多"在左下角；主操作"全部领取"靠右，便于右手操作。
+			<!-- 信息提示样式 -->
+			<div class="mt-3 p-3 bg-slate-50 rounded flex items-start gap-2 text-xs text-slate-600">
+				<svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M11 11v6m0-8h.01M12 4.5a7.5 7.5 0 100 15 7.5 7.5 0 000-15z"/>
+				</svg>
+				<div>
+					<div>默认仅展示 3 条，点击「查看更多」可展开全部任务。</div>
+					<div>处于「未到时间」的任务仅可查看不可进入；</div>
+					<div>进入任务前需完成当时窗 PPE 采集；</div>
 				</div>
 			</div>
 		</main>
@@ -317,7 +333,7 @@
 					DONE: { text: '已完成', color: 'bg-green-100 text-green-700' },
 				};
 				const status = statusMap[state] || statusMap.UNSTARTED;
-				return `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${status.color}">${status.text}</span>`;
+				return `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${status.color}"><span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>${status.text}</span>`;
 			}
 
 			function getActionButton(state) {
@@ -337,10 +353,10 @@
 			const sOpen = rows.filter((x) => x.state === 'OPEN' || x.state === 'IN_PROGRESS').length;
 			const sOver = rows.filter((x) => x.state === 'OVERDUE').length;
 
-			let statHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600">未到 ${sNotYet}</span>`;
-			statHtml += `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">在办 ${sOpen}</span>`;
+			let statHtml = `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600"><span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>未到 ${sNotYet}</span>`;
+			statHtml += `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700"><span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>在办 ${sOpen}</span>`;
 			if (sOver > 0) {
-				statHtml += `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700">逾期 ${sOver}</span>`;
+				statHtml += `<span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700"><span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>逾期 ${sOver}</span>`;
 			}
 			statEl.innerHTML = statHtml;
 
@@ -355,10 +371,10 @@
 
 				toShow.forEach((r) => {
 					const row = document.createElement('div');
-					row.className = 'flex items-center justify-between p-2 border-b border-slate-200 last:border-b-0';
+					row.className = 'flex items-center justify-between p-3 border-b border-dashed border-slate-200 last:border-b-0';
 					row.innerHTML = `
 						<div class="flex-1 min-w-0">
-							<div class="text-base font-semibold text-slate-900">${r.p.name}</div>
+							<div class="text-base font-medium text-slate-900">${r.p.name}</div>
 							<div class="text-xs text-slate-600 mt-1">${r.w.start}–${r.w.end}</div>
 						</div>
 						<div class="flex items-center space-x-3 ml-3">
@@ -369,7 +385,8 @@
 					list.appendChild(row);
 				});
 
-				document.getElementById('toggleMore').textContent = showAll ? '收起' : '查看更多';
+				const remaining = sorted.length - 3;
+				document.getElementById('toggleMore').textContent = showAll ? '收起' : `查看更多 (还有${remaining}条)`;
 			}
 
 			document.getElementById('toggleMore').addEventListener('click', (e) => {

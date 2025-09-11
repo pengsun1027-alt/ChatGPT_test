@@ -11,18 +11,50 @@
 		<!-- <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" /> -->
 
 		<style>
+			:root {
+				--brand-600: #2563eb; /* 主色 */
+				--brand-700: #1d4ed8; /* 深一点用于hover/标题 */
+			}
 			body {
-				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
+					sans-serif;
 				background: #f7f8fa;
 			}
 			.safe-bottom {
 				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
+
+			/* 背景：渐变 + Blob 装饰 */
+			.header-bg {
+				background: radial-gradient(1200px 600px at 20% 0%, rgba(37, 99, 235, 0.35), transparent 60%),
+					radial-gradient(900px 500px at 100% 10%, rgba(29, 78, 216, 0.35), transparent 60%),
+					linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+				position: relative;
+			}
+
+			/* 适配首页 Header 的矮横幅，Blob 更扁更宽 */
+			.header-bg::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				pointer-events: none;
+				background: radial-gradient(320px 200px at 8% 6%, rgba(255, 255, 255, 0.22) 0%, transparent 65%),
+					radial-gradient(420px 260px at 92% 10%, rgba(255, 255, 255, 0.18) 0%, transparent 68%),
+					radial-gradient(360px 220px at 70% 100%, rgba(255, 255, 255, 0.2) 0%, transparent 62%);
+				filter: blur(1.5px); /* 柔化边缘，避免喧宾夺主 */
+				z-index: 0;
+			}
+
+			/* 确保前景内容在装饰层之上 */
+			.header-bg > * {
+				position: relative;
+				z-index: 1;
+			}
 		</style>
 	</head>
 	<body class="pb-20">
-		<!-- 顶部用户信息栏 - 简洁单色设计 -->
-		<header class="bg-blue-600 text-white px-4 pt-4 pb-6">
+		<!-- 顶部用户信息栏 - 应用克制的分层渐变背景 -->
+		<header class="header-bg text-white px-4 pt-4 pb-6">
 			<div class="flex items-center justify-between mb-4">
 				<div class="flex items-center space-x-3">
 					<div class="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
@@ -36,12 +68,20 @@
 				<div class="flex space-x-3">
 					<button class="w-10 h-10 bg-white/20 rounded flex items-center justify-center">
 						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+							/>
 						</svg>
 					</button>
 					<button class="w-10 h-10 bg-white/20 rounded flex items-center justify-center">
 						<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z" />
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
+							/>
 						</svg>
 					</button>
 				</div>
@@ -54,7 +94,7 @@
 			<div class="bg-white rounded-lg shadow-sm border border-slate-200 p-5 mb-6">
 				<div class="grid grid-cols-4 gap-4">
 					<div class="text-center">
-						<div class="text-3xl font-bold mb-2" style="color: #2563EB;">13</div>
+						<div class="text-3xl font-bold mb-2" style="color: #2563eb">13</div>
 						<div class="text-sm text-slate-700">今日任务</div>
 					</div>
 					<div class="text-center">
@@ -78,81 +118,202 @@
 			<!-- 功能宫格 - 使用单色线性图标，统一圆角 -->
 			<div class="grid grid-cols-3 gap-4 mb-6">
 				<!-- 巡检 -->
-				<a href="#" class="relative bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50">
-					<svg class="w-8 h-8 mb-3" style="color: #2563EB;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+				<a
+					href="#"
+					class="relative bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50"
+				>
+					<svg
+						class="w-8 h-8 mb-3"
+						style="color: #2563eb"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+						/>
 					</svg>
 					<div class="text-sm font-medium text-slate-900">巡检</div>
-					<div class="absolute -top-2 -right-2 min-w-[24px] h-6 bg-red-500 rounded-full flex items-center justify-center">
+					<div
+						class="absolute -top-2 -right-2 min-w-[24px] h-6 bg-red-500 rounded-full flex items-center justify-center"
+					>
 						<span class="text-white text-xs font-medium px-1">8</span>
 					</div>
 				</a>
 
 				<!-- 点检 -->
-				<a href="#" class="relative bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50">
-					<svg class="w-8 h-8 text-green-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.125m-8 0V8.25m0 0V7.875c0-.621.504-1.125 1.125-1.125h.375m7.5 10.5v.375c0 .621-.504 1.125-1.125 1.125H12M9 16h.008v.008H9V16zm.375-1.5a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+				<a
+					href="#"
+					class="relative bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50"
+				>
+					<svg
+						class="w-8 h-8 text-green-600 mb-3"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M11.35 3.836c-.065.21-.1.433-.1.664 0 .414.336.75.75.75h4.5a.75.75 0 00.75-.75 2.25 2.25 0 00-.1-.664m-5.8 0A2.251 2.251 0 0113.5 2.25H15c1.012 0 1.867.668 2.15 1.586m-5.8 0c-.376.023-.75.05-1.124.08C9.095 4.01 8.25 4.973 8.25 6.108V8.25m8.9-4.414c.376.023.75.05 1.124.08 1.131.094 1.976 1.057 1.976 2.192V16.5A2.25 2.25 0 0118 18.75h-2.25m-7.5-10.5H4.875c-.621 0-1.125.504-1.125 1.125v11.25c0 .621.504 1.125 1.125 1.125h9.75c.621 0 1.125-.504 1.125-1.125V18.75m-7.5-10.5h6.375c.621 0 1.125.504 1.125 1.125v9.125m-8 0V8.25m0 0V7.875c0-.621.504-1.125 1.125-1.125h.375m7.5 10.5v.375c0 .621-.504 1.125-1.125 1.125H12M9 16h.008v.008H9V16zm.375-1.5a.375.375 0 11-.75 0 .375.375 0 01.75 0z"
+						/>
 					</svg>
 					<div class="text-sm font-medium text-slate-900">点检</div>
-					<div class="absolute -top-2 -right-2 min-w-[24px] h-6 bg-green-500 rounded-full flex items-center justify-center">
+					<div
+						class="absolute -top-2 -right-2 min-w-[24px] h-6 bg-green-500 rounded-full flex items-center justify-center"
+					>
 						<span class="text-white text-xs font-medium px-1">5</span>
 					</div>
 				</a>
 
 				<!-- 保养 -->
-				<a href="#" class="relative bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50">
-					<svg class="w-8 h-8 text-orange-500 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+				<a
+					href="#"
+					class="relative bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50"
+				>
+					<svg
+						class="w-8 h-8 text-orange-500 mb-3"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"
+						/>
 					</svg>
 					<div class="text-sm font-medium text-slate-900">保养</div>
-					<div class="absolute -top-2 -right-2 min-w-[24px] h-6 bg-orange-500 rounded-full flex items-center justify-center">
+					<div
+						class="absolute -top-2 -right-2 min-w-[24px] h-6 bg-orange-500 rounded-full flex items-center justify-center"
+					>
 						<span class="text-white text-xs font-medium px-1">2</span>
 					</div>
 				</a>
 
 				<!-- 维修 -->
-				<a href="#" class="relative bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50">
-					<svg class="w-8 h-8 text-red-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5" />
+				<a
+					href="#"
+					class="relative bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50"
+				>
+					<svg
+						class="w-8 h-8 text-red-600 mb-3"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M4.26 10.147a60.436 60.436 0 00-.491 6.347A48.627 48.627 0 0112 20.904a48.627 48.627 0 018.232-4.41 60.46 60.46 0 00-.491-6.347m-15.482 0a50.57 50.57 0 00-2.658-.813A59.905 59.905 0 0112 3.493a59.902 59.902 0 0110.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0112 13.489a50.702 50.702 0 017.74-3.342M6.75 15a.75.75 0 100-1.5.75.75 0 000 1.5zm0 0v-3.675A55.378 55.378 0 0112 8.443m-7.007 11.55A5.981 5.981 0 006.75 15.75v-1.5"
+						/>
 					</svg>
 					<div class="text-sm font-medium text-slate-900">维修</div>
-					<div class="absolute -top-2 -right-2 min-w-[24px] h-6 bg-red-500 rounded-full flex items-center justify-center">
+					<div
+						class="absolute -top-2 -right-2 min-w-[24px] h-6 bg-red-500 rounded-full flex items-center justify-center"
+					>
 						<span class="text-white text-xs font-medium px-1">3</span>
 					</div>
 				</a>
 
 				<!-- 档案 -->
-				<a href="#" class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50">
-					<svg class="w-8 h-8 text-slate-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+				<a
+					href="#"
+					class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50"
+				>
+					<svg
+						class="w-8 h-8 text-slate-600 mb-3"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"
+						/>
 					</svg>
 					<div class="text-sm font-medium text-slate-900">档案</div>
 				</a>
 
 				<!-- 扫码 -->
-				<a href="#" class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50">
-					<svg class="w-8 h-8 text-slate-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z" />
-						<path stroke-linecap="round" stroke-linejoin="round" d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z" />
+				<a
+					href="#"
+					class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50"
+				>
+					<svg
+						class="w-8 h-8 text-slate-600 mb-3"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M3.75 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 013.75 9.375v-4.5zM3.75 14.625c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5a1.125 1.125 0 01-1.125-1.125v-4.5zM13.5 4.875c0-.621.504-1.125 1.125-1.125h4.5c.621 0 1.125.504 1.125 1.125v4.5c0 .621-.504 1.125-1.125 1.125h-4.5A1.125 1.125 0 0113.5 9.375v-4.5z"
+						/>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M6.75 6.75h.75v.75h-.75v-.75zM6.75 16.5h.75v.75h-.75v-.75zM16.5 6.75h.75v.75h-.75v-.75zM13.5 13.5h.75v.75h-.75v-.75zM13.5 19.5h.75v.75h-.75v-.75zM19.5 13.5h.75v.75h-.75v-.75zM19.5 19.5h.75v.75h-.75v-.75zM16.5 16.5h.75v.75h-.75v-.75z"
+						/>
 					</svg>
 					<div class="text-sm font-medium text-slate-900">扫码</div>
 				</a>
 
 				<!-- 营格 -->
-				<a href="#" class="relative bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50">
-					<svg class="w-8 h-8 mb-3" style="color: #2563EB;" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5a2.25 2.25 0 002.25-2.25m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5" />
+				<a
+					href="#"
+					class="relative bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50"
+				>
+					<svg
+						class="w-8 h-8 mb-3"
+						style="color: #2563eb"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5a2.25 2.25 0 002.25-2.25m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
+						/>
 					</svg>
 					<div class="text-sm font-medium text-slate-900">营格</div>
-					<div class="absolute -top-2 -right-2 min-w-[24px] h-6 rounded-full flex items-center justify-center" style="background-color: #2563EB;">
+					<div
+						class="absolute -top-2 -right-2 min-w-[24px] h-6 rounded-full flex items-center justify-center"
+						style="background-color: #2563eb"
+					>
 						<span class="text-white text-xs font-medium px-1">4</span>
 					</div>
 				</a>
 
 				<!-- 个人中心 -->
-				<a href="#" class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50">
-					<svg class="w-8 h-8 text-slate-600 mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+				<a
+					href="#"
+					class="bg-white rounded-lg shadow-sm border border-slate-200 p-6 flex flex-col items-center justify-center min-h-[100px] active:bg-slate-50"
+				>
+					<svg
+						class="w-8 h-8 text-slate-600 mb-3"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+						/>
 					</svg>
 					<div class="text-sm font-medium text-slate-900">个人中心</div>
 				</a>
@@ -161,12 +322,20 @@
 			<!-- 提醒信息 -->
 			<div class="bg-orange-50 border border-orange-200 rounded p-4">
 				<div class="flex items-center space-x-3">
-					<svg class="w-5 h-5 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+					<svg
+						class="w-5 h-5 text-orange-600"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						stroke-width="1.5"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"
+						/>
 					</svg>
-					<div class="text-sm font-medium text-orange-800">
-						您有 2 个逾期任务，请及时处理
-					</div>
+					<div class="text-sm font-medium text-orange-800">您有 2 个逾期任务，请及时处理</div>
 				</div>
 			</div>
 		</main>
@@ -175,27 +344,67 @@
 		<nav class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="mx-auto max-w-md">
 				<div class="grid grid-cols-4 text-center">
-					<a href="#" class="py-3 flex flex-col items-center justify-center" style="color: #2563EB;">
-						<svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+					<a href="#" class="py-3 flex flex-col items-center justify-center" style="color: #2563eb">
+						<svg
+							class="w-5 h-5 mb-1"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25"
+							/>
 						</svg>
 						<span class="text-xs">首页</span>
 					</a>
 					<a href="#" class="py-3 flex flex-col items-center justify-center text-slate-500">
-						<svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z" />
+						<svg
+							class="w-5 h-5 mb-1"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"
+							/>
 						</svg>
 						<span class="text-xs">工具</span>
 					</a>
 					<a href="#" class="py-3 flex flex-col items-center justify-center text-slate-500">
-						<svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+						<svg
+							class="w-5 h-5 mb-1"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+							/>
 						</svg>
 						<span class="text-xs">我的</span>
 					</a>
 					<a href="#" class="py-3 flex flex-col items-center justify-center text-slate-500">
-						<svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-							<path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.240.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z" />
+						<svg
+							class="w-5 h-5 mb-1"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+							stroke-width="1.5"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.240.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"
+							/>
 							<path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
 						</svg>
 						<span class="text-xs">设置</span>
@@ -203,8 +412,5 @@
 				</div>
 			</div>
 		</nav>
-
-		<!-- Vant 4 JS - 仅在必要时使用 -->
-		<!-- <script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script> -->
 	</body>
 </html>

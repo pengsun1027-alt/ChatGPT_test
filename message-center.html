@@ -22,17 +22,15 @@
 	</head>
 	<body>
 		<!-- 顶部导航栏 -->
-		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50">
-			<div class="flex items-center space-x-3">
-				<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
-					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-					</svg>
-				</button>
-				<h1 class="text-base font-semibold">消息中心</h1>
-			</div>
+		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center px-4 z-50">
+			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+				</svg>
+			</button>
+			<h1 class="flex-1 text-base font-semibold text-center">消息中心</h1>
 			<button 
-				class="px-3 py-1 text-white text-sm font-medium rounded hover:opacity-80 active:opacity-60" style="background-color: #2563EB;"
+				class="px-3 py-1 text-white text-sm font-semibold rounded hover:opacity-80 hover:-translate-y-px active:opacity-60 transition-all duration-200" style="background-color: #2563EB;"
 				onclick="markAll()"
 			>
 				清空未读
@@ -43,25 +41,25 @@
 		<div class="fixed inset-x-0 top-12 bg-white border-b border-slate-200 z-40">
 			<div class="flex space-x-1 px-4 py-3 overflow-x-auto">
 				<button 
-					class="px-4 py-2 text-sm font-medium rounded-full text-white whitespace-nowrap" style="background-color: #2563EB;"
+					class="px-4 py-2 text-sm font-semibold rounded-full text-white whitespace-nowrap transition-all duration-200" style="background-color: #2563EB;"
 					onclick="filter('all', this)"
 				>
 					全部
 				</button>
 				<button 
-					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+					class="px-4 py-2 text-sm font-semibold rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap transition-all duration-200"
 					onclick="filter('task', this)"
 				>
 					任务
 				</button>
 				<button 
-					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+					class="px-4 py-2 text-sm font-semibold rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap transition-all duration-200"
 					onclick="filter('repair', this)"
 				>
 					维修
 				</button>
 				<button 
-					class="px-4 py-2 text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap"
+					class="px-4 py-2 text-sm font-semibold rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 whitespace-nowrap transition-all duration-200"
 					onclick="filter('system', this)"
 				>
 					系统
@@ -93,7 +91,7 @@
 						<div class="text-xs text-slate-500 ml-2">09:40</div>
 					</div>
 					<div class="flex justify-end">
-						<button class="text-sm font-medium hover:opacity-80" style="color: #2563EB;">去处理</button>
+						<button class="text-sm font-medium hover:opacity-80 transition-all duration-200" style="color: #2563EB;">去处理</button>
 					</div>
 				</div>
 			</div>
@@ -120,7 +118,7 @@
 						<div class="text-xs text-slate-500 ml-2">09:20</div>
 					</div>
 					<div class="flex justify-end">
-						<button class="text-sm font-medium hover:opacity-80" style="color: #2563EB;">查看工单</button>
+						<button class="text-sm font-medium hover:opacity-80 transition-all duration-200" style="color: #2563EB;">查看工单</button>
 					</div>
 				</div>
 			</div>

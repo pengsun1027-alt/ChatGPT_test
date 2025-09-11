@@ -4,9 +4,6 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>设备巡检系统 - 设备档案</title>
-
-		<!-- Vant 4 CSS -->
-		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
 		<!-- Tailwind CSS -->
 		<script src="https://cdn.tailwindcss.com"></script>
 
@@ -23,17 +20,13 @@
 	</head>
 	<body>
 		<!-- 顶部导航栏 -->
-		<header
-			class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-between px-4 z-50"
-		>
-			<div class="flex items-center space-x-3">
-				<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
-					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-					</svg>
-				</button>
-				<h1 class="text-base font-semibold">设备档案</h1>
-			</div>
+		<header class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center px-4 z-50">
+			<button class="w-8 h-8 flex items-center justify-center" onclick="history.back()">
+				<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+				</svg>
+			</button>
+			<h1 class="flex-1 text-base font-semibold text-center">设备档案</h1>
 			<div class="flex items-center space-x-2">
 				<button class="w-8 h-8 flex items-center justify-center">
 					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,35 +55,23 @@
 		<main class="mt-14 px-4 space-y-4">
 			<!-- 设备基本信息卡片 -->
 			<div class="bg-white rounded-lg shadow-sm p-6">
-				<div class="flex items-start justify-between mb-4">
-					<div class="flex-1">
-						<div class="flex items-center space-x-2 mb-2">
-							<h2 class="text-lg font-bold text-slate-800">供水泵#1</h2>
-							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
-							>
-								在线
-							</span>
-						</div>
-						<div class="text-sm text-slate-500 space-y-1">
-							<div class="flex items-center space-x-4">
-								<span class="font-medium text-slate-600">设备编号：</span>
-								<span>DEV-001</span>
-							</div>
-							<div class="flex items-center space-x-4">
-								<span class="font-medium text-slate-600">位置：</span>
-								<span>一号厂 · 南区</span>
-							</div>
-							<div class="flex items-center space-x-4">
-								<span class="font-medium text-slate-600">状态：</span>
-								<span class="text-green-600 font-medium">运行</span>
-							</div>
-						</div>
-					</div>
+				<!-- 区块1：标题 + 重要程度（右上） -->
+				<div class="flex items-start justify-between">
+					<h3 class="text-lg font-bold text-slate-800 leading-tight">供水泵#1</h3>
+					<span
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-800 ml-3 shrink-0 whitespace-nowrap"
+					>
+						<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>在线
+					</span>
+				</div>
+				<!-- 区块2：元信息 -->
+				<div class="mt-2 text-sm text-slate-600">
+					<div class="mt-1 whitespace-nowrap">设备编号：<span class="font-medium">DEV-001</span></div>
+					<div class="mt-1 whitespace-nowrap">位置：<span class="font-medium">一号厂 · 南区</span></div>
 				</div>
 
 				<!-- 健康度指标 -->
-				<div class="border-t border-slate-100 pt-4">
+				<div class="border-t border-slate-100 pt-4 mt-3">
 					<div class="text-sm font-semibold text-slate-700 mb-2">设备健康度</div>
 					<div class="flex items-center space-x-4">
 						<div class="flex-1 bg-slate-100 rounded-full h-2 overflow-hidden">
@@ -102,18 +83,35 @@
 				</div>
 			</div>
 
-			<!-- Tab 切换 -->
+			<!-- Tab 切换（含三类内容面板） -->
 			<div class="bg-white rounded-lg shadow-sm overflow-hidden">
+				<!-- Tab Header -->
 				<div class="flex border-b border-slate-100">
-					<button class="flex-1 py-3 text-sm font-medium text-blue-600 border-b-2 border-blue-600">
+					<button
+						class="flex-1 py-3 text-sm font-semibold text-blue-600 border-b-2 border-blue-600 transition-all duration-200"
+						data-tab="inspect"
+						aria-selected="true"
+					>
 						检查记录
 					</button>
-					<button class="flex-1 py-3 text-sm font-medium text-slate-500">维修记录</button>
-					<button class="flex-1 py-3 text-sm font-medium text-slate-500">设备资料</button>
+					<button
+						class="flex-1 py-3 text-sm font-semibold text-slate-500 transition-all duration-200"
+						data-tab="repair"
+						aria-selected="false"
+					>
+						维修记录
+					</button>
+					<button
+						class="flex-1 py-3 text-sm font-semibold text-slate-500 transition-all duration-200"
+						data-tab="docs"
+						aria-selected="false"
+					>
+						设备资料
+					</button>
 				</div>
 
-				<!-- 检查记录内容 -->
-				<div class="p-4">
+				<!-- 检查记录 内容面板 -->
+				<div class="p-4" data-pane="inspect">
 					<div class="flex items-center justify-between mb-4">
 						<h3 class="font-semibold text-slate-800">检查记录</h3>
 						<div class="flex items-center space-x-2 text-xs text-slate-500">
@@ -130,11 +128,12 @@
 								<div class="text-sm font-medium text-slate-800">2025-08-18 10:15 巡检</div>
 								<div class="text-xs text-green-600 mt-1">✓ 正常</div>
 							</div>
-							<button
-								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
+							<a
+								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200 transition-all duration-200"
+								href="record-detail.html?from=device-archive.html"
 							>
 								查看
-							</button>
+							</a>
 						</div>
 
 						<div class="flex items-center justify-between py-3 border-b border-slate-100 last:border-b-0">
@@ -142,11 +141,12 @@
 								<div class="text-sm font-medium text-slate-800">2025-08-12 09:20 巡检</div>
 								<div class="text-xs text-red-600 mt-1">⚠ 异常</div>
 							</div>
-							<button
-								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
+							<a
+								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200 transition-all duration-200"
+								href="record-detail.html?from=device-archive.html"
 							>
 								查看
-							</button>
+							</a>
 						</div>
 
 						<div class="flex items-center justify-between py-3 border-b border-slate-100 last:border-b-0">
@@ -154,122 +154,122 @@
 								<div class="text-sm font-medium text-slate-800">2025-08-10 14:30 点检</div>
 								<div class="text-xs text-green-600 mt-1">✓ 正常</div>
 							</div>
-							<button
-								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
+							<a
+								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200 transition-all duration-200"
+								href="record-detail.html?from=device-archive.html"
 							>
 								查看
-							</button>
+							</a>
 						</div>
 					</div>
 
 					<!-- 加载更多 -->
 					<div class="text-center pt-4">
-						<button class="text-sm text-blue-600 font-medium">查看更多记录</button>
-					</div>
-				</div>
-			</div>
-
-			<!-- 维修记录卡片 -->
-			<div class="bg-white rounded-lg shadow-sm p-4">
-				<h3 class="font-semibold text-slate-800 mb-4">最近维修</h3>
-				<div class="flex items-center justify-between">
-					<div>
-						<div class="text-sm font-medium text-slate-800">#WX-20250812-003</div>
-						<div class="text-xs text-slate-500 mt-1">轴承更换 · 2025-08-12</div>
-					</div>
-					<div class="flex items-center space-x-2">
-						<span
-							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800"
-						>
-							已完成
-						</span>
-						<button
-							class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
-						>
-							详情
+						<button class="text-sm text-blue-600 font-medium transition-all duration-200">
+							查看更多记录
 						</button>
 					</div>
 				</div>
-			</div>
 
-			<!-- 设备资料卡片 -->
-			<div class="bg-white rounded-lg shadow-sm p-4">
-				<h3 class="font-semibold text-slate-800 mb-4">设备资料</h3>
-				<div class="space-y-3">
+				<!-- 维修记录 内容面板（原“最近维修”卡片内容已移入） -->
+				<div class="p-4 hidden" data-pane="repair">
+					<h3 class="font-semibold text-slate-800 mb-4">最近维修</h3>
 					<div class="flex items-center justify-between">
-						<div class="flex items-center space-x-3">
-							<div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
-								<svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 24 24">
-									<path
-										d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"
-									/>
-								</svg>
-							</div>
-							<div>
-								<div class="text-sm font-medium text-slate-800">设备手册.pdf</div>
-								<div class="text-xs text-slate-500">2.3 MB</div>
-							</div>
+						<div>
+							<div class="text-sm font-medium text-slate-800">#WX-20250812-003</div>
+							<div class="text-xs text-slate-500 mt-1">轴承更换 · 2025-08-12</div>
 						</div>
-						<button
-							class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
-						>
-							预览
-						</button>
+						<div class="flex items-center space-x-2">
+							<span
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800"
+							>
+								<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>已完成
+							</span>
+							<button
+								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
+							>
+								详情
+							</button>
+						</div>
 					</div>
+				</div>
 
-					<div class="flex items-center justify-between">
-						<div class="flex items-center space-x-3">
-							<div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
-								<svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
-									<path
-										d="M5,3H7V5H5V10A2,2 0 0,0 7,12H10V10A2,2 0 0,0 8,8V3A2,2 0 0,0 6,1H4A2,2 0 0,0 2,3V8A4,4 0 0,0 6,12H8V21H10V12H12A4,4 0 0,0 16,8V3A2,2 0 0,0 14,1H12A2,2 0 0,0 10,3V8A2,2 0 0,0 8,10V12H10A2,2 0 0,0 12,10V5H14V10A2,2 0 0,0 16,12H19A2,2 0 0,0 21,10V5H19V3H21V10A4,4 0 0,0 17,14H15V21H13V14H11V21H9V14H7A4,4 0 0,0 3,10V3H5M9,3H11V5H9V3M15,3H17V5H15V3Z"
-									/>
-								</svg>
+				<!-- 设备资料 内容面板（原“设备资料”卡片内容已移入） -->
+				<div class="p-4 hidden" data-pane="docs">
+					<h3 class="font-semibold text-slate-800 mb-4">设备资料</h3>
+					<div class="space-y-3">
+						<div class="flex items-center justify-between">
+							<div class="flex items-center space-x-3">
+								<div class="w-8 h-8 bg-red-100 rounded-lg flex items-center justify-center">
+									<svg class="w-4 h-4 text-red-600" fill="currentColor" viewBox="0 0 24 24">
+										<path
+											d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20Z"
+										/>
+									</svg>
+								</div>
+								<div>
+									<div class="text-sm font-medium text-slate-800">设备手册.pdf</div>
+									<div class="text-xs text-slate-500">2.3 MB</div>
+								</div>
 							</div>
-							<div>
-								<div class="text-sm font-medium text-slate-800">技术参数表.xlsx</div>
-								<div class="text-xs text-slate-500">156 KB</div>
-							</div>
+							<button
+								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
+							>
+								预览
+							</button>
 						</div>
-						<button
-							class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
-						>
-							下载
-						</button>
+
+						<div class="flex items-center justify-between">
+							<div class="flex items-center space-x-3">
+								<div class="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
+									<svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 24 24">
+										<path
+											d="M5,3H7V5H5V10A2,2 0 0,0 7,12H10V10A2,2 0 0,0 8,8V3A2,2 0 0,0 6,1H4A2,2 0 0,0 2,3V8A4,4 0 0,0 6,12H8V21H10V12H12A4,4 0 0,0 16,8V3A2,2 0 0,0 14,1H12A2,2 0 0,0 10,3V8A2,2 0 0,0 8,10V12H10A2,2 0 0,0 12,10V5H14V10A2,2 0 0,0 16,12H19A2,2 0 0,0 21,10V5H19V3H21V10A4,4 0 0,0 17,14H15V21H13V14H11V21H9V14H7A4,4 0 0,0 3,10V3H5M9,3H11V5H9V3M15,3H17V5H15V3Z"
+										/>
+									</svg>
+								</div>
+								<div>
+									<div class="text-sm font-medium text-slate-800">技术参数表.xlsx</div>
+									<div class="text-xs text-slate-500">156 KB</div>
+								</div>
+							</div>
+							<button
+								class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
+							>
+								下载
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>
-
-			<!-- 快捷操作 -->
-			<div class="bg-white rounded-lg shadow-sm p-4">
-				<h3 class="font-semibold text-slate-800 mb-4">快捷操作</h3>
-				<div class="grid grid-cols-2 gap-3">
-					<button
-						class="flex items-center justify-center p-3 bg-blue-50 text-blue-700 rounded-lg active:bg-blue-100"
-					>
-						<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-						</svg>
-						<span class="text-sm font-medium">新建记录</span>
-					</button>
-					<button
-						class="flex items-center justify-center p-3 bg-orange-50 text-orange-700 rounded-lg active:bg-orange-100"
-					>
-						<svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-							<path
-								stroke-linecap="round"
-								stroke-linejoin="round"
-								stroke-width="2"
-								d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"
-							/>
-						</svg>
-						<span class="text-sm font-medium">报修</span>
-					</button>
-				</div>
-			</div>
+			<!-- /Tab 切换 -->
 		</main>
 
-		<!-- Vant 4 JS -->
-		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
+		<!-- Tab 切换逻辑 -->
+		<script>
+			const tabBtns = document.querySelectorAll('[data-tab]');
+			const panes = document.querySelectorAll('[data-pane]');
+
+			tabBtns.forEach((btn) => {
+				btn.addEventListener('click', () => {
+					const name = btn.getAttribute('data-tab');
+
+					// 按钮选中样式
+					tabBtns.forEach((b) => {
+						b.classList.remove('text-blue-600', 'border-b-2', 'border-blue-600');
+						b.classList.add('text-slate-500');
+						b.setAttribute('aria-selected', 'false');
+					});
+					btn.classList.add('text-blue-600', 'border-b-2', 'border-blue-600');
+					btn.classList.remove('text-slate-500');
+					btn.setAttribute('aria-selected', 'true');
+
+					// 面板切换
+					panes.forEach((p) => p.classList.add('hidden'));
+					const active = document.querySelector(`[data-pane="${name}"]`);
+					if (active) active.classList.remove('hidden');
+				});
+			});
+		</script>
 	</body>
 </html>

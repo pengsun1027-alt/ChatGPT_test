@@ -1,28 +1,56 @@
-<!DOCTYPE html>
 <html lang="zh-CN">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<title>设计规范 - 设备巡检系统（纯 Tailwind 独立版）</title>
-
+		<title>设计规范 - 设备巡检系统（纯 Tailwind 独立版 · 修订）</title>
 		<!-- 仅使用 TailwindCSS -->
 		<script src="https://cdn.tailwindcss.com"></script>
-
 		<style>
 			body {
 				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
 					sans-serif;
 				background: #f7f8fa;
 			}
-			/* 安全区适配（兼容 iOS 刘海屏） */
 			.safe-bottom {
 				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
+			:root {
+				--brand-600: #2563eb;
+				--brand-700: #1d4ed8;
+			}
+/* 以 Blob 装饰替换原“渐变+噪点”，并按 Tabbar 头图高度收敛尺寸 */
+.bg-brand-gradient{
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+  /* 渐变底层保持与体系一致 */
+  background: linear-gradient(135deg, var(--brand-600) 0%, var(--brand-700) 100%);
+}
+
+/* Blob 叠加层（为较矮的头图优化：更扁、更宽） */
+.bg-brand-gradient::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(280px 170px at 10% 18%,  rgba(255,255,255,.22) 0%, transparent 65%),
+    radial-gradient(360px 210px at 90% 20%,  rgba(255,255,255,.18) 0%, transparent 68%),
+    radial-gradient(300px 180px at 75% 105%, rgba(255,255,255,.20) 0%, transparent 62%);
+  filter: blur(1.5px);   /* 柔化边缘，避免喧宾夺主 */
+  z-index:0;
+}
+
+/* 确保标题文字位于装饰之上 */
+.bg-brand-gradient > *{
+  position: relative;
+  z-index: 1;
+}
+
 		</style>
 	</head>
 	<body class="pb-24">
-		<!-- 留出底部导航空间 -->
-		<!-- 顶部导航栏（替代 van-nav-bar） -->
+		<!-- 顶部导航栏（轻盈：backdrop-blur + shadow-sm） -->
 		<header
 			class="fixed inset-x-0 top-0 h-12 bg-white/90 backdrop-blur shadow-sm flex items-center justify-center z-50"
 		>
@@ -30,11 +58,11 @@
 		</header>
 
 		<main class="mt-12 p-4 space-y-4">
-			<!-- 主题概览（保持内容不变） -->
+			<!-- 主题概览（渐变 + 噪点） -->
 			<section class="bg-white rounded-lg shadow-sm overflow-hidden">
-				<div class="text-white p-6 pb-4" style="background-color: #2563eb">
+				<div class="p-6 pb-4 bg-brand-gradient">
 					<div class="text-xl font-semibold">工业移动巡检应用</div>
-					<div class="text-sm/6 opacity-90">Design Guideline v1.0</div>
+					<div class="text-sm opacity-90">Design Guideline v1.0</div>
 				</div>
 				<div class="p-6">
 					<p class="text-sm text-slate-600">
@@ -46,7 +74,7 @@
 			<!-- 设计基线（颜色、字体、圆角、间距、触控命中区、状态色、图标说明） -->
 			<section class="bg-white rounded-lg shadow-sm overflow-hidden">
 				<div class="p-6 space-y-6">
-					<!-- 主色彩 -->
+					<!-- 主色彩-->
 					<div class="space-y-3">
 						<div class="flex items-center text-slate-800 font-semibold text-sm">
 							<span
@@ -57,7 +85,6 @@
 							主色彩系统 (单主色策略)
 						</div>
 						<div class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-7 gap-3">
-							<!-- 每个色块 -->
 							<div class="text-center">
 								<div
 									class="h-12 rounded flex items-center justify-center text-white text-xs font-semibold"
@@ -129,7 +156,7 @@
 								<div class="text-[11px] text-slate-500 font-mono">#06B6D4</div>
 							</div>
 						</div>
-						<!-- 中性色 -->
+						<!-- 中性色（保持） -->
 						<div class="mt-4">
 							<div class="text-sm font-semibold text-slate-800 mb-2">中性色</div>
 							<div class="grid grid-cols-2 xs:grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
@@ -197,14 +224,13 @@
 						</div>
 					</div>
 
-					<!-- 字体与字号 -->
+					<!-- 字体与字号（保持） -->
 					<div class="space-y-3">
 						<div class="flex items-center text-slate-800 font-semibold text-sm">
 							<span
 								class="w-5 h-5 rounded bg-indigo-500 text-white text-[10px] grid place-items-center mr-2"
 								>📝</span
-							>
-							字体与字号 (移动端 H5)
+							>字体与字号 (移动端 H5)
 						</div>
 						<div class="text-sm text-slate-600">
 							<p>
@@ -243,41 +269,40 @@
 						</div>
 					</div>
 
-					<!-- 圆角与阴影 -->
+					<!-- 圆角与阴影（按新基线：卡片8/按钮4） -->
 					<div class="space-y-3">
 						<div class="flex items-center text-slate-800 font-semibold text-sm">
 							<span
 								class="w-5 h-5 rounded bg-indigo-500 text-white text-[10px] grid place-items-center mr-2"
 								>🎯</span
-							>
-							圆角与阴影
+							>圆角与阴影
 						</div>
 						<ul class="list-disc pl-5 text-sm text-slate-600 space-y-2">
 							<li><strong>卡片圆角：</strong> 8px</li>
-							<li><strong>按钮圆角：</strong> 4px</li>
+							<li><strong>按钮圆角：</strong> 4px（切换按钮使用 rounded-full）</li>
 							<li><strong>输入框圆角：</strong> 4px</li>
 							<li>
 								<strong>卡片阴影：</strong>
 								<code class="bg-slate-100 px-1.5 py-0.5 rounded">0 6px 16px rgba(16,24,40,0.06)</code>
 							</li>
 							<li>
-								<strong>悬浮大按钮阴影：</strong>
-								<code class="bg-slate-100 px-1.5 py-0.5 rounded">0 8px 24px rgba(16,24,40,0.12)</code>
+								<strong>顶部吸附栏：</strong> 使用
+								<code class="bg-slate-100 px-1.5 py-0.5 rounded"
+									>bg-white/90 + backdrop-blur + shadow-sm</code
+								>
 							</li>
 						</ul>
 					</div>
 
-					<!-- 间距尺度 -->
+					<!-- 间距尺度（保持） -->
 					<div class="space-y-3">
 						<div class="flex items-center text-slate-800 font-semibold text-sm">
 							<span
 								class="w-5 h-5 rounded bg-indigo-500 text-white text-[10px] grid place-items-center mr-2"
 								>📏</span
-							>
-							间距尺度 (8pt 系)
+							>间距尺度 (8pt 系)
 						</div>
 						<div class="flex flex-wrap gap-3 mt-3">
-							<!-- 尺寸块 -->
 							<div class="text-center">
 								<div class="bg-indigo-500 rounded mx-auto mb-2" style="width: 4px; height: 4px"></div>
 								<div class="text-[12px] text-slate-500">XS 4px</div>
@@ -309,14 +334,13 @@
 						</div>
 					</div>
 
-					<!-- 触控命中区 -->
+					<!-- 触控命中区（保持） -->
 					<div class="space-y-3">
 						<div class="flex items-center text-slate-800 font-semibold text-sm">
 							<span
 								class="w-5 h-5 rounded bg-indigo-500 text-white text-[10px] grid place-items-center mr-2"
 								>👆</span
-							>
-							触控命中区
+							>触控命中区
 						</div>
 						<ul class="list-disc pl-5 text-sm text-slate-600 space-y-2">
 							<li><strong>主要操作：</strong> ≥44×44px</li>
@@ -325,32 +349,32 @@
 						</ul>
 					</div>
 
-					<!-- 状态色 / 标签 -->
+					<!-- 状态色 / 标签（按新规范：标签 font-semibold、语义色统一） -->
 					<div class="space-y-3">
 						<div class="flex items-center text-slate-800 font-semibold text-sm">
 							<span
 								class="w-5 h-5 rounded bg-indigo-500 text-white text-[10px] grid place-items-center mr-2"
 								>🔖</span
-							>
-							状态色 / 标签
+							>状态色 / 标签
 						</div>
 						<ul class="list-disc pl-5 text-sm text-slate-600 space-y-2">
-							<li><strong>待领：</strong> <span class="text-slate-500">#64748B (灰)</span></li>
-							<li><strong>进行中：</strong> <span class="text-[#2b6fff]">Primary</span></li>
-							<li><strong>已提交：</strong> <span class="text-[#22c55e]">Success</span></li>
-							<li><strong>异常：</strong> <span class="text-[#ef4444]">Danger</span></li>
-							<li><strong>草稿：</strong> <span class="text-[#f59e0b]">#F59E0B (黄)</span></li>
+							<li><strong>未到 / 中性：</strong> <span class="text-slate-600">#64748B</span></li>
+							<li>
+								<strong>进行中 / 正常：</strong> <span class="text-emerald-600">#059669 / #22C55E</span>
+							</li>
+							<li><strong>异常 / 逾期：</strong> <span class="text-red-600">#DC2626 / #EF4444</span></li>
+							<li><strong>警告：</strong> <span class="text-amber-600">#F59E0B</span></li>
+							<li><strong>品牌 / 全部：</strong> <span class="text-blue-600">#2563EB</span></li>
 						</ul>
 					</div>
 
-					<!-- 图标说明 -->
+					<!-- 图标说明（保持） -->
 					<div class="space-y-3">
 						<div class="flex items-center text-slate-800 font-semibold text-sm">
 							<span
 								class="w-5 h-5 rounded bg-indigo-500 text-white text-[10px] grid place-items-center mr-2"
 								>🎨</span
-							>
-							图标
+							>图标
 						</div>
 						<ul class="list-disc pl-5 text-sm text-slate-600 space-y-2">
 							<li>
@@ -364,10 +388,75 @@
 							</li>
 						</ul>
 					</div>
+					<!-- 输入组件示例 -->
+					<div class="space-y-3">
+						<div class="flex items-center text-slate-800 font-semibold text-sm">
+							<span
+								class="w-5 h-5 rounded bg-indigo-500 text-white text-[10px] grid place-items-center mr-2"
+								>⌨️</span
+							>输入组件
+						</div>
+						<div class="space-y-4">
+							<input
+								type="text"
+								placeholder="普通输入框"
+								class="w-full border border-slate-300 rounded px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
+							/>
+							<input
+								type="text"
+								placeholder="禁用输入框"
+								disabled
+								class="w-full border border-slate-200 rounded px-3 py-2 text-sm bg-slate-50 text-slate-400"
+							/>
+						</div>
+					</div>
+					<!-- 反馈与交互示例 -->
+					<div class="space-y-3">
+						<div class="flex items-center text-slate-800 font-semibold text-sm">
+							<span
+								class="w-5 h-5 rounded bg-indigo-500 text-white text-[10px] grid place-items-center mr-2"
+								>⚡</span
+							>反馈与交互
+						</div>
+						<div class="flex flex-wrap gap-3">
+							<button
+								class="px-4 py-2 rounded bg-blue-600 text-white text-sm font-semibold shadow active:translate-y-px"
+							>
+								点击反馈
+							</button>
+							<button disabled class="px-4 py-2 rounded bg-slate-100 text-slate-400 text-sm font-medium">
+								禁用状态
+							</button>
+							<div class="flex items-center space-x-2">
+								<svg
+									class="animate-spin h-5 w-5 text-blue-600"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+								>
+									<circle
+										class="opacity-25"
+										cx="12"
+										cy="12"
+										r="10"
+										stroke="currentColor"
+										stroke-width="4"
+									></circle>
+									<path
+										class="opacity-75"
+										fill="currentColor"
+										d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+									></path>
+								</svg>
+								<span class="text-sm text-slate-600">加载中</span>
+							</div>
+							<div class="text-sm text-slate-500">空状态提示：暂无数据</div>
+						</div>
+					</div>
 				</div>
 			</section>
 
-			<!-- 组件示例（用 Tailwind 还原：按钮、标签、徽章） -->
+			<!-- 组件示例（按钮、标签、徽章） -->
 			<section class="bg-white rounded-lg shadow-sm overflow-hidden">
 				<div class="p-6 space-y-6">
 					<div class="flex items-center text-slate-800 font-semibold text-sm">
@@ -375,39 +464,41 @@
 							class="w-5 h-5 rounded text-white text-[10px] grid place-items-center mr-2"
 							style="background-color: #2563eb"
 							>🧩</span
-						>
-						按钮与标签示例
+						>按钮与标签示例
 					</div>
 
-					<!-- 操作按钮：微圆角 -->
+					<!-- 操作按钮：微圆角（按字重规范） -->
 					<div>
 						<div class="text-xs text-slate-500 mb-2">操作按钮 (微圆角 rounded)</div>
 						<div class="flex flex-wrap gap-2">
+							<!-- 主要：semibold -->
 							<button
-								class="px-3.5 h-9 rounded text-white text-sm font-medium shadow hover:opacity-95"
+								class="px-3.5 h-9 rounded text-white text-sm font-semibold shadow hover:opacity-95"
 								style="background-color: #2563eb"
 							>
 								进入
 							</button>
+							<!-- 次要：medium -->
 							<button
 								class="px-3.5 h-9 rounded bg-slate-100 text-slate-700 text-sm font-medium hover:bg-slate-200"
 							>
 								查看
 							</button>
+							<!-- 危险：semibold -->
 							<button
-								class="px-3.5 h-9 rounded bg-red-600 text-white text-sm font-medium shadow hover:opacity-95"
+								class="px-3.5 h-9 rounded bg-red-600 text-white text-sm font-semibold shadow hover:opacity-95"
 							>
 								异常报修
 							</button>
 						</div>
 					</div>
 
-					<!-- 切换按钮：完全圆角 -->
+					<!-- 切换按钮：完全圆角 + 语义色（激活示例） -->
 					<div>
 						<div class="text-xs text-slate-500 mb-2">切换按钮 (完全圆角 rounded-full)</div>
 						<div class="flex flex-wrap gap-2">
 							<button
-								class="px-4 py-2 rounded-full text-white text-sm font-medium"
+								class="px-4 py-2 rounded-full text-white text-sm font-semibold"
 								style="background-color: #2563eb"
 							>
 								全部
@@ -418,36 +509,41 @@
 								可开始
 							</button>
 							<button
-								class="px-4 py-2 rounded-full bg-slate-100 text-slate-600 text-sm font-medium hover:bg-slate-200"
+								class="px-4 py-2 rounded-full bg-green-100 text-green-700 text-sm font-semibold hover:bg-green-200"
 							>
 								进行中
+							</button>
+							<button
+								class="px-4 py-2 rounded-full bg-red-100 text-red-700 text-sm font-semibold hover:bg-red-200"
+							>
+								逾期
 							</button>
 						</div>
 					</div>
 
-					<!-- 状态标签：完全圆角 + 语义化颜色 -->
+					<!-- 状态标签：完全圆角 + 语义化颜色（font-semibold） -->
 					<div>
 						<div class="text-xs text-slate-500 mb-2">状态标签 (完全圆角 rounded-full)</div>
 						<div class="flex flex-wrap gap-2">
 							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100"
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-blue-100"
 								style="color: #2563eb"
 								>可开始</span
 							>
 							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700"
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700"
 								>在办</span
 							>
 							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700"
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700"
 								>处理中</span
 							>
 							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700"
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700"
 								>逾期</span
 							>
 							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600"
 								>未到</span
 							>
 						</div>
@@ -457,7 +553,6 @@
 					<div>
 						<div class="text-xs text-slate-500 mb-2">徽章</div>
 						<div class="flex items-center gap-6">
-							<!-- 数字角标 -->
 							<div class="relative">
 								<div class="w-6 h-6 rounded bg-slate-100 grid place-items-center">💬</div>
 								<span
@@ -465,14 +560,12 @@
 									>5</span
 								>
 							</div>
-							<!-- 红点 -->
 							<div class="relative">
 								<div class="w-6 h-6 rounded bg-slate-100 grid place-items-center">🔔</div>
 								<span
 									class="absolute -top-0.5 -right-0.5 w-[9px] h-[9px] rounded-full bg-rose-500"
 								></span>
 							</div>
-							<!-- 文本徽标 -->
 							<div class="relative">
 								<div class="w-6 h-6 rounded bg-slate-100 grid place-items-center">🪙</div>
 								<span
@@ -482,29 +575,141 @@
 							</div>
 						</div>
 					</div>
+					<!-- 文本输入框 -->
+					<div>
+						<div class="text-xs text-slate-500 mb-2">文本输入（边框型，focus 高亮，禁用态）</div>
+						<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+							<input
+								type="text"
+								placeholder="正常态"
+								class="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-[color:#2563EB]"
+							/>
+							<div class="relative">
+								<span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">🔍</span>
+								<input
+									type="text"
+									placeholder="带图标"
+									class="w-full pl-9 pr-3 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-[color:#2563EB]"
+								/>
+							</div>
+							<input
+								type="text"
+								placeholder="禁用态"
+								disabled
+								class="w-full px-3 py-2 border border-slate-200 rounded bg-slate-50 text-slate-400"
+							/>
+						</div>
+					</div>
+					<!-- 校验与错误提示 -->
+					<div>
+						<div class="text-xs text-slate-500 mb-2">表单校验</div>
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+							<div>
+								<input
+									type="text"
+									placeholder="成功示例"
+									class="w-full px-3 py-2 border rounded border-emerald-300 focus:outline-none focus:ring-2 focus:ring-emerald-400"
+								/>
+								<p class="text-xs text-emerald-600 mt-1">已通过校验</p>
+							</div>
+							<div>
+								<input
+									type="text"
+									placeholder="错误示例"
+									class="w-full px-3 py-2 border rounded border-red-300 focus:outline-none focus:ring-2 focus:ring-red-400"
+								/>
+								<p class="text-xs text-red-600 mt-1">请输入有效的数值</p>
+							</div>
+						</div>
+					</div>
+					<!-- 选择类控件 -->
+<div>
+	<div class="text-xs text-slate-500 mb-2">选择类控件</div>
+	<div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-center">
+	<select class="w-full px-3 py-2 border border-slate-300 rounded bg-white focus:outline-none focus:ring-2 focus:ring-[color:#2563EB]">
+	<option>请选择设备</option>
+	<option>供水泵#1</option>
+	<option>供水泵#2</option>
+	</select>
+	<label class="inline-flex items-center gap-2 text-sm text-slate-700">
+	<input type="checkbox" class="w-4 h-4 rounded border-slate-300 text-[color:#2563EB] focus:ring-[color:#2563EB]" />
+	需照片
+	</label>
+	<label class="inline-flex items-center gap-2 text-sm text-slate-700">
+	<input type="radio" name="mode" class="w-4 h-4 border-slate-300 text-[color:#2563EB] focus:ring-[color:#2563EB]" />
+	即时上传
+	</label>
+	</div>
+	</div>
+	<!-- 多行输入与计数 -->
+<div>
+	<div class="text-xs text-slate-500 mb-2">多行输入（备注/异常）</div>
+	<div class="relative">
+	<textarea rows="3" class="w-full px-3 py-2 border border-slate-300 rounded focus:outline-none focus:ring-2 focus:ring-[color:#2563EB] pr-12" placeholder="请填写备注…"></textarea>
+	<span class="absolute right-3 bottom-2 text-xs text-slate-400">0/200</span>
+	</div>
+	</div>
+	</div>
 				</div>
 			</section>
+			<!-- 反馈与交互示例（新增） -->
+<section class="bg-white rounded-lg shadow-sm overflow-hidden">
+	<div class="p-6 space-y-6">
+	<div class="flex items-center text-slate-800 font-semibold text-sm"><span class="w-5 h-5 rounded text-white text-[10px] grid place-items-center mr-2" style="background-color:#2563eb">⚡</span>反馈与交互（Feedback & Interactions）</div>
+	
+	
+	<!-- Hover / Active 手感 -->
+	<div>
+	<div class="text-xs text-slate-500 mb-2">微交互（hover/active）</div>
+	<div class="flex flex-wrap gap-3 items-center">
+	<button class="px-4 py-2 rounded text-white text-sm font-semibold transition active:translate-y-px shadow hover:shadow-md" style="background-color:#2563eb">主要操作</button>
+	<button class="px-4 py-2 rounded bg-slate-100 text-slate-700 text-sm font-medium transition active:translate-y-px hover:bg-slate-200">次要操作</button>
+	<button class="px-4 py-2 rounded bg-red-600 text-white text-sm font-semibold transition active:translate-y-px shadow hover:shadow-md">危险操作</button>
+	</div>
+	</div>
+	
+	
+	<!-- 加载态 -->
+	<div>
+	<div class="text-xs text-slate-500 mb-2">加载态</div>
+	<div class="flex items-center gap-3">
+	<div class="w-5 h-5 border-2 border-slate-300 border-t-slate-600 rounded-full animate-spin"></div>
+	<span class="text-sm text-slate-700">数据加载中…</span>
+	</div>
+	</div>
+	
+	
+	<!-- 空状态 -->
+	<div>
+	<div class="text-xs text-slate-500 mb-2">空状态</div>
+	<div class="p-6 border border-dashed border-slate-200 rounded text-center">
+	<div class="text-3xl mb-2">📭</div>
+	<div class="text-sm text-slate-700">暂无任务</div>
+	<div class="text-xs text-slate-500 mt-1">完成 PPE 采集后即可领取新的任务</div>
+	</div>
+	</div>
+	
+	
+	<!-- 提示/通知 -->
+	<div>
+	<div class="text-xs text-slate-500 mb-2">提示/通知</div>
+	<div class="flex flex-col gap-2">
+	<div class="p-3 bg-slate-50 rounded flex items-start gap-2 text-xs text-slate-600">
+	<svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11 11v6m0-8h.01M12 4.5a7.5 7.5 0 100 15 7.5 7.5 0 000-15z"/></svg>
+	<div>默认仅展示 3 条，点击「查看更多」可展开全部。</div>
+	</div>
+	<div class="p-3 bg-amber-50 border border-amber-200 rounded flex items-start gap-2 text-xs text-amber-800">
+	<svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg>
+	<div>您有 2 个逾期任务，请及时处理。</div>
+	</div>
+	<div class="p-3 bg-emerald-50 border border-emerald-200 rounded flex items-start gap-2 text-xs text-emerald-800">
+	<svg class="w-4 h-4 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+	<div>已完成 PPE 采集，可以直接进入任务。</div>
+	</div>
+	</div>
+	</div>
+	</div>
+	</section>
 		</main>
-
-		<nav class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
-			<div class="mx-auto max-w-md">
-				<div class="grid grid-cols-2 text-center">
-					<a
-						href="home.html"
-						class="py-2.5 flex flex-col items-center justify-center text-slate-700 hover:text-slate-900"
-					>
-						<span class="text-lg leading-none">🏠</span>
-						<span class="text-[12px]">首页</span>
-					</a>
-					<a
-						href="mine.html"
-						class="py-2.5 flex flex-col items-center justify-center text-slate-700 hover:text-slate-900"
-					>
-						<span class="text-lg leading-none">👤</span>
-						<span class="text-[12px]">我的</span>
-					</a>
-				</div>
-			</div>
-		</nav>
 	</body>
 </html>

@@ -46,29 +46,39 @@
 
 		<!-- 主要内容区域 -->
 		<main class="mt-14 px-4 pb-20 space-y-4">
-			<!-- 工单基本信息 -->
-			<div class="bg-white rounded-lg shadow-sm p-4">
-				<div class="flex items-start justify-between mb-4">
-					<div class="flex-1">
-						<div class="flex items-center space-x-2 mb-2">
-							<h2 class="text-lg font-bold text-slate-800">WO-2025-001</h2>
-							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700"
-							>
-								紧急
-							</span>
-						</div>
-						<h3 class="text-base font-semibold text-slate-700 mb-2">供水泵#1 - 电机温度异常</h3>
-						<div class="text-sm text-slate-600">报告时间：2025-08-18 14:30 · 报告人：张三</div>
-					</div>
+			<!-- 工单基本信息（顶层纵向划分，重要程度靠右，同一行） -->
+			<div class="bg-white rounded-lg shadow-sm p-6">
+				<!-- 区块1：标题 + 重要程度（右上） -->
+				<div class="flex items-start justify-between">
+					<h3 class="text-lg font-bold text-slate-800 leading-tight">供水泵#1</h3>
 					<span
-						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700 ml-3 shrink-0 whitespace-nowrap"
 					>
-						待处理
+						<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>紧急
 					</span>
 				</div>
 
-				<div class="grid grid-cols-2 gap-4 pt-3 border-t border-slate-100">
+				<!-- 区块2：异常描述（左） + 状态（右） -->
+				<div class="mt-2 flex items-center justify-between min-w-0">
+					<div class="text-base font-bold text-slate-600 truncate">电机温度异常</div>
+					<span
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700 whitespace-nowrap"
+					>
+						<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>待处理
+					</span>
+				</div>
+
+				<!-- 区块3：元信息（固定两行） -->
+				<div class="mt-2 text-sm text-slate-600">
+					<div class="mt-1 whitespace-nowrap">工单号：<span class="font-medium">WO-2025-001</span></div>
+					<div class="mt-1 whitespace-nowrap">
+						报告时间：<span class="font-medium">2025-08-18 14:30</span>
+					</div>
+					<div class="mt-1 whitespace-nowrap">报告人：<span class="font-medium">张三</span></div>
+				</div>
+
+				<!-- 区块4：关键信息 -->
+				<div class="mt-3 pt-3 border-t border-slate-100 grid grid-cols-2 gap-4">
 					<div>
 						<div class="text-xs text-slate-500">设备位置</div>
 						<div class="text-sm font-medium text-slate-800">一号厂 · 南区</div>
@@ -178,7 +188,7 @@
 							<div class="text-xs text-slate-500">2025-08-18 10:15 · 电机温度：85°C</div>
 						</div>
 						<button
-							class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
+							class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200 transition-all duration-200"
 						>
 							查看
 						</button>
@@ -189,7 +199,7 @@
 							<div class="text-xs text-slate-500">2025-07-15 · 常规保养</div>
 						</div>
 						<button
-							class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200"
+							class="px-3 py-1 bg-slate-100 text-slate-700 text-xs font-medium rounded hover:bg-slate-200 transition-all duration-200"
 						>
 							查看
 						</button>
@@ -201,11 +211,13 @@
 		<!-- 底部操作栏 -->
 		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="px-4 py-3 flex space-x-3">
-				<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200">
+				<button
+					class="flex-1 py-3 bg-slate-100 text-slate-700 font-semibold rounded hover:bg-slate-200 hover:-translate-y-px transition-all duration-200"
+				>
 					转派
 				</button>
 				<button
-					class="flex-1 py-3 text-white font-medium rounded hover:bg-blue-700"
+					class="flex-1 py-3 text-white font-semibold rounded hover:bg-blue-700 hover:-translate-y-px transition-all duration-200"
 					style="background-color: #2563eb"
 				>
 					接单

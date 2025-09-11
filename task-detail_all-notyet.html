@@ -31,7 +31,7 @@
 					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 				</svg>
 			</button>
-			<h1 class="text-base font-semibold">任务详情（全未到时间）</h1>
+			<h1 class="text-base font-semibold">任务详情</h1>
 			<div class="w-8"></div>
 		</header>
 
@@ -47,7 +47,7 @@
 				<div class="text-xs text-slate-500">请先到点扫码，完成位置与时间校验</div>
 			</div>
 			<button
-				class="px-3 py-1 text-white text-xs font-medium rounded"
+				class="px-3 py-1 text-white text-xs font-semibold rounded hover:-translate-y-px transition-all duration-200"
 				style="background-color: #2563eb"
 				onmouseover="this.style.backgroundColor='#1d4ed8'"
 				onmouseout="this.style.backgroundColor='#2563EB'"
@@ -68,7 +68,7 @@
 						<p class="text-sm text-slate-600">一号厂 · 南区</p>
 					</div>
 					<span
-						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600"
 					>
 						批次 2025W33
 					</span>
@@ -78,29 +78,29 @@
 				</div>
 			</div>
 
-			<!-- 选择今日实例 -->
+			<!-- 选择今日时窗 -->
 			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-3">
-					<h3 class="font-semibold text-slate-800">选择今日实例</h3>
+					<h3 class="font-semibold text-slate-800">选择今日时窗</h3>
 					<span class="text-xs text-slate-500">时窗列表</span>
 				</div>
 				<div class="flex flex-wrap gap-2">
-					<span
-						class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border"
+					<button
+						class="px-3 py-1 rounded-full text-xs font-semibold border"
 						style="background-color: #dbeafe; color: #2563eb; border-color: #93c5fd"
 					>
 						08:00–09:00 · 未到时间
-					</span>
-					<span
-						class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200"
+					</button>
+					<button
+						class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200"
 					>
 						12:00–13:00 · 未到时间
-					</span>
-					<span
-						class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600 border border-slate-200"
+					</button>
+					<button
+						class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600 border border-slate-200"
 					>
 						18:00–19:00 · 未到时间
-					</span>
+					</button>
 				</div>
 			</div>
 
@@ -135,11 +135,14 @@
 						</div>
 						<div class="flex items-center space-x-2">
 							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600"
 							>
-								未到时间
+								<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>未到时间
 							</span>
-							<button class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded" disabled>
+							<button
+								class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded transition-all duration-200"
+								disabled
+							>
 								开始记录
 							</button>
 						</div>
@@ -154,11 +157,14 @@
 						</div>
 						<div class="flex items-center space-x-2">
 							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600"
 							>
-								未到时间
+								<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>未到时间
 							</span>
-							<button class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded" disabled>
+							<button
+								class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded transition-all duration-200"
+								disabled
+							>
 								开始记录
 							</button>
 						</div>
@@ -173,11 +179,14 @@
 						</div>
 						<div class="flex items-center space-x-2">
 							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600"
 							>
-								未到时间
+								<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>未到时间
 							</span>
-							<button class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded" disabled>
+							<button
+								class="px-3 py-1 bg-slate-200 text-slate-500 text-xs font-medium rounded transition-all duration-200"
+								disabled
+							>
 								开始记录
 							</button>
 						</div>
@@ -189,8 +198,17 @@
 		<!-- 底部操作栏 -->
 		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="px-4 py-3 flex space-x-3">
-				<button class="flex-1 py-3 bg-red-500 text-white font-medium rounded hover:bg-red-600">异常报修</button>
-				<button class="flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded" disabled>开始记录</button>
+				<button
+					class="flex-1 py-3 bg-red-500 text-white font-semibold rounded hover:bg-red-600 hover:-translate-y-px transition-all duration-200"
+				>
+					异常报修
+				</button>
+				<button
+					class="flex-1 py-3 bg-slate-300 text-slate-500 font-semibold rounded transition-all duration-200"
+					disabled
+				>
+					开始记录
+				</button>
 			</div>
 		</div>
 

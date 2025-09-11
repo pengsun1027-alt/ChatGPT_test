@@ -3,145 +3,289 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<title>设备巡检系统 - 登录</title>
+		<title>设备巡检系统 - 登录（优化版）</title>
 
 		<!-- Vant 4 CSS -->
 		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
-		<!-- Tailwind CSS -->
+		<!-- Tailwind CSS CDN（JIT） -->
 		<script src="https://cdn.tailwindcss.com"></script>
 
 		<style>
+			:root {
+				--brand-600: #2563eb; /* 主色 */
+				--brand-700: #1d4ed8; /* 深一点用于hover/标题 */
+				--slate-50: #f8fafc;
+				--slate-100: #f1f5f9;
+				--slate-200: #e2e8f0;
+				--slate-500: #64748b;
+				--slate-600: #475569;
+				--slate-900: #0f172a;
+			}
 			body {
 				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
 					sans-serif;
 			}
+
+			/* 背景：渐变 + Blob 装饰 */
 			.login-bg {
-				background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
 				min-height: 100vh;
+				background: radial-gradient(1200px 600px at 20% 0%, rgba(37, 99, 235, 0.35), transparent 60%),
+					radial-gradient(900px 500px at 100% 10%, rgba(29, 78, 216, 0.35), transparent 60%),
+					linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+				position: relative;
 			}
-			.safe-bottom {
-				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
+
+			.login-bg::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				pointer-events: none;
+				background: radial-gradient(180px 220px at 12% 18%, rgba(255, 255, 255, 0.22) 0%, transparent 65%),
+					radial-gradient(240px 180px at 88% 22%, rgba(255, 255, 255, 0.18) 0%, transparent 68%),
+					radial-gradient(200px 200px at 78% 78%, rgba(255, 255, 255, 0.2) 0%, transparent 62%);
+				filter: blur(2px);
+				z-index: 0;
+			}
+			.login-bg > * {
+				position: relative;
+				z-index: 1; /* 确保文字内容在装饰之上 */
+			}
+
+			/* 输入框统一样式（Tailwind + 自定义focus光圈） */
+			.input {
+				width: 100%;
+				padding: 12px;
+				border: 1px solid var(--slate-200);
+				border-radius: 8px;
+				font-size: 14px;
+				color: #0f172a;
+			}
+			.input::placeholder {
+				color: #94a3b8;
+			}
+			.input:focus {
+				outline: none;
+				border-color: var(--brand-600);
+				box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+			}
+
+			/* 主要按钮（微圆角） */
+			.btn-primary {
+				width: 100%;
+				padding: 14px 16px;
+				color: #fff;
+				background-color: var(--brand-600);
+				border-radius: 8px;
+				font-weight: 500;
+				transition: transform 0.2s, background-color 0.2s;
+			}
+			.btn-primary:hover {
+				background-color: var(--brand-700);
+				transform: translateY(-1px);
+			}
+			.btn-primary:active {
+				transform: translateY(0);
+			}
+			.btn-primary:disabled {
+				background-color: #cbd5e1;
+				cursor: not-allowed;
+				transform: none;
+			}
+
+			/* 次要按钮（灰） */
+			.btn-secondary {
+				padding: 12px 16px;
+				border-radius: 8px;
+				background: var(--slate-100);
+				color: var(--slate-700);
+				font-weight: 500;
+				transition: background-color 0.2s;
+			}
+			.btn-secondary:hover {
+				background: var(--slate-200);
+			}
+
+			/* Pill 切换按钮组（完全圆角） */
+			.pill-group {
+				display: inline-flex;
+				align-items: center;
+				background: var(--slate-100);
+				border-radius: 9999px;
+				padding: 4px;
+			}
+			.pill {
+				padding: 8px 16px;
+				border-radius: 9999px;
+				color: var(--slate-600);
+				font-weight: 600;
+				font-size: 14px;
+			}
+			.pill.active {
+				background: var(--brand-600);
+				color: #fff;
+				box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+			}
+
+			/* 卡片质感：更大的圆角 + 中等阴影 + 细边框 */
+			.card {
+				background: #fff;
+				border-radius: 16px;
+				box-shadow: 0 8px 24px rgba(2, 6, 23, 0.08);
+				border: 1px solid var(--slate-200);
+			}
+
+			/* 固定表单区域高度，防止切换时卡片尺寸变化 */
+			.form-container {
+				min-height: 180px; /* 固定高度以适应两种表单 */
+				position: relative;
+			}
+
+			.form-content {
+				position: absolute;
+				top: 0;
+				left: 0;
+				right: 0;
+				transition: opacity 0.3s ease-in-out;
+			}
+
+			.form-content.hidden {
+				opacity: 0;
+				pointer-events: none;
+			}
+
+			.form-content:not(.hidden) {
+				opacity: 1;
+				pointer-events: auto;
 			}
 		</style>
 	</head>
 	<body class="login-bg">
 		<!-- 主容器 -->
-		<div class="min-h-screen flex flex-col justify-center px-4 py-8">
+		<div class="min-h-screen flex flex-col justify-center px-5 py-8 relative">
 			<!-- 顶部标题 -->
-			<div class="text-center mb-12">
-				<h1 class="text-2xl font-bold text-white mb-2">设备巡检系统</h1>
-				<p class="text-white/80 text-sm">移动巡检，让设备管理更智能</p>
+			<div class="text-center mb-10">
+				<h1 class="text-[26px] font-bold text-white mb-2 tracking-wide">设备巡检系统</h1>
+				<p class="text-white/85 text-sm">移动巡检 · 高效 · 专业 · 可靠</p>
 			</div>
 
 			<!-- 登录表单卡片 -->
-			<div class="bg-white rounded-lg shadow-lg mx-auto w-full max-w-sm">
+			<div class="card mx-auto w-full max-w-sm">
 				<div class="p-6">
-					<!-- 登录方式切换 -->
-					<div class="mb-6">
-						<div class="flex justify-center space-x-8 mb-4">
-							<label class="flex items-center text-sm font-medium">
-								<div
-									class="w-4 h-4 rounded-full mr-2 flex items-center justify-center"
-									style="background-color: #2563eb"
-								>
-									<div class="w-1.5 h-1.5 bg-white rounded-full"></div>
-								</div>
-								<span style="color: #2563eb">手机号</span>
-							</label>
-							<label class="flex items-center text-sm font-medium text-slate-400">
-								<div class="w-4 h-4 rounded-full border-2 border-slate-300 mr-2"></div>
-								<span>工号</span>
-							</label>
+					<!-- 登录方式切换（手机号 / 工号） -->
+					<div class="mb-6 flex justify-center">
+						<div class="pill-group" role="tablist" aria-label="登录方式">
+							<button
+								id="tab-phone"
+								class="pill active"
+								onclick="switchMode('phone')"
+								role="tab"
+								aria-selected="true"
+							>
+								手机号
+							</button>
+							<button
+								id="tab-staff"
+								class="pill"
+								onclick="switchMode('staff')"
+								role="tab"
+								aria-selected="false"
+							>
+								工号
+							</button>
 						</div>
 					</div>
 
-					<!-- 表单字段 -->
-					<div class="space-y-4">
-						<!-- 手机号输入 -->
-						<div>
-							<div class="text-sm font-medium text-slate-700 mb-1">手机号</div>
-							<input
-								id="phone"
-								type="tel"
-								class="w-full px-3 py-3 border border-slate-200 rounded text-sm placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-								placeholder="请输入11位手机号"
-							/>
-							<div id="phoneHelp" class="text-xs text-slate-500 mt-1">用于接收验证码</div>
-						</div>
-
-						<!-- 验证码输入 -->
-						<div>
-							<div class="text-sm font-medium text-slate-700 mb-1">验证码</div>
-							<div class="flex gap-3">
-								<input
-									id="code"
-									type="number"
-									class="flex-1 px-3 py-3 border border-slate-200 rounded text-sm placeholder-slate-400 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-									placeholder="请输入"
-								/>
-								<button
-									id="codeBtn"
-									type="button"
-									onclick="sendCode()"
-									class="px-4 py-3 text-white text-xs font-medium rounded hover:bg-blue-700 active:bg-blue-800 disabled:bg-slate-300 disabled:cursor-not-allowed whitespace-nowrap"
-									style="background-color: #2563eb"
-								>
-									获取验证码
-								</button>
+					<!-- 表单字段容器 - 固定高度防止尺寸变化 -->
+					<div class="form-container">
+						<!-- 表单字段：手机号模式 -->
+						<div id="form-phone" class="form-content space-y-4">
+							<div>
+								<div class="text-sm font-medium text-slate-700 mb-1">手机号</div>
+								<input id="phone" type="tel" class="input" placeholder="请输入 11 位手机号" />
+								<div id="phoneHelp" class="text-xs text-slate-500 mt-1">用于接收验证码</div>
 							</div>
-							<div id="codeHelp" class="text-xs text-slate-500 mt-1">请输入</div>
-						</div>
 
-						<!-- 用户协议 -->
-						<div class="flex items-start gap-3 py-2">
-							<input
-								id="agree"
-								type="checkbox"
-								class="mt-0.5 w-4 h-4 text-blue-500 border-slate-300 rounded focus:ring-blue-500"
-							/>
-							<div class="text-xs text-slate-600">
-								我已阅读并同意
-								<a href="#" class="underline" style="color: #2563eb">《用户协议》</a>
+							<div>
+								<div class="text-sm font-medium text-slate-700 mb-1">验证码</div>
+								<div class="flex gap-3">
+									<input
+										id="code"
+										type="text"
+										inputmode="numeric"
+										pattern="[0-9]*"
+										class="input flex-1"
+										placeholder="6 位数字"
+									/>
+									<button
+										id="codeBtn"
+										type="button"
+										onclick="sendCode()"
+										class="btn-secondary whitespace-nowrap w-[112px]"
+									>
+										<span id="codeBtnText">获取</span>
+									</button>
+								</div>
+								<div id="codeHelp" class="text-xs text-slate-500 mt-1">如未收到可 60 秒后重试</div>
 							</div>
 						</div>
 
-						<!-- 登录按钮 -->
-						<button
-							id="loginBtn"
-							type="button"
-							onclick="login()"
-							disabled
-							class="w-full py-3.5 text-white font-medium rounded hover:bg-blue-700 disabled:bg-slate-300 disabled:cursor-not-allowed"
-							style="background-color: #2563eb"
-						>
-							登录
-						</button>
+						<!-- 表单字段：工号模式 -->
+						<div id="form-staff" class="form-content space-y-4 hidden">
+							<div>
+								<div class="text-sm font-medium text-slate-700 mb-1">工号</div>
+								<input id="staffNo" type="text" class="input" placeholder="请输入工号" />
+								<div class="text-xs text-slate-500 mt-1 opacity-0">占位文本保持高度一致</div>
+							</div>
 
-						<!-- 底部提示 -->
-						<div class="text-center pt-2">
-							<div class="text-xs text-slate-500">遇到问题？请联系系统管理员</div>
+							<div>
+								<div class="text-sm font-medium text-slate-700 mb-1">密码</div>
+								<input id="staffPwd" type="password" class="input" placeholder="请输入密码" />
+								<div class="text-xs text-slate-500 mt-1 opacity-0">占位文本保持高度一致</div>
+							</div>
 						</div>
+					</div>
+
+					<!-- 用户协议 -->
+					<div class="flex items-start gap-3 pt-6 pb-3">
+						<input
+							id="agree"
+							type="checkbox"
+							class="mt-0.5 w-4 h-4 text-blue-500 border-slate-300 rounded focus:ring-blue-500"
+						/>
+						<div class="text-xs text-slate-600 leading-5">
+							我已阅读并同意
+							<a href="#" class="underline" style="color: var(--brand-600)">《用户协议》</a>
+						</div>
+					</div>
+
+					<!-- 登录按钮 -->
+					<button id="loginBtn" type="button" onclick="login()" disabled class="btn-primary">登录</button>
+
+					<!-- 底部提示 -->
+					<div class="text-center pt-3">
+						<div class="text-xs text-slate-500">遇到问题？请联系系统管理员</div>
 					</div>
 				</div>
 			</div>
 
-			<!-- 底部设置按钮 -->
+			<!-- 右下角设置按钮（半透明 + 毛玻璃） -->
 			<div class="fixed bottom-6 right-6">
 				<button
-					class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white"
+					class="w-10 h-10 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white shadow-md hover:bg-white/25 transition"
+					aria-label="设置"
 				>
-					<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+					<svg
+						class="w-5 h-5"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+					>
+						<circle cx="12" cy="12" r="3"></circle>
 						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
-						></path>
-						<path
-							stroke-linecap="round"
-							stroke-linejoin="round"
-							stroke-width="2"
-							d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+							d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 8 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 3.6 15a1.65 1.65 0 0 0-1.51-1H2a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 3.6 8a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 8 3.6a1.65 1.65 0 0 0 1-1.51V2a2 2 0 1 1 4 0v.09A1.65 1.65 0 0 0 15 3.6c.47 0 .93-.19 1.27-.53l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 20.4 8c0 .47.19.93.53 1.27l.06.06A2 2 0 1 1 18.16 12a1.65 1.65 0 0 0 1.24 3z"
 						></path>
 					</svg>
 				</button>
@@ -149,47 +293,78 @@
 		</div>
 
 		<script>
-			let timer = null,
-				sec = 0;
-			function validPhone(p) {
-				return /^1\d{10}$/.test(p) || p.trim().length >= 4;
-			}
-			function sendCode() {
-				const p = document.getElementById('phone').value.trim();
-				const help = document.getElementById('phoneHelp');
-				if (!validPhone(p)) {
-					help.className = 'text-xs text-red-500 mt-1';
-					help.textContent = '请输入正确的手机号或有效工号';
-					return;
+			// 登录方式切换
+			function switchMode(mode) {
+				const tabPhone = document.getElementById('tab-phone');
+				const tabStaff = document.getElementById('tab-staff');
+				const formPhone = document.getElementById('form-phone');
+				const formStaff = document.getElementById('form-staff');
+				if (mode === 'phone') {
+					tabPhone.classList.add('active');
+					tabPhone.setAttribute('aria-selected', 'true');
+					tabStaff.classList.remove('active');
+					tabStaff.setAttribute('aria-selected', 'false');
+					formPhone.classList.remove('hidden');
+					formStaff.classList.add('hidden');
+				} else {
+					tabStaff.classList.add('active');
+					tabStaff.setAttribute('aria-selected', 'true');
+					tabPhone.classList.remove('active');
+					tabPhone.setAttribute('aria-selected', 'false');
+					formStaff.classList.remove('hidden');
+					formPhone.classList.add('hidden');
 				}
-				help.className = 'text-xs text-slate-500 mt-1';
-				help.textContent = '验证码已发送（模拟）';
+				validate();
+			}
+
+			// 验证码按钮倒计时
+			let timer = null;
+			function sendCode() {
 				const btn = document.getElementById('codeBtn');
-				sec = 60;
+				const txt = document.getElementById('codeBtnText');
+				if (btn.disabled) return;
 				btn.disabled = true;
-				btn.textContent = '60s后重发';
+				let left = 60;
+				txt.textContent = left + 's';
 				timer = setInterval(() => {
-					sec--;
-					btn.textContent = sec + 's后重发';
-					if (sec <= 0) {
+					left--;
+					if (left <= 0) {
 						clearInterval(timer);
 						btn.disabled = false;
-						btn.textContent = '获取验证码';
+						txt.textContent = '获取';
+					} else {
+						txt.textContent = left + 's';
 					}
 				}, 1000);
 			}
-			function lock() {
-				const ok =
-					validPhone(document.getElementById('phone').value.trim()) &&
-					document.getElementById('code').value.trim().length >= 4 &&
-					document.getElementById('agree').checked;
-				document.getElementById('loginBtn').disabled = !ok;
+
+			// 简单表单校验：勾选协议后才可登录
+			const agree = document.getElementById('agree');
+			agree.addEventListener('change', validate);
+			function validate() {
+				const loginBtn = document.getElementById('loginBtn');
+				const activePhone = !document.getElementById('form-phone').classList.contains('hidden');
+				let ok = agree.checked;
+				if (activePhone) {
+					const phone = document.getElementById('phone').value.trim();
+					const code = document.getElementById('code').value.trim();
+					ok = ok && /^\d{11}$/.test(phone) && /^\d{4,6}$/.test(code);
+				} else {
+					const sn = document.getElementById('staffNo').value.trim();
+					const sp = document.getElementById('staffPwd').value.trim();
+					ok = ok && sn.length >= 2 && sp.length >= 4;
+				}
+				loginBtn.disabled = !ok;
 			}
-			document.getElementById('phone').addEventListener('input', lock);
-			document.getElementById('code').addEventListener('input', lock);
-			document.getElementById('agree').addEventListener('change', lock);
+			document.addEventListener('input', (e) => {
+				if (['phone', 'code', 'staffNo', 'staffPwd'].includes(e.target.id)) validate();
+			});
+
+			// 登录动作（示例）
 			function login() {
-				alert('登录成功 → 进入首页（home.html）');
+				const activePhone = !document.getElementById('form-phone').classList.contains('hidden');
+				if (activePhone) alert('手机号登录成功（示例）');
+				else alert('工号登录成功（示例）');
 			}
 		</script>
 	</body>

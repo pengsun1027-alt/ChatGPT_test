@@ -4,9 +4,6 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>设备巡检系统 - 记录详情</title>
-
-		<!-- Vant 4 CSS -->
-		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
 		<!-- Tailwind CSS -->
 		<script src="https://cdn.tailwindcss.com"></script>
 
@@ -36,23 +33,28 @@
 		</header>
 
 		<!-- 主要内容区域 -->
-		<main class="mt-14 px-4 pb-6 space-y-4">
-			<!-- 设备信息卡片 -->
-			<div class="bg-white rounded-lg shadow-sm p-4">
+		<main class="mt-14 px-4 space-y-4">
+			<!-- 设备基本信息卡片 -->
+			<div class="bg-white rounded-lg shadow-sm p-6">
+				<!-- 区块1：标题 + 重要程度（右上） -->
 				<div class="flex items-start justify-between">
-					<div class="flex-1">
-						<h2 class="text-lg font-bold text-slate-800 mb-1">供水泵#1 · 电机温度</h2>
-						<p class="text-sm text-slate-600">2025-08-18 10:15 · 执行人：张三 · 批次 2025W33</p>
-					</div>
+					<h3 class="text-lg font-bold text-slate-800 leading-tight">供水泵#1</h3>
 					<span
-						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800 ml-3 shrink-0 whitespace-nowrap"
 					>
-						正常
+						<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>在线
 					</span>
+				</div>
+				<!-- 区块2：元信息 -->
+				<div class="mt-2 text-sm text-slate-600">
+					<div class="mt-1 whitespace-nowrap">
+						记录时间：<span class="font-medium">2025-08-18 10:15</span>
+					</div>
+					<div class="mt-1 whitespace-nowrap">执行人：<span class="font-medium">张三</span></div>
 				</div>
 			</div>
 
-			<!-- 采集数据 -->
+			<!-- 采集数据卡片 -->
 			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">采集数据</h3>
@@ -78,7 +80,7 @@
 				</div>
 			</div>
 
-			<!-- 现场图片 -->
+			<!-- 现场图片卡片 -->
 			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">现场图片</h3>
@@ -103,7 +105,7 @@
 				</div>
 			</div>
 
-			<!-- 定位与审计 -->
+			<!-- 定位与审计卡片 -->
 			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
 					<h3 class="font-semibold text-slate-800">定位与审计</h3>
@@ -143,8 +145,5 @@
 				</div>
 			</div>
 		</main>
-
-		<!-- Vant 4 JS -->
-		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
 	</body>
 </html>

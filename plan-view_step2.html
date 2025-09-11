@@ -32,31 +32,22 @@
 				</svg>
 			</button>
 			<h1 class="text-base font-semibold">计划视图</h1>
-			<span
-				class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
-				style="background-color: #eff6ff; color: #2563eb"
-			>
-				演示版本
-			</span>
+			<!-- 右侧等宽占位，保持标题居中 -->
+			<div class="w-8 h-8"></div>
 		</header>
 
 		<!-- 主要内容区域 -->
-		<main class="mt-12 px-4 pb-20 space-y-4">
+		<main class="mt-16 px-4 pb-20 space-y-4">
 			<!-- 计划概要 -->
 			<div class="bg-white rounded-lg shadow-sm p-4">
+				<!-- 计划信息 -->
 				<div class="flex items-start justify-between mb-4">
 					<div class="flex-1">
-						<h2 class="text-lg font-bold text-slate-800 mb-1">机组A日巡 · W33-1</h2>
-						<p class="text-sm text-slate-600">日期：2025-08-22 · 当前时窗：12:00–13:00</p>
+						<h2 class="text-lg font-bold text-slate-800 mb-1">机组A日巡</h2>
+						<p class="text-sm text-slate-600">日期：2025-08-22 · 时窗：12:00–13:00</p>
 					</div>
-					<a
-						href="task-list-aggregate_with-sessionbar_step2.html"
-						class="px-3 py-2 bg-slate-100 text-slate-700 text-sm font-medium rounded hover:bg-slate-200"
-					>
-						返回列表
-					</a>
 				</div>
-
+				<!-- 信息卡片 -->
 				<div class="grid grid-cols-2 gap-3">
 					<div class="bg-slate-50 rounded-xl p-3">
 						<div class="text-xs text-slate-500 mb-2">总体完成率</div>
@@ -69,19 +60,19 @@
 						<div class="text-xs text-slate-500 mb-2">PPE/SSP/SOP</div>
 						<div class="flex flex-wrap gap-1">
 							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700"
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700"
 							>
-								PPE ✓
+								<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>PPE ✓
 							</span>
 							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700"
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700"
 							>
-								SSP ✓
+								<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>SSP ✓
 							</span>
 							<span
-								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700"
+								class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700"
 							>
-								SOP ✓
+								<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>SOP ✓
 							</span>
 						</div>
 					</div>
@@ -103,10 +94,10 @@
 							<span class="text-sm font-medium text-slate-800">供水泵#1</span>
 						</div>
 						<span
-							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium"
+							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold"
 							style="background-color: #eff6ff; color: #2563eb"
 						>
-							可开始
+							<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>可开始
 						</span>
 					</div>
 
@@ -121,9 +112,9 @@
 							<span class="text-sm font-medium text-slate-800">供水泵#2</span>
 						</div>
 						<span
-							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600"
 						>
-							未到
+							<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>未到
 						</span>
 					</div>
 
@@ -138,9 +129,9 @@
 							<span class="text-sm font-medium text-slate-800">冷却塔#1</span>
 						</div>
 						<span
-							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-red-100 text-red-700"
+							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700"
 						>
-							逾期
+							<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>逾期
 						</span>
 					</div>
 
@@ -155,9 +146,9 @@
 							<span class="text-sm font-medium text-slate-800">配电柜A</span>
 						</div>
 						<span
-							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-orange-100 text-orange-700"
+							class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-orange-100 text-orange-700"
 						>
-							进行中
+							<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>进行中
 						</span>
 					</div>
 				</div>
@@ -191,16 +182,14 @@
 			<div class="px-4 py-3 flex space-x-3">
 				<a
 					href="task-list-aggregate_with-sessionbar_step2.html"
-					class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 text-center"
+					class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 text-center transition-all duration-200"
 				>
 					返回任务列表
 				</a>
 				<a
 					href="task-list-aggregate_with-sessionbar_step2.html"
-					class="flex-1 py-3 text-white font-medium rounded text-center"
+					class="flex-1 py-3 text-white font-semibold rounded text-center hover:-translate-y-px transition-all duration-200"
 					style="background-color: #2563eb"
-					onmouseover="this.style.backgroundColor='#1D4ED8'"
-					onmouseout="this.style.backgroundColor='#2563EB'"
 				>
 					开始巡检
 				</a>

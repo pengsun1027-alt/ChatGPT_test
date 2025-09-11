@@ -60,12 +60,12 @@
 			<!-- 项目一：电机温度 -->
 			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
-					<h3 class="font-semibold text-slate-800">项目1：电机温度</h3>
+					<h3 class="font-semibold text-slate-800">电机温度</h3>
 					<span
 						id="tag-temp"
-						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-800"
 					>
-						正常
+						<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>正常
 					</span>
 				</div>
 
@@ -108,18 +108,16 @@
 				</div>
 
 				<div class="flex justify-between">
-					<button class="text-sm text-slate-500 underline" onclick="openCant('项目1：电机温度')">
-						无法完成
-					</button>
+					<button class="text-sm text-slate-500 underline" onclick="openCant('电机温度')">无法完成</button>
 					<button
 						id="btn-temp"
-						class="px-4 py-2 text-white text-sm font-medium rounded"
+						class="px-4 py-2 text-white text-sm font-semibold rounded hover:-translate-y-px transition-all duration-200"
 						style="background-color: #2563eb"
 						onmouseover="this.style.backgroundColor='#1d4ed8'"
 						onmouseout="this.style.backgroundColor='#2563EB'"
 						onclick="submitTemp()"
 					>
-						提交项目
+						提交
 					</button>
 				</div>
 			</div>
@@ -127,12 +125,12 @@
 			<!-- 项目二：运行电流 -->
 			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
-					<h3 class="font-semibold text-slate-800">项目2：运行电流</h3>
+					<h3 class="font-semibold text-slate-800">运行电流</h3>
 					<span
 						id="tag-amp"
-						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600"
 					>
-						待提交
+						<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>待提交
 					</span>
 				</div>
 
@@ -174,18 +172,16 @@
 				</div>
 
 				<div class="flex justify-between">
-					<button class="text-sm text-slate-500 underline" onclick="openCant('项目2：运行电流')">
-						无法完成
-					</button>
+					<button class="text-sm text-slate-500 underline" onclick="openCant('运行电流')">无法完成</button>
 					<button
 						id="btn-amp"
-						class="px-4 py-2 text-white text-sm font-medium rounded"
+						class="px-4 py-2 text-white text-sm font-semibold rounded hover:-translate-y-px transition-all duration-200"
 						style="background-color: #2563eb"
 						onmouseover="this.style.backgroundColor='#1d4ed8'"
 						onmouseout="this.style.backgroundColor='#2563EB'"
 						onclick="submitAmp()"
 					>
-						提交项目
+						提交
 					</button>
 				</div>
 			</div>
@@ -193,12 +189,12 @@
 			<!-- 项目三：轴承振动 -->
 			<div class="bg-white rounded-lg shadow-sm p-4">
 				<div class="flex items-center justify-between mb-4">
-					<h3 class="font-semibold text-slate-800">项目3：轴承振动</h3>
+					<h3 class="font-semibold text-slate-800">轴承振动</h3>
 					<span
 						id="tag-vib"
-						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600"
 					>
-						待提交
+						<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>待提交
 					</span>
 				</div>
 
@@ -240,18 +236,16 @@
 				</div>
 
 				<div class="flex justify-between">
-					<button class="text-sm text-slate-500 underline" onclick="openCant('项目3：轴承振动')">
-						无法完成
-					</button>
+					<button class="text-sm text-slate-500 underline" onclick="openCant('轴承振动')">无法完成</button>
 					<button
 						id="btn-vib"
-						class="px-4 py-2 text-white text-sm font-medium rounded"
+						class="px-4 py-2 text-white text-sm font-semibold rounded hover:-translate-y-px transition-all duration-200"
 						style="background-color: #2563eb"
 						onmouseover="this.style.backgroundColor='#1d4ed8'"
 						onmouseout="this.style.backgroundColor='#2563EB'"
 						onclick="submitVib()"
 					>
-						提交项目
+						提交
 					</button>
 				</div>
 			</div>
@@ -262,9 +256,9 @@
 					<h3 class="font-semibold text-slate-800">整体备注</h3>
 					<span
 						id="tag-rmk"
-						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-600"
+						class="inline-flex items-center px-2 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-600"
 					>
-						待提交
+						<span class="w-1.5 h-1.5 bg-current rounded-full mr-1.5"></span>待提交
 					</span>
 				</div>
 
@@ -282,7 +276,7 @@
 				<div class="flex justify-end">
 					<button
 						id="btn-rmk"
-						class="px-4 py-2 text-white text-sm font-medium rounded"
+						class="px-4 py-2 text-white text-sm font-semibold rounded hover:-translate-y-px transition-all duration-200"
 						style="background-color: #2563eb"
 						onmouseover="this.style.backgroundColor='#1d4ed8'"
 						onmouseout="this.style.backgroundColor='#2563EB'"
@@ -298,18 +292,18 @@
 		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="px-4 py-3 flex space-x-3">
 				<button
-					class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 active:bg-slate-300"
+					class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 transition-all duration-200"
 					onclick="saveDraft()"
 				>
 					保存草稿
 				</button>
 				<button
 					id="submitAll"
-					class="flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded"
+					class="flex-1 py-3 bg-slate-300 text-slate-500 font-medium rounded transition-all duration-200"
 					onclick="submitForm()"
 					disabled
 				>
-					提交
+					全部提交
 				</button>
 			</div>
 		</div>
@@ -319,16 +313,24 @@
 			<div class="bg-white rounded-t-2xl w-full p-6">
 				<h3 id="cant-title" class="text-lg font-semibold mb-4">项目无法完成</h3>
 				<div class="flex flex-wrap gap-2 mb-4">
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+					<button
+						class="px-3 py-1 border border-slate-300 rounded-full text-sm font-semibold hover:bg-slate-50 transition-all duration-200"
+					>
 						无法接近测点
 					</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+					<button
+						class="px-3 py-1 border border-slate-300 rounded-full text-sm font-semibold hover:bg-slate-50 transition-all duration-200"
+					>
 						仪表损坏
 					</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+					<button
+						class="px-3 py-1 border border-slate-300 rounded-full text-sm font-semibold hover:bg-slate-50 transition-all duration-200"
+					>
 						工况不允许
 					</button>
-					<button class="px-3 py-1 border border-slate-300 rounded-full text-sm hover:bg-slate-50">
+					<button
+						class="px-3 py-1 border border-slate-300 rounded-full text-sm font-semibold hover:bg-slate-50 transition-all duration-200"
+					>
 						其他
 					</button>
 				</div>
@@ -339,13 +341,13 @@
 				></textarea>
 				<div class="flex space-x-3 mt-4">
 					<button
-						class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200"
+						class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 transition-all duration-200"
 						onclick="closeCant()"
 					>
 						取消
 					</button>
 					<button
-						class="flex-1 py-3 text-white font-medium rounded"
+						class="flex-1 py-3 text-white font-semibold rounded hover:-translate-y-px transition-all duration-200"
 						style="background-color: #2563eb"
 						onmouseover="this.style.backgroundColor='#1d4ed8'"
 						onmouseout="this.style.backgroundColor='#2563EB'"
@@ -442,7 +444,9 @@
 			let currentCantProj = '';
 			function openCant(name) {
 				currentCantProj = name;
-				document.getElementById('cant-title').textContent = name + ' · 无法完成';
+				// 显示格式：设备名称+项目名称+无法完成
+				const deviceName = '供水泵#1';
+				document.getElementById('cant-title').textContent = deviceName + ' · ' + name + ' · 无法完成';
 				document.getElementById('cant-modal').classList.remove('hidden');
 				document.getElementById('cant-modal').classList.add('flex');
 			}
@@ -457,13 +461,13 @@
 				if (!reason) return alert('请填写具体原因');
 
 				// 根据项目标记状态
-				if (currentCantProj.includes('项目1')) {
+				if (currentCantProj.includes('电机温度')) {
 					markTag('tag-temp', '无法完成');
 					document.getElementById('btn-temp').disabled = true;
-				} else if (currentCantProj.includes('项目2')) {
+				} else if (currentCantProj.includes('运行电流')) {
 					markTag('tag-amp', '无法完成');
 					document.getElementById('btn-amp').disabled = true;
-				} else if (currentCantProj.includes('项目3')) {
+				} else if (currentCantProj.includes('轴承振动')) {
 					markTag('tag-vib', '无法完成');
 					document.getElementById('btn-vib').disabled = true;
 				}
