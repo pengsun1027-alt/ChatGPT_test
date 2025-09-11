@@ -7,17 +7,12 @@
 
 		<!-- Tailwind CSS - 优先 -->
 		<script src="https://cdn.tailwindcss.com"></script>
-		<!-- Vant 4 CSS - 仅在必要时使用 -->
-		<!-- <link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" /> -->
 
 		<style>
 			body {
 				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
 					sans-serif;
 				background: #f7f8fa;
-			}
-			.safe-bottom {
-				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
 		</style>
 	</head>
@@ -244,24 +239,7 @@
 			</div>
 		</main>
 
-		<!-- 浮动新建按钮 -->
-		<button
-			class="fixed bottom-6 right-6 w-16 h-16 text-white rounded-full shadow-lg flex items-center justify-center hover:bg-blue-700 hover:-translate-y-px z-50 transition-all duration-200"
-			style="background-color: #2563eb"
-			onclick="openNewRepair()"
-		>
-			<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="1.5">
-				<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-			</svg>
-		</button>
-
-		<!-- Vant 4 JS - 仅在必要时使用 -->
-		<!-- <script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script> -->
-
 		<script>
-			function openNewRepair() {
-				location.href = 'repair-new.html';
-			}
 
 			// 筛选功能
 			const filterButtons = document.querySelectorAll('header + div button');

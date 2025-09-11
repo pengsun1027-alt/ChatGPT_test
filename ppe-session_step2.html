@@ -5,8 +5,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>设备巡检系统 - PPE会话采集</title>
 
-		<!-- Vant 4 CSS -->
-		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
 		<!-- Tailwind CSS -->
 		<script src="https://cdn.tailwindcss.com"></script>
 
@@ -156,8 +154,8 @@
 				</a>
 				<button
 					id="go"
-					class="flex-1 py-3 bg-slate-300 text-slate-500 font-semibold rounded transition-all duration-200"
-					disabled
+					class="flex-1 py-3 text-white bg-slate-300 text-slate-500 font-semibold rounded transition-all duration-200"
+					style="background-color: #2563eb"
 					onclick="finish()"
 				>
 					开始本时窗巡检
@@ -165,21 +163,8 @@
 			</div>
 		</div>
 
-		<!-- Vant 4 JS -->
-		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
-
 		<script>
 			let hasPhoto = false;
-
-			function capture() {
-				hasPhoto = true;
-				document.getElementById('mock').textContent = '已拍摄';
-				document.getElementById('mock').className =
-					'w-24 h-18 border-2 border-green-300 rounded-lg flex items-center justify-center text-xs text-green-700 bg-green-50';
-				document.getElementById('bar').style.width = '66%';
-				updateBtn();
-				document.getElementById('receipt').textContent = '已拍摄 · 待勾选 SSP/SOP';
-			}
 
 			function updateBtn() {
 				const ok = hasPhoto && document.getElementById('ssp').checked && document.getElementById('sop').checked;
@@ -207,7 +192,7 @@
 			function finish() {
 				// 使用 Vant 的 Toast 组件
 				if (typeof vant !== 'undefined') {
-					vant.showToast('已完成 PPE + SSP/SOP 确认，返回原路径');
+					alert('已完成 PPE + SSP/SOP 确认，返回原路径');
 				} else {
 					alert('已完成 PPE + SSP/SOP 确认，返回原路径并恢复动作');
 				}

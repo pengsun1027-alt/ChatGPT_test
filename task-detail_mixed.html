@@ -5,8 +5,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<title>设备巡检系统 - 任务详情(逾期)</title>
 
-		<!-- Vant 4 CSS -->
-		<link rel="stylesheet" href="https://fastly.jsdelivr.net/npm/vant@4/lib/index.css" />
 		<!-- Tailwind CSS -->
 		<script src="https://cdn.tailwindcss.com"></script>
 
@@ -328,9 +326,6 @@
 			</div>
 		</div>
 
-		<!-- Vant 4 JS -->
-		<script src="https://fastly.jsdelivr.net/npm/vant@4/lib/vant.min.js"></script>
-
 		<script>
 			// 时窗数据和状态映射
 			const timeWindowStatus = {
@@ -342,8 +337,7 @@
 			let selectedTimeWindow = '08:00-09:00'; // 默认选中逾期的
 			
 			function selectTimeWindow(button) {
-				const tw = button.dataset.tw;
-				selectedTimeWindow = tw;
+				selectedTimeWindow = button.dataset.tw;
 				
 				// 更新按钮样式
 				document.querySelectorAll('#twButtons button').forEach(btn => {

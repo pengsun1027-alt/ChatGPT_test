@@ -380,17 +380,6 @@
 				updateLocks();
 			}
 
-			function addPhoto(id) {
-				const wrap = document.getElementById(id);
-				const ph = document.createElement('div');
-				ph.className = 'w-20 h-20 bg-slate-100 rounded flex items-center justify-center text-xs text-slate-600';
-				ph.textContent = 'IMG';
-				wrap.insertBefore(ph, wrap.lastElementChild);
-				const count = parseInt(wrap.getAttribute('data-count') || '0') + 1;
-				wrap.setAttribute('data-count', count);
-				updateLocks();
-			}
-
 			function tagState(idx) {
 				const el = document.getElementById('tag' + idx);
 				if (el.classList.contains('bg-green-100')) return 'GREEN';
