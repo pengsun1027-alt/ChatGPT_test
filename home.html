@@ -17,7 +17,21 @@
 				font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei',
 					sans-serif;
 				background: #f7f8fa;
+				/* 禁用纵向滚动条但保留滚动功能 */
+				overflow-y: scroll;
+				/* IE/Edge 隐藏滚动条 */
+				-ms-overflow-style: none;
 			}
+			/* Firefox 隐藏滚动条 */
+			html {
+				scrollbar-width: none;
+			}
+			/* 隐藏滚动条 */
+			::-webkit-scrollbar {
+				width: 0;
+				background: transparent;
+			}
+
 			.safe-bottom {
 				padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
 			}
