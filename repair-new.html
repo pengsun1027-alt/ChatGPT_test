@@ -204,7 +204,9 @@
 		<!-- 底部操作栏 -->
 		<div class="fixed inset-x-0 bottom-0 bg-white/95 backdrop-blur border-t border-slate-200 safe-bottom z-50">
 			<div class="px-4 py-3 flex space-x-3">
-				<button class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 transition-all duration-200">
+				<button
+					class="flex-1 py-3 bg-slate-100 text-slate-700 font-medium rounded hover:bg-slate-200 transition-all duration-200"
+				>
 					保存草稿
 				</button>
 				<button
@@ -223,7 +225,8 @@
 				// 清除所有按钮的选中状态
 				const buttons = button.parentNode.querySelectorAll('button');
 				buttons.forEach((btn) => {
-					btn.className = 'px-4 py-2 border border-slate-300 text-slate-600 rounded-full text-sm font-semibold';
+					btn.className =
+						'px-4 py-2 border border-slate-300 text-slate-600 rounded-full text-sm font-semibold';
 				});
 
 				// 设置选中状态
